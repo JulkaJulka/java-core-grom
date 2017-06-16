@@ -10,13 +10,23 @@ public class Controller {
         this.apis = apis;
     }
 
-    public Room[] requestRooms(int price, int persons,String city, String hotel){
+    public Room[] requestRooms(int price, int persons, String city, String hotel) {
+        int lengthApi = 0;
 
-        Room[] requestRooms = new Room[]{};
-        for (int i = 0; i < apis.length ; i++) {
-             apis[i].findRooms(price, persons, city, hotel);
-/*if(requestRooms[i] != null){
-    requestRooms[i] = */
+        Room[] findRoomForApi = new Room[]{};
+        //Room[] requestRooms = new Room[apis.];
+        for (int i = 0; i < apis.length; i++) {
+
+            findRoomForApi = apis[i].findRooms(price, persons, city, hotel);
+            lengthApi = lengthApi + findRoomForApi.length;
+            // apis[i].findRooms(price, persons, city, hotel);
+        }
+        Room[] requestRooms = new Room[lengthApi];
+        for (int i = 0; i < apis.length; i++) {
+            for (int j = 0; j < findRoomForApi.length; j++) {
+                requestRooms[i] = findRoomForApi[j];
+                System.out.println(requestRooms[i] + " ");
+            }
 
         }
         return requestRooms;
@@ -42,11 +52,11 @@ public class Controller {
                         api1Rooms[i].getCityName().equals(api2Rooms[j].getCityName()) &&
                         api1Rooms[i].getHotelName().equals(api2Rooms[j].getHotelName())) {
                     res[i] = api1Rooms[i];
-                  //  System.out.println(res[i] + " ");
-                }
+                    //  System.out.println(res[i] + " ");
                 }
             }
-            return res;
+        }
+        return res;
 
     }
 }

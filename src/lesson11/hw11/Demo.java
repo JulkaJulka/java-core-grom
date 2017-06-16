@@ -20,12 +20,17 @@ public class Demo {
 
         BookingComAPI bookingComAPI2 = new BookingComAPI(roomsBooking);
         TripAdvisorAPI tripAdvisorAPI2 = new TripAdvisorAPI(roomsTrip);
+        GoogleAPI googleAPI = new GoogleAPI(roomsTrip);
+        API[] apis1 = new API[]{bookingComAPI2, tripAdvisorAPI2, googleAPI};
+
 
        // BookingComAPI api1 = new BookingComAPI(roomsBooking);
        // TripAdvisorAPI api2 = new TripAdvisorAPI(roomsTrip);
         API[] apis = new API[]{bookingComAPI2,tripAdvisorAPI2};
         Controller controller = new Controller(apis);
         controller.check(bookingComAPI2,tripAdvisorAPI2);
+        Controller controller1 = new Controller(apis1);
+        controller1.requestRooms(289, 2, "Kyiv", "Lybid");
         //controller.check(bookingComAPI2, tripAdvisorAPI2);
 
 /*int[] mas = new int[]{120,50,1000};
