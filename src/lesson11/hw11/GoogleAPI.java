@@ -1,9 +1,5 @@
 package lesson11.hw11;
-
-/**
- * Created by user on 13.06.2017.
- */
-public class GoogleAPI implements API {
+ public class GoogleAPI implements API {
     private Room[] rooms;
 
     public GoogleAPI(Room[] rooms) {
@@ -19,20 +15,18 @@ public class GoogleAPI implements API {
     public Room[] findRooms(int price, int persons, String city, String hotel) {
 
         int countFindRooms = 0;
-        Room[] findRooms = new Room[countFindRooms];
         if (rooms == null) {
-            findRooms = null;}
+            return null;}
         for (int i = 0; i < rooms.length; i++) {
             if (rooms[i] != null && rooms[i].getPrice() == price && rooms[i].getPersons() == persons &&
-                    rooms[i].getCityName() == city && rooms[i].getHotelName() == hotel) {
+                    rooms[i].getCityName().equals(city)  && rooms[i].getHotelName().equals(hotel)) {
                 countFindRooms++;
             }
         }
-
-
+        Room[] findRooms = new Room[countFindRooms];
             for (int i = 0; i < rooms.length; i++) {
                 if (rooms[i] != null && rooms[i].getPrice() == price && rooms[i].getPersons() == persons &&
-                        rooms[i].getCityName() == city && rooms[i].getHotelName() == hotel) {
+                        rooms[i].getCityName().equals(city) && rooms[i].getHotelName().equals(hotel)) {
                     findRooms[i] = rooms[i];
                 }
 
