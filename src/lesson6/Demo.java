@@ -1,4 +1,4 @@
-package week6;
+package lesson6;
 
 /**
  * Created by user on 12.05.2017.

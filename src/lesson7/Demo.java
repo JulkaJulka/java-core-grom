@@ -1,8 +1,8 @@
-package week7;
+package lesson7;
 
-import week6.Car;
-import week6.DbConnector;
-import week6.User;
+import lesson6.Car;
+import lesson6.DbConnector;
+import lesson6.User;
 
 /**
  * Created by user on 12.05.2017.

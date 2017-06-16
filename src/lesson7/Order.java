@@ -1,11 +1,11 @@
-package week7;
+package lesson7;
 
 import java.util.Date;
 
 /**
  * Created by user on 12.05.2017.
  */
-import java.util.Date;
+
 public class Order {
     long id;
     int price;

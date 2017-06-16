@@ -1,4 +1,4 @@
-package week7;
+package lesson7;
 
 
 import java.util.Date;
