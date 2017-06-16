@@ -1,3 +1,5 @@
+package lesson3;
+
 /**
  * Created by user on 22.03.2017.
  */
