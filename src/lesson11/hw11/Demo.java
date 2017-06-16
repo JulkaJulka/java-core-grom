@@ -13,18 +13,20 @@ public class Demo {
         Room room1 = new Room(354, 120, 1, date1, "Lybid", "Kyiv");
         Room room2 = new Room(354, 289, 2, date1, "Lybid", "Kyiv");
         Room room3 = new Room(354, 1000, 5, date1, "Lybid", "Kyiv");
+        Room room4 = new Room(354, 1000, 5, date1, "Lybid", "Kyiv");
 
-        Room[] roomsBooking = new Room[]{room1, room3};
-        Room[] roomsTrip = new Room[]{room1, room2};
+        Room[] roomsBooking = new Room[]{room2};
+        Room[] roomsTrip = new Room[]{room2, room3,room4};
 
         BookingComAPI bookingComAPI2 = new BookingComAPI(roomsBooking);
         TripAdvisorAPI tripAdvisorAPI2 = new TripAdvisorAPI(roomsTrip);
 
-        BookingComAPI api1 = new BookingComAPI(roomsBooking);
-        TripAdvisorAPI api2 = new TripAdvisorAPI(roomsBooking);
+       // BookingComAPI api1 = new BookingComAPI(roomsBooking);
+       // TripAdvisorAPI api2 = new TripAdvisorAPI(roomsTrip);
         API[] apis = new API[]{bookingComAPI2,tripAdvisorAPI2};
         Controller controller = new Controller(apis);
-        System.out.println(controller.check(api1, api2));
+        controller.check(bookingComAPI2,tripAdvisorAPI2);
+        //controller.check(bookingComAPI2, tripAdvisorAPI2);
 
 /*int[] mas = new int[]{120,50,1000};
 int a = 100;

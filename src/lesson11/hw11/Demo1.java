@@ -20,8 +20,8 @@ public class Demo1 {
         TripAdvisorAPI tripAdvisorAPI2 = new TripAdvisorAPI(roomsTrip);
 
         BookingComAPI api1 = new BookingComAPI(roomsBooking);
-        TripAdvisorAPI api2 = new TripAdvisorAPI(roomsBooking);
-        API[] apis = new API[]{bookingComAPI2,tripAdvisorAPI2};
+        TripAdvisorAPI api2 = new TripAdvisorAPI(roomsTrip);
+        API[] apis = new API[]{api1,api2};
         Controller controller = new Controller(apis);
         controller.check(api1, api2);
         System.out.println("----------------");
