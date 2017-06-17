@@ -16,7 +16,9 @@ package lesson11.hw11;
 
         int countFindRooms = 0;
         if (rooms == null) {
-            return null;}
+            Room[] emptyFindRoom = new Room[0];
+            return emptyFindRoom ;
+        }
         for (int i = 0; i < rooms.length; i++) {
             if (rooms[i] != null && rooms[i].getPrice() == price && rooms[i].getPersons() == persons &&
                     rooms[i].getCityName().equals(city)  && rooms[i].getHotelName().equals(hotel)) {
