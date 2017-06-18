@@ -5,7 +5,7 @@ package lesson11.hw11;
  */
 public class CheckTest {
     public static void main(String[] args) {
-        int[] mas1 = {3, 7, 89, 364};
+        int[] mas1 = {};
         int[] mas2 = {7,6,364,90, 89,900};
         check(mas1, mas2);
         //System.out.println(check(mas1, mas2));
@@ -13,7 +13,7 @@ public class CheckTest {
     }
     public  static int[] check(int[] mas1, int[] mas2){
 
-        if(mas1 == null || mas2 == null){
+        if(mas1.length == 0 || mas2.length == 0){
             return null;
         }
         int[] res = new int[mas1.length];

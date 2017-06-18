@@ -42,11 +42,24 @@ public class Controller {
 
         if (api1Rooms.length == 0 || api2Rooms.length == 0) {
             Room[] res = new Room[0];
-            System.out.println(res);
+            //System.out.println(res);
             return res;
 
         }
-        Room[] res = new Room[api1Rooms.length];
+        int countRes =0;
+        for (int i = 0; i < api1Rooms.length; i++) {
+            for (int j = 0; j < api2Rooms.length; j++) {
+
+                if (api1Rooms[i].getPrice() == api2Rooms[j].getPrice() &&
+                        api1Rooms[i].getPersons() == api2Rooms[j].getPersons() &&
+                        api1Rooms[i].getCityName().equals(api2Rooms[j].getCityName()) &&
+                        api1Rooms[i].getHotelName().equals(api2Rooms[j].getHotelName())) {
+                   countRes++;
+                }
+            }
+        }
+
+        Room[] res = new Room[countRes];
         for (int i = 0; i < api1Rooms.length; i++) {
             for (int j = 0; j < api2Rooms.length; j++) {
 
@@ -55,7 +68,7 @@ public class Controller {
                         api1Rooms[i].getCityName().equals(api2Rooms[j].getCityName()) &&
                         api1Rooms[i].getHotelName().equals(api2Rooms[j].getHotelName())) {
                     res[i] = api1Rooms[i];
-                    //  System.out.println(res[i] + " ");
+                     // System.out.println(res[i] + " ");
                 }
             }
         }

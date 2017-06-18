@@ -10,10 +10,10 @@ public class Demo1 {
         Date date1 = new Date();
         Room room1 = new Room(354, 120, 1, date1, "Lybid", "Kyiv");
         Room room2 = new Room(354, 289, 2, date1, "Lybid", "Kyiv");
-        Room room3 = new Room(354, 1000, 5, date1, "Lybid", "Kyiv");
+        Room room3 = new Room(354, 2, 5, date1, "Lybid", "Kyiv");
         Room room4 = new Room(354, 1000, 5, date1, "Lybid", "Kyiv");
 
-        Room[] roomsBooking = new Room[]{room1,room4, room3};
+        Room[] roomsBooking = new Room[]{room1,room2,room4};
         Room[] roomsTrip = new Room[]{room1, room2, room4};
 
         BookingComAPI bookingComAPI2 = new BookingComAPI(roomsBooking);
