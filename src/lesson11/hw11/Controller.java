@@ -11,6 +11,9 @@ public class Controller {
     }
 
     public Room[] requestRooms(int price, int persons, String city, String hotel) {
+        if(apis.length == 0){
+            return null;
+        }
         int lengthApi = 0;
 
         Room[] findRoomForApi = new Room[]{};
