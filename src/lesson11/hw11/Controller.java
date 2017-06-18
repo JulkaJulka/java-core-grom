@@ -33,32 +33,6 @@ public class Controller {
         }
         return requestRooms;
     }
-    /*
-    public Room[] requestRooms(int price, int persons, String city, String hotel) {
-14	        if(apis.length == 0){
-15	            return null;
-16	        }
-17	        int lengthApi = 0;
-18
-19	        Room[] findRoomForApi = new Room[]{};
-20	        //Room[] requestRooms = new Room[apis.];
-21	        for (int i = 0; i < apis.length; i++) {
-22
-23	            findRoomForApi = apis[i].findRooms(price, persons, city, hotel);
-24	            lengthApi = lengthApi + findRoomForApi.length;
-25	            // apis[i].findRooms(price, persons, city, hotel);
-26	        }
-27	        Room[] requestRooms = new Room[lengthApi];
-28	        for (int i = 0; i < apis.length; i++) {
-29	            for (int j = 0; j < findRoomForApi.length; j++) {
-30	                requestRooms[i] = findRoomForApi[j];
-31	                System.out.println(requestRooms[i] + " ");
-32	            }
-33
-34	        }
-35	        return requestRooms;
-36	    }
-     */
 
     public Room[] check(API api1, API api2) {
 
