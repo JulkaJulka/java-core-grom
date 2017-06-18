@@ -22,11 +22,13 @@ public class TripAdvisorAPI implements API{
 
         }
         Room[] findRooms = new Room[countFindRooms];
+        int indexFindRooms = 0;
         for (int i = 0; i <rooms.length ; i++) {
             if(rooms[i] != null && rooms[i].getPersons() >= persons - 1 && rooms[i].getPersons() <= persons + 1 &&
                     price == rooms[i].getPrice() && city.equals(rooms[i].getCityName())  &&
                     hotel.equals(rooms[i].getHotelName())){
-                findRooms[i] = rooms[i];
+                findRooms[indexFindRooms] = rooms[i];
+                indexFindRooms++;
                 //System.out.println(findRooms[i] + " ");
             }
 

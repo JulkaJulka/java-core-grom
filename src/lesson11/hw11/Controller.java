@@ -28,7 +28,7 @@ public class Controller {
         for (int i = 0; i < apis.length; i++) {
             for (int j = 0; j < findRoomForApi.length; j++) {
                 requestRooms[i] = findRoomForApi[j];
-                System.out.println(requestRooms[i] + " ");
+               // System.out.println(requestRooms[i] + " ");
             }
 
         }
