@@ -26,7 +26,7 @@ public class Demo1 {
         API[] apis = new API[]{api1,api2};
         Controller controller = new Controller(apis);
         controller.check(api1, api2);
-        api2.findRooms(120,1,"Kyiv", "Lybid");
+        api3.findRooms(120,1,"Kyiv", "Lybid");
         System.out.println("----------------");
 
 

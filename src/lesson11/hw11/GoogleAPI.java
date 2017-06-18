@@ -31,11 +31,13 @@ package lesson11.hw11;
             System.out.println(countFindRooms);
         }
         Room[] findRooms = new Room[countFindRooms];
+        int indexFindRooms = 0;
             for (int i = 0; i < rooms.length; i++) {
                 if (rooms[i] != null && rooms[i].getPrice() == price && rooms[i].getPersons() == persons &&
                         rooms[i].getCityName().equals(city) && rooms[i].getHotelName().equals(hotel)) {
-                    findRooms[i] = rooms[i];
-                    System.out.println(findRooms[i] + " ");
+                    findRooms[indexFindRooms] = rooms[i];
+                    indexFindRooms++;
+                   // System.out.println(findRooms[i] + " ");
                 }
 
             }
