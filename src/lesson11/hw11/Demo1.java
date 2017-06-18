@@ -15,15 +15,18 @@ public class Demo1 {
 
         Room[] roomsBooking = new Room[]{room1,room2,room4};
         Room[] roomsTrip = new Room[]{room1, room2, room4};
-
+        Room[] roomsGoogle = new Room[]{room1,room2,room4};
         BookingComAPI bookingComAPI2 = new BookingComAPI(roomsBooking);
         TripAdvisorAPI tripAdvisorAPI2 = new TripAdvisorAPI(roomsTrip);
 
         BookingComAPI api1 = new BookingComAPI(roomsBooking);
         TripAdvisorAPI api2 = new TripAdvisorAPI(roomsTrip);
+        GoogleAPI api3 = new GoogleAPI(roomsGoogle);
+
         API[] apis = new API[]{api1,api2};
         Controller controller = new Controller(apis);
         controller.check(api1, api2);
+        api2.findRooms(120,1,"Kyiv", "Lybid");
         System.out.println("----------------");
 
 

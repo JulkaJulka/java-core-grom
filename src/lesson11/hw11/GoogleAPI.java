@@ -13,23 +13,29 @@ package lesson11.hw11;
 
     @Override
     public Room[] findRooms(int price, int persons, String city, String hotel) {
+        Room[] notFindRoom = new Room[0];
+        if (rooms.length == 0) {
 
-        int countFindRooms = 0;
-        if (rooms == null) {
-            Room[] notFindRoom = new Room[0];
             return notFindRoom ;
         }
+       /* if(price == 0 || persons ==0 || city ==null || hotel == null){
+            return notFindRoom;
+        }*/
+        int countFindRooms = 0;
         for (int i = 0; i < rooms.length; i++) {
             if (rooms[i] != null && rooms[i].getPrice() == price && rooms[i].getPersons() == persons &&
                     rooms[i].getCityName().equals(city)  && rooms[i].getHotelName().equals(hotel)) {
                 countFindRooms++;
+
             }
+            System.out.println(countFindRooms);
         }
         Room[] findRooms = new Room[countFindRooms];
             for (int i = 0; i < rooms.length; i++) {
                 if (rooms[i] != null && rooms[i].getPrice() == price && rooms[i].getPersons() == persons &&
                         rooms[i].getCityName().equals(city) && rooms[i].getHotelName().equals(hotel)) {
                     findRooms[i] = rooms[i];
+                    System.out.println(findRooms[i] + " ");
                 }
 
             }

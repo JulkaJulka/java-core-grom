@@ -8,7 +8,7 @@ public class TripAdvisorAPI implements API{
 
     @Override
     public Room[] findRooms(int price, int persons, String city, String hotel) {
-        if(rooms == null){
+        if(rooms.length == 0){
             Room[] notFoundRooms = new Room[0];
             return notFoundRooms;
         }
@@ -27,6 +27,7 @@ public class TripAdvisorAPI implements API{
                     price == rooms[i].getPrice() && city.equals(rooms[i].getCityName())  &&
                     hotel.equals(rooms[i].getHotelName())){
                 findRooms[i] = rooms[i];
+                //System.out.println(findRooms[i] + " ");
             }
 
         }
