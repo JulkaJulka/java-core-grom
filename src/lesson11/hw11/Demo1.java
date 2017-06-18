@@ -23,8 +23,10 @@ public class Demo1 {
         TripAdvisorAPI api2 = new TripAdvisorAPI(roomsTrip);
         GoogleAPI api3 = new GoogleAPI(roomsGoogle);
 
-        API[] apis = new API[]{api1,api2};
+        API[] apis = new API[]{api1,api2,api3};
         Controller controller = new Controller(apis);
+        controller.requestRooms(1000,5,"Kyiv","Lybid");
+        System.out.println("********");
         controller.check(api1, api2);
         api3.findRooms(120,1,"Kyiv", "Lybid");
         System.out.println("----------------");

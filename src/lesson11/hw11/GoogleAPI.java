@@ -28,7 +28,7 @@ package lesson11.hw11;
                 countFindRooms++;
 
             }
-            System.out.println(countFindRooms);
+           // System.out.println(countFindRooms);
         }
         Room[] findRooms = new Room[countFindRooms];
         int indexFindRooms = 0;
