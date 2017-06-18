@@ -12,7 +12,8 @@ public class Controller {
 
     public Room[] requestRooms(int price, int persons, String city, String hotel) {
         if(apis.length == 0){
-            return null;
+            Room[] res = new Room[0];
+            return res;
         }
         int lengthApi = 0;
 
@@ -27,7 +28,7 @@ public class Controller {
         for (int i = 0; i < apis.length; i++) {
             for (int j = 0; j < findRoomForApi.length; j++) {
                 requestRooms[i] = findRoomForApi[j];
-                System.out.println(requestRooms[i] + " ");
+                //System.out.println(requestRooms[i] + " ");
             }
 
         }
