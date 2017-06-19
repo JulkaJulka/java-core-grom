@@ -47,11 +47,20 @@ public class Controller {
             findRoomForApi = apis[i].findRooms(price, persons, city, hotel);
             lengthApi = lengthApi + findRoomForApi.length;
         }
-        System.out.println(lengthApi);
+       // System.out.println(lengthApi);
         Room[] requestRooms = new Room[lengthApi];
         int index = 0;
+        for (API api: apis) {
+            if(api != null){
+                for (Room room: api.findRooms(price,persons,city,hotel)) {
+                    requestRooms[index] = room;
+                    //System.out.println(requestRooms[index] + " ");
+                    index++;
+                }
+            }
+        }
 
-        for (int i = 0; i < apis.length; i++) {
+     /*   for (int i = 0; i < apis.length; i++) {
             if (apis[i].findRooms(price, persons, city, hotel) != null) {
                 for (int j = 0; j < findRoomForApi.length; j++) {
                     requestRooms[index] = findRoomForApi[j];
@@ -59,7 +68,7 @@ public class Controller {
                 }
 
             }
-        }
+        }*/
         return requestRooms;
 
 }
