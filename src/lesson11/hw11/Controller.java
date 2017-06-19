@@ -11,6 +11,31 @@ public class Controller {
     }
 
     public Room[] requestRooms(int price, int persons, String city, String hotel) {
+      /*  Room[] res = new Room[0];
+
+        if (apis.length == 0) {
+            return res;
+        }
+        int countRequestRoom = 0;
+        for (int i = 0; i < apis.length; i++) {
+            if (apis[i].findRooms(price, persons, city, hotel) != null) {
+                countRequestRoom++;
+            }
+        }
+        Room[] requestRoom = new Room[countRequestRoom];
+        int index = 0;
+        for (int i = 0; i < apis.length; i++) {
+            if (apis[i].findRooms(price, persons, city, hotel) != null) {
+                for (int j = 0; j < apis[i].findRooms(price, persons, city, hotel).length; j++) {
+                    requestRoom[index] = apis[j].findRooms(price, persons, city, hotel);
+                    index++;
+                }
+            }
+        }
+        return requestRoom;
+    }*/
+
+
         if(apis.length == 0){
             Room[] res = new Room[0];
             return res;
@@ -19,21 +44,25 @@ public class Controller {
 
         Room[] findRoomForApi = new Room[]{};
         for (int i = 0; i < apis.length; i++) {
-
             findRoomForApi = apis[i].findRooms(price, persons, city, hotel);
             lengthApi = lengthApi + findRoomForApi.length;
-            // apis[i].findRooms(price, persons, city, hotel);
         }
+        System.out.println(lengthApi);
         Room[] requestRooms = new Room[lengthApi];
-        for (int i = 0; i < apis.length; i++) {
-            for (int j = 0; j < findRoomForApi.length; j++) {
-                requestRooms[i] = findRoomForApi[j];
-                //System.out.println(requestRooms[i] + " ");
-            }
+        int index = 0;
 
+        for (int i = 0; i < apis.length; i++) {
+            if (apis[i].findRooms(price, persons, city, hotel) != null) {
+                for (int j = 0; j < findRoomForApi.length; j++) {
+                    requestRooms[index] = findRoomForApi[j];
+                   // System.out.println(requestRooms[index] + " ");
+                }
+
+            }
         }
         return requestRooms;
-    }
+
+}
 
     public Room[] check(API api1, API api2) {
 
@@ -46,7 +75,7 @@ public class Controller {
             return res;
 
         }
-        int countRes =0;
+        int countRes = 0;
         for (int i = 0; i < api1Rooms.length; i++) {
             for (int j = 0; j < api2Rooms.length; j++) {
 
@@ -54,7 +83,7 @@ public class Controller {
                         api1Rooms[i].getPersons() == api2Rooms[j].getPersons() &&
                         api1Rooms[i].getCityName().equals(api2Rooms[j].getCityName()) &&
                         api1Rooms[i].getHotelName().equals(api2Rooms[j].getHotelName())) {
-                   countRes++;
+                    countRes++;
                 }
             }
         }
@@ -68,7 +97,7 @@ public class Controller {
                         api1Rooms[i].getCityName().equals(api2Rooms[j].getCityName()) &&
                         api1Rooms[i].getHotelName().equals(api2Rooms[j].getHotelName())) {
                     res[i] = api1Rooms[i];
-                     // System.out.println(res[i] + " ");
+                    // System.out.println(res[i] + " ");
                 }
             }
         }

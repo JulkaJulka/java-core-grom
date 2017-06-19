@@ -14,7 +14,7 @@ public class Demo1 {
         Room room4 = new Room(354, 1000, 5, date1, "Lybid", "Kyiv");
 
         Room[] roomsBooking = new Room[]{room1,room2,room4};
-        Room[] roomsTrip = new Room[]{room1, room2, room4};
+        Room[] roomsTrip = new Room[]{room1, room3, room2};
         Room[] roomsGoogle = new Room[]{room1,room2,room4};
         BookingComAPI bookingComAPI2 = new BookingComAPI(roomsBooking);
         TripAdvisorAPI tripAdvisorAPI2 = new TripAdvisorAPI(roomsTrip);
@@ -25,7 +25,7 @@ public class Demo1 {
 
         API[] apis = new API[]{api1,api2,api3};
         Controller controller = new Controller(apis);
-        controller.requestRooms(1000,5,"Kyiv","Lybid");
+        System.out.println(controller.requestRooms(1000,5,"Kyiv","Lybid"));
         System.out.println("********");
         controller.check(api1, api2);
         api3.findRooms(120,1,"Kyiv", "Lybid");
