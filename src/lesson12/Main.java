@@ -24,8 +24,8 @@ public class Main {
        /* bankSystem.fund(user3, 50000);
         System.out.println(user3.getBalance()+" "  + user3.getName());*/
 
-        bankSystem.transferMoney(user1, user3,50000);
-        System.out.println(user1.getBalance()+" "  + "userFrom");
+        bankSystem.transferMoney(user6, user3,50);
+        System.out.println(user6.getBalance()+" "  + "userFrom");
         System.out.println(user3.getBalance()+" "  + "userTo");
 
     }
