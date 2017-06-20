@@ -5,7 +5,7 @@ public class Main {
         Bank euBank = new EUBank(1344,"France", Currency.EUR,100, 1500,4, 546899997);
         Bank chinaBank  = new ChinaBank(1344,"China", Currency.USD,100, 1300,4, 33339997);
 
-        User user1 = new User(1001, "Denis", 12200, 40, "GMD", 1500, usBank);
+        User user1 = new User(1001, "Denis", 52200, 40, "GMD", 1500, usBank);
         User user2 = new User(1002, "Roman", 10000, 40, "Moto", 1000, usBank);
 
         User user3 = new User(2002, "Tanya", 5000, 40, "FBG", 1000, euBank);
@@ -24,9 +24,9 @@ public class Main {
        /* bankSystem.fund(user3, 50000);
         System.out.println(user3.getBalance()+" "  + user3.getName());*/
 
-        bankSystem.transferMoney(user4, user3,150);
-        System.out.println(user3.getBalance()+" "  + "userFrom");
-        System.out.println(user4.getBalance()+" "  + "userTo");
+        bankSystem.transferMoney(user1, user3,50000);
+        System.out.println(user1.getBalance()+" "  + "userFrom");
+        System.out.println(user3.getBalance()+" "  + "userTo");
 
     }
 }
