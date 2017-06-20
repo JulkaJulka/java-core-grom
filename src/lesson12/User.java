@@ -8,7 +8,8 @@ public class User {
    private int salary;
     private Bank bank;
 
-    public User(long id, String name, double balance, int monthsOfEmployment, String companyName, int salary, Bank bank) {
+    public User(long id, String name, double balance, int monthsOfEmployment,
+                String companyName, int salary, Bank bank) {
         this.id = id;
         this.name = name;
         this.balance = balance;

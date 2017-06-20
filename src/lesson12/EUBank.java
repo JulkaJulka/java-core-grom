@@ -1,4 +1,5 @@
 package lesson12;
+
 public class EUBank extends Bank {
 
     public EUBank(long id, String bankCountry, Currency currency, int numberOfEmployees,
@@ -8,21 +9,35 @@ public class EUBank extends Bank {
 
     @Override
     public int getLimitOfWithdrawal() {
-        return 0;
+        if (getCurrency() == Currency.USD)
+            return 2000;
+        return 2200;
     }
 
     @Override
     public int getLimitOfFunding() {
-        return 0;
+        if (getCurrency() == Currency.USD)
+            return 10000;
+        return 20000;
     }
 
     @Override
     public double getMonthlyRate() {
-        return 0;
+        if (getCurrency() == Currency.USD)
+            return 0.00;
+        return 0.02;
     }
 
     @Override
     public double getCommission(int amount) {
-        return 0;
+        if (getCurrency() == Currency.USD) {
+            if (amount <= 1000)
+                return 0.05;
+            return 0.07;
+        } else {
+            if (amount <= 1000)
+                return 0.02;
+            return 0.04;
+        }
     }
 }

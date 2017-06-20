@@ -2,6 +2,9 @@ package lesson12;
 public class UkrainianBankSystem implements BankSystem {
     @Override
     public void withdraw(User user, int amount) {
+        if (!checkWithdraw(user, amount))
+            return;
+        user.setBalance(user.getBalance() - amount - amount * user.getBank().getCommission(amount));
 /*int limitOfWithdrawal = user.getBank().getLimitOfWithdrawal();
         if(amount + user.getBank().getCommission(amount) > limitOfWithdrawal ){
             printWithdrawalErrorMsg(amount,user);
@@ -12,16 +15,20 @@ public class UkrainianBankSystem implements BankSystem {
             printWithdrawalErrorMsg(amount,user);
             return;
         }*/
-        if (!checkWithdraw(user, amount))
-            return;
-        user.setBalance(user.getBalance() - amount - amount * user.getBank().getCommission(amount));
-        // double balanceAfterWithdraw = user.getBalance() - amount -user.getBank().getCommission(amount);
 
     }
 
     @Override
     public void fund(User user, int amount) {
+        if(!checkFund(user,amount))
+            return;
+        user.setBalance(user.getBalance() + amount);
 
+/*if(amount > user.getBank().getLimitOfFunding()){
+    System.err.println("Can't fund money " + amount + " to user" + user.toString());
+} else{
+    user.setBalance(user.getBalance() + amount);
+}*/
     }
 
     @Override
@@ -30,13 +37,19 @@ public class UkrainianBankSystem implements BankSystem {
         //пополняем toUser
         if (!checkWithdraw(fromUser, amount))
             return;
-        //TODO checkfund rules
+        // checkfund rules
+        if (!checkFund(toUser,amount))
+            return;
         fromUser.setBalance(fromUser.getBalance() - amount - amount * fromUser.getBank().getCommission(amount));
-        //TODO fund
+        // fund
+        fund(toUser,amount);
     }
 
     @Override
     public void paySalary(User user) {
+        if(!checkFund(user,user.getSalary()))
+            return;
+        user.setBalance(user.getBalance() + user.getSalary());
 
     }
 
@@ -55,5 +68,19 @@ public class UkrainianBankSystem implements BankSystem {
             return false;
         }
         return true;
+    }
+    private void printFundErrorMsg(int amount, User user) {
+        System.err.println("Can't fund money " + amount + " to user" + user.toString());
+    }
+
+    private boolean checkFundLimits(User user, int amount, double limit){
+        if(amount > user.getBank().getLimitOfFunding()) {
+            printFundErrorMsg(amount,user);
+            return false;
+        }
+        return true;
+    }
+    private boolean checkFund(User user, int amount) {
+        return checkFundLimits(user, amount, user.getBank().getLimitOfFunding());
     }
 }
