@@ -40,7 +40,8 @@ public class UkrainianBankSystem implements BankSystem {
         // checkfund rules
         if (!checkFund(toUser,amount))
             return;
-        fromUser.setBalance(fromUser.getBalance() - amount - amount * fromUser.getBank().getCommission(amount));
+        withdraw(fromUser, amount);
+      //  fromUser.setBalance(fromUser.getBalance() - amount - amount * fromUser.getBank().getCommission(amount));
         // fund
         fund(toUser,amount);
     }
