@@ -40,6 +40,9 @@ public class UkrainianBankSystem implements BankSystem {
         // checkfund rules
         if(!checkFund(toUser,amount))
             return;
+        if(!(fromUser.getBank().getCurrency() == toUser.getBank().getCurrency())){
+            System.out.println("Different currency between fromUser and toUser so transaction is impossible");
+            return;}
 
         withdraw(fromUser, amount);
       //  fromUser.setBalance(fromUser.getBalance() - amount - amount * fromUser.getBank().getCommission(amount));
