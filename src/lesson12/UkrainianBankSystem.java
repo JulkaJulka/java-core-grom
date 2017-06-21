@@ -35,14 +35,15 @@ public class UkrainianBankSystem implements BankSystem {
     public void transferMoney(User fromUser, User toUser, int amount) {
 //снимаем деньги с fromUser
         //пополняем toUser
-        if (!checkWithdraw(fromUser, amount) )
+        if (!checkWithdraw(fromUser, amount) && !checkFund(toUser,amount) &&
+                !(fromUser.getBank().getCurrency() == toUser.getBank().getCurrency()))
             return;
         // checkfund rules
-        if(!checkFund(toUser,amount))
+      /*  if(!checkFund(toUser,amount))
             return;
         if(!(fromUser.getBank().getCurrency() == toUser.getBank().getCurrency())){
             System.out.println("Different currency between fromUser and toUser so transaction is impossible");
-            return;}
+            return;}*/
 
         withdraw(fromUser, amount);
       //  fromUser.setBalance(fromUser.getBalance() - amount - amount * fromUser.getBank().getCommission(amount));
