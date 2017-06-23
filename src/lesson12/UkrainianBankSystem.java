@@ -1,4 +1,5 @@
 package lesson12;
+
 public class UkrainianBankSystem implements BankSystem {
     @Override
     public void withdraw(User user, int amount) {
@@ -20,7 +21,7 @@ public class UkrainianBankSystem implements BankSystem {
 
     @Override
     public void fund(User user, int amount) {
-        if(!checkFund(user,amount))
+        if (!checkFund(user, amount))
             return;
         user.setBalance(user.getBalance() + amount);
 
@@ -35,25 +36,16 @@ public class UkrainianBankSystem implements BankSystem {
     public void transferMoney(User fromUser, User toUser, int amount) {
 //снимаем деньги с fromUser
         //пополняем toUser
-        if (!(checkWithdraw(fromUser, amount) && checkFund(toUser,amount) &&
+        if (!(checkWithdraw(fromUser, amount) && checkFund(toUser, amount) &&
                 (fromUser.getBank().getCurrency() == toUser.getBank().getCurrency())))
-return;
-        // checkfund rules
-      /*  if(!checkFund(toUser,amount))
             return;
-        if(!(fromUser.getBank().getCurrency() == toUser.getBank().getCurrency())){
-            System.out.println("Different currency between fromUser and toUser so transaction is impossible");
-            return;}*/
-
         withdraw(fromUser, amount);
-      //  fromUser.setBalance(fromUser.getBalance() - amount - amount * fromUser.getBank().getCommission(amount));
-        // fund
-        fund(toUser,amount);
+        fund(toUser, amount);
     }
 
     @Override
     public void paySalary(User user) {
-        if(!checkFund(user,user.getSalary()))
+        if (!checkFund(user, user.getSalary()))
             return;
         user.setBalance(user.getBalance() + user.getSalary());
 
@@ -75,17 +67,19 @@ return;
         }
         return true;
     }
+
     private void printFundErrorMsg(int amount, User user) {
         System.err.println("Can't fund money " + amount + " to user" + user.toString());
     }
 
-    private boolean checkFundLimits(User user, int amount, double limit){
-        if(amount > user.getBank().getLimitOfFunding()) {
-            printFundErrorMsg(amount,user);
+    private boolean checkFundLimits(User user, int amount, double limit) {
+        if (amount > user.getBank().getLimitOfFunding()) {
+            printFundErrorMsg(amount, user);
             return false;
         }
         return true;
     }
+
     private boolean checkFund(User user, int amount) {
         return checkFundLimits(user, amount, user.getBank().getLimitOfFunding());
     }

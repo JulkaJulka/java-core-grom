@@ -1,10 +1,11 @@
-package lesson9.user;
+package lesson13;
 
 /**
  * Created by user on 25.05.2017.
  */
 public class UserRepository {
     private User[] users = new User[10];
+
     public User[] getUsers() {
         return users;
     }
@@ -13,7 +14,8 @@ public class UserRepository {
         return findById(id);
     }
 
- private User findById(long id) {
+
+    private User findById(long id) {
         for (int i = 0; i < users.length; i++) {
             if (users[i] != null && users[i].getId() == id) {
                 return users[i];
@@ -77,5 +79,6 @@ public class UserRepository {
             }
         }
     }
+
 
 }
