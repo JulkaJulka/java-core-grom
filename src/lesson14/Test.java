@@ -24,7 +24,7 @@ public class Test implements Cloneable {
         System.out.println(test1);
         System.out.println(test1.hashCode());
 
-       // Test test2 = new Test(test.getSomeNumber(),test.getName());
+       Test test2 = new Test(test.getSomeNumber(),test.getName());
     }
 
     public int getSomeNumber() {
