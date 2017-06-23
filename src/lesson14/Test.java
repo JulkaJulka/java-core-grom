@@ -23,8 +23,10 @@ public class Test implements Cloneable {
         Test test1 = (Test) test.clone();
         System.out.println(test1);
         System.out.println(test1.hashCode());
+        System.out.println(test1.toString());
 
        Test test2 = new Test(test.getSomeNumber(),test.getName());
+        System.out.println(test2.toString());
     }
 
     public int getSomeNumber() {
