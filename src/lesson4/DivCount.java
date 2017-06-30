@@ -23,7 +23,7 @@ public class DivCount {
     public static int count(short a, short b, int n) {
         short count = 0;
         for (short i = a; i <= b; i++) {
-            if (i % n == 0)
+            if (n !=0 && i % n == 0)
                 count++;
         }
         return (int)count;

@@ -23,6 +23,7 @@ int res = a < b ? a : b;
 
     public static double average(int n){
         int sum = 0;
+
         for (int i = 0; i <= n; i++) {
             sum += i;
         }
