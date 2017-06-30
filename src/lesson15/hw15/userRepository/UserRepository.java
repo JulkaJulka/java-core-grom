@@ -34,9 +34,20 @@ public class UserRepository {
 
         if (user.equals(null))
             return null;
+        int index =0;
+        for (User us:users) {
+            if(us.equals(user)){
+                return null;
+            }if(!us.equals(user) && us.hashCode()!= user.hashCode()){
+                us  = user;
+                break;
 
-        User userSave = findById(user.getId());
-        if(!userSave.equals(null))
+            }index++;
+
+        }
+
+       // User userSave = findById(user.getId());
+        /*if(!userSave.equals(null))
             return null;
 
         for (int i = 0; i <users.length ; i++) {
@@ -44,7 +55,7 @@ public class UserRepository {
                 users[i] = user;
                 break;
             }
-        }return user;
+        }*/return user;
 
     }
 

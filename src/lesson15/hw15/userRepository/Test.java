@@ -20,7 +20,7 @@ public class Test {
 
 //users.update(user4);
 //users.delete(5);
-       // users.save(user1);
+        users.save(user1);
        // users.save(user4);
         //System.out.println(ar[0]);
     //users.delete(3);
