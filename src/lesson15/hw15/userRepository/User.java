@@ -44,12 +44,17 @@ public class User {
 
         User user = (User) o;
 
-        return id == user.id;
+        if (id != user.id) return false;
+        if (!name.equals(user.name)) return false;
+        return sessionId.equals(user.sessionId);
 
     }
 
     @Override
     public int hashCode() {
-        return (int) (id ^ (id >>> 32));
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + name.hashCode();
+        result = 31 * result + sessionId.hashCode();
+        return result;
     }
 }
