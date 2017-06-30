@@ -1,4 +1,4 @@
-package lesson15.cast;
+package lesson15.equals;
 
 /**
  * Created by user on 28.06.2017.

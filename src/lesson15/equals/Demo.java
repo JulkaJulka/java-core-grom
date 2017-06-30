@@ -1,12 +1,10 @@
-package lesson15;
+package lesson15.equals;
 
-import lesson11.biginterfaceexample.*;
-import lesson15.cast.User;
 public class Demo {
     public static void main(String[] args) {
-        File file1 = new File(1001, "home/Documents/test", "txt");
-        File file2 = new File(1001, "home/Documents/image", "img");
-        File file3 = new File(1001, "home/Documents/test", "txt");
+        File file1 = new File(111, "home/Documents/test", "txt");
+        File file2 = new File(111, "home/Documents/image", "img");
+        File file3 = new File(111, "home/Documents/test", "txt");
 
         File someFile = file1;
 
