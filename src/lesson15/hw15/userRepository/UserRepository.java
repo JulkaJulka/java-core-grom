@@ -32,11 +32,11 @@ public class UserRepository {
         if(countNull == 0)
             return null;
 
-        if (user == null)
+        if (user.equals(null))
             return null;
 
         User userSave = findById(user.getId());
-        if(userSave != null)
+        if(!userSave.equals(null))
             return null;
 
         for (int i = 0; i <users.length ; i++) {
