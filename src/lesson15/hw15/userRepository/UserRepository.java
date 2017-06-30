@@ -25,38 +25,26 @@ public class UserRepository {
     public User save(User user) {
         int countNull = 0;
         for (int i = 0; i <users.length ; i++) {
-            if(users[i].equals(null)){
+            if(users[i] == null){
                 countNull = countNull + 1;
             }
         }
         if(countNull == 0)
             return null;
 
-        if (user.equals(null))
+        if (user == null)
             return null;
-        int index =0;
-        for (User us:users) {
-            if(us.equals(user)){
-                return null;
-            }if(!us.equals(user) && us.hashCode()!= user.hashCode()){
-                us  = user;
-                break;
 
-            }index++;
-
-        }
-
-       // User userSave = findById(user.getId());
-        /*if(!userSave.equals(null))
+        User userSave = findById(user.getId());
+        if(userSave != null)
             return null;
 
         for (int i = 0; i <users.length ; i++) {
-            if(users[i].equals(null)){
+            if(users[i] == null){
                 users[i] = user;
                 break;
             }
-        }*/return user;
-
+        }return user;
     }
 
     public User update(User user) {
