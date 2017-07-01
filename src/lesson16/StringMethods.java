@@ -26,6 +26,7 @@ public class StringMethods {
         System.out.println(test);
         System.out.println(test.contains("mes"));
 
+        System.out.println(test);
         String phrase = "Hello there guys";
         System.out.println(Arrays.toString(phrase.split(" ")));
 
