@@ -15,7 +15,7 @@ public class StringUsage {
 
         char[] chars = {charVariable, charVariable1};
 
-        String  test1 = new String(chars);
+        String test1 = new String(chars);
         System.out.println(test1);
 
         String test2 = new String("hello there");

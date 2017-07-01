@@ -14,10 +14,10 @@ public class StringMethods {
 
         System.out.println(test.length());
 
-        System.out.println( test.charAt(2));
+        System.out.println(test.charAt(2));
 
 
-        String res = test.replace("me","T");
+        String res = test.replace("me", "T");
         System.out.println(res);
 
         System.out.println(test.replaceAll("me", "T"));

@@ -1,12 +1,7 @@
 package lesson16;
 
-import lesson15.equals.User;
-
 import java.util.Arrays;
 
-/**
- * Created by user on 01.07.2017.
- */
 public class StringCompare {
     public static void main(String[] args) {
         System.out.println(new String("abc") == new String("abc"));
@@ -18,8 +13,8 @@ public class StringCompare {
         String s2 = "test";
         System.out.println(s1 == s2);
 
-      //  User user1 = new User();
-       // User user2 = new User();
+        //  User user1 = new User();
+        // User user2 = new User();
 
         //using intern
         String s3 = new String("pppp");
