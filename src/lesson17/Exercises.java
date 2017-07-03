@@ -38,7 +38,9 @@ public class Exercises {
         //count replaces
         static int[] countDuplicates (String input,String[] words){
             String[] strings = input.split(" ");
+
             int[] res = new int[words.length];
+
             for (String string:strings){
                 for (int i = 0; i < words.length; i++) {
                     if(string.equals(words[i]))
