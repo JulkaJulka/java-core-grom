@@ -29,12 +29,12 @@ public class Exercises {
         String res = "";
         for (String word : words) {
             res += word;
-if(!word.isEmpty()){
-    res += " ";
-}
+            if (!word.isEmpty())
+                res += " ";
         }
         return res;
     }
+
         //count replaces
         static int[] countDuplicates (String input,String[] words){
             String[] strings = input.split(" ");
