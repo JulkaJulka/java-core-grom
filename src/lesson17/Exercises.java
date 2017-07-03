@@ -45,7 +45,7 @@ public class Exercises {
     }
 
     //count replaces
-    static int[] countDuplicates(String input, String[] words) {
+    public static int[] countDuplicates(String input, String[] words) {
         String[] strings = input.split(" ");
 
         int[] res = new int[words.length];
