@@ -26,7 +26,7 @@ public class Test {
         }
         System.out.println(Arrays.toString(res));
 
-        String str = "(fghjsFDDDL #hf0 dfgsQ jhjfhk jfjh %";
+        String str = "БGFGvm #hf0 їіолв jhjfhk jfjh %";
         String str1 = "";
         System.out.println(countWords(str));
 
