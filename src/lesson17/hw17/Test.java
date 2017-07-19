@@ -1,37 +1,29 @@
 package lesson17.hw17;
 
-import java.util.Arrays;
+import static lesson17.Solution.*;
 
-import static lesson17.hw17.Solution.countWords;
 public class Test {
     public static void main(String[] args) {
-        int[] mas = {12, 3, 5, 87, 32, 100};
-        //int[] res = new int[mas.length];
 
-        int count = 0;
-        for (int i = 0; i < mas.length; i++) {
-            if ((mas[i] > 10 && mas[i] < 15) || (mas[i] > 50 && mas[i] < 100))
-                count++;
-        }
-        System.out.println(count);
-
-        int[] res = new int[count];
-        int index = 0;
-        for (int i = 0; i < mas.length; i++) {
-            if ((mas[i] > 10 && mas[i] < 15) || (mas[i] > 50 && mas[i] < 100)) {
-                res[index] = mas[i];
-                index++;
-            }
-
-        }
-        System.out.println(Arrays.toString(res));
-
-        String str = "БGFGvm #hf0 їіолв jhjfhk jfjh %";
+        String str = "";
         String str1 = "";
-        System.out.println(countWords(str));
+       // System.out.println(checkWithoutSpecSymbol(str1));
 
-        //  String word = "ABAgN2MZz";
-        //  System.out.println(checkWithoutSpecSymbol(word));
+
+        String str2 = "9 0-";
+        String str3 = "";
+        System.out.println(mostCountedWords(str2));
+       // mostCountedWords(str);
+       // maxWord(str2);
+       // System.out.println( minWord(str2));
+       // mostCountedWords(str2);
+
+       // String address = "http://www.d.com";
+      //  String[] domens = {".net"};
+      // System.out.println(validateDomen(address,domens));
+
+
+   // System.out.println(validate(address));
 
     }
 
