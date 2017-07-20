@@ -7,8 +7,8 @@ import java.util.Arrays;
  */
 public class Solution {
     public static void main(String[] args) {
-        String text = "ert 9";
-        findNumbers(text);
+        String text = "ert 9 11111111111111111";
+        //findNumbers(text);
         System.out.println(Arrays.toString(findNumbers(text)));
     }
 
