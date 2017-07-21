@@ -3,6 +3,10 @@ package lesson17;
 import java.util.Arrays;
 
 public class Solution {
+    public static void main(String[] args) {
+        String str = "df4 44 %kj";
+        System.out.println(mostCountedWords(str));
+    }
 
     public static int countWords(String input) {
         String[] str = input.split(" ");
@@ -45,6 +49,21 @@ public class Solution {
         }
 
         return true;
+    }
+    public static boolean checkStringWithoutSpecSymbal(String string){
+        string.trim();
+        String[] str = string.split(" ");
+        int countWordWithoutSpecSymbal = 0;
+        int count = str.length;
+        for (String word: str) {
+            if(checkWithoutSpecSymbol(word)){
+                countWordWithoutSpecSymbal++;
+            }
+        }
+        if(countWordWithoutSpecSymbal == count)
+            return true;
+        return false;
+
     }
 
     public static String maxWord(String string) {
@@ -113,6 +132,11 @@ public class Solution {
 
         if (str.length == 1 && !checkWithoutSpecSymbol(str[0]))
         {   return null;}
+
+        if(!checkStringWithoutSpecSymbal(input))
+            return null;
+
+
 
 
 
