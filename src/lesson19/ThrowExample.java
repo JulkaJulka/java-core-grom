@@ -4,7 +4,7 @@ package lesson19;
  * Created by user on 21.07.2017.
  */
 public class ThrowExample {
-    private static String[] array= {"Test","Test1", "testqwd", null,  "adsasf", "sdfsdf"};
+    private static String[] array= {"test","test1", "tesqwd", null,  "adsasf", "sdfsdf"};
 
     public static void main(String[] args) {
       // test();
