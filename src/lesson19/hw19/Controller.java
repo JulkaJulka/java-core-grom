@@ -11,8 +11,10 @@ public class Controller {
     }
 
     public File findById(Storage storage, long id) {
+        if(storage.getFiles() == null)
+            return null;
 
-        for (int i = 0; i < storage.getFiles().length && i < storage.getStorageSize(); i++) {
+        for (int i = 0; i < storage.getFiles().length; i++) {
             for (File file : storage.getFiles()) {
                 if (file != null && id == file.getId())
                     return file;
@@ -23,54 +25,69 @@ public class Controller {
 
     }
 
-    public File put(Storage storage, File file) {
+    public File put(Storage storage, File file) throws Exception {
+        if (file == null)
+            throw new Exception("File is not detected");
 
-        int countNull = 0;
+       /* int countNull = 0;
+        int countFullPositions = 0;
 
         for (File el : storage.getFiles()) {
-            if (el == null)
+            if (el == null) {
                 countNull++;
-        }
-
-        if (file == null)
-            return null;
-
-        if (countNull == 0)
-            return null;
+                countFullPositions++;
+            }
+            if (countFullPositions == storage.getStorageSize())
+                throw new Exception("Storage " + storage.getId() + " is full");*/
 
         File putFile = findById(storage, file.getId());
 
-       if (putFile != null)
-            return null;
+        if (putFile != null)
+            throw new Exception("File " + file.getId() +
+                    " already exists. Storage can't save files with the same ID. ");
+
+        if (!checkFormatsSupported(storage, file))
+            throw new Exception("Format " + file.getFormat() + " is not supported by storage " + storage.getId());
+
         int limitLengthOfFileName = 10;
 
-        try {
-            for (int i = 0; i < storage.getFiles().length && i < storage.getStorageSize(); i++) {
-                if (storage.getFiles()[i] == null && checkFormatsSupported(storage, file)
-                        && file.getName().length() <= limitLengthOfFileName ) {
-                    storage.getFiles()[i] = file;
-                    break;
-                }
+        if (file.getName().length() > limitLengthOfFileName)
+            throw new Exception("The name of file is longer 10 chars.");
+
+        for (int i = 0; i < storage.getFiles().length; i++) {
+            if (storage.getFiles()[i] == null) {
+                storage.getFiles()[i] = file;
+                return file;
             }
+        }
+        throw new Exception("Storage "+storage.getId() +"is not empty");
+
+    }
+
+
 //??? чем отличается от fori
       /* for (File el: storage.getFiles()) {
             if(el == null)
                 el = file;
                 break;
         }*/
-        return file;
-    }catch (Exception e){
-            System.err.println( storage + " something");
-            return null;
-
-    }
+       // return file;
 
 
-    }
 
-    public File delete(Storage storage, File file) {
+
+
+    public void delete(Storage storage, File file) throws Exception {
         if (file == null)
-            return null;
+            throw new Exception("Deleted file is null.");
+
+        int limitLengthOfFileName = 10;
+
+        if(storage.getFiles() == null)
+            throw new Exception("Storage hasn't any files. It is empty");
+
+        if (file.getName().length() > limitLengthOfFileName)
+            throw new Exception("The name of file is longer 10 chars.");
 
         File deleteFile = findById(storage, file.getId());
         if (deleteFile != null) {
@@ -79,12 +96,10 @@ public class Controller {
                     storage.getFiles()[i] = null;
                     break;
                 }
+
             }
-            return file;
         }
 
-
-        return null;
     }
 
     public void showFiles(File[] files) {
