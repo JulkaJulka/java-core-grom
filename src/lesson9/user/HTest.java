@@ -33,8 +33,8 @@ public class HTest {
         husers.showUsers(ar);
         //husers.save(user4);
        // System.out.println("Save user:");
-        husers.delete(3);
-        husers.showUsers(ar);
+       // husers.delete(3);
+       // husers.showUsers(ar);
       System.out.println(husers.save(user5));
         husers.showUsers(ar);
         //System.out.println(husers.save(user100));
