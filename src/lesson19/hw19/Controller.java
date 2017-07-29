@@ -25,7 +25,7 @@ public class Controller {
 
     }
 
-    private File put(Storage storage, File file) throws Exception {
+    public File put(Storage storage, File file) throws Exception {
         if (file == null)
             throw new Exception("Putted file  is not detected");
 
