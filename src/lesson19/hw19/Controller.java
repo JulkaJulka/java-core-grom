@@ -25,9 +25,9 @@ public class Controller {
 
     }
 
-    public File put(Storage storage, File file) throws Exception {
+    private File put(Storage storage, File file) throws Exception {
         if (file == null)
-            throw new Exception("File is not detected");
+            throw new Exception("Putted file  is not detected");
 
        /* int countNull = 0;
         int countFullPositions = 0;
@@ -43,8 +43,8 @@ public class Controller {
         File putFile = findById(storage, file.getId());
 
         if (putFile != null)
-            throw new Exception("File " + file.getId() +
-                    " already exists. Storage can't save files with the same ID. ");
+            throw new Exception("File with Id " + file.getId() +
+                    " already exists in storage " + storage.getId() + " Storage can't save files with the same ID. ");
 
         if (!checkFormatsSupported(storage, file))
             throw new Exception("Format " + file.getFormat() + " is not supported by storage " + storage.getId());
@@ -52,7 +52,17 @@ public class Controller {
         int limitLengthOfFileName = 10;
 
         if (file.getName().length() > limitLengthOfFileName)
-            throw new Exception("The name of file is longer 10 chars.");
+            throw new Exception("The name of file with Id " + file.getId() + " is wrong. The name " +
+                    file.getName() + " exceeds limit of length ("+ limitLengthOfFileName + " chars)");
+
+        if(file.getId() <= 0)
+            throw new Exception("Id " + file.getId() + " isn't unacceptable");
+
+        if(!checkWithoutSpecSymbol(file.getName()))
+            throw new Exception("File's name " + file.getName() + " is wrong. It must be contain only chars.");
+
+        if(!checkIdStorage(storage))
+            throw new Exception("Storage Id " + storage.getId() + " is wrong.");
 
         for (int i = 0; i < storage.getFiles().length; i++) {
             if (storage.getFiles()[i] == null) {
@@ -79,15 +89,16 @@ public class Controller {
 
     public void delete(Storage storage, File file) throws Exception {
         if (file == null)
-            throw new Exception("Deleted file is null.");
+            throw new Exception("Deleted file with Id " + file.getId() + " is null.");
 
         int limitLengthOfFileName = 10;
 
-        if(storage.getFiles() == null)
-            throw new Exception("Storage hasn't any files. It is empty");
+        if(storage == null)
+            throw new Exception("Storage with Id " + storage.getId() + " is not detected.");
 
         if (file.getName().length() > limitLengthOfFileName)
-            throw new Exception("The name of file is longer 10 chars.");
+            throw new Exception("The name of file with Id " + file.getId() + " is wrong. The name " +
+                    file.getName() + " exceeds limit of length ("+ limitLengthOfFileName + " chars)");
 
         File deleteFile = findById(storage, file.getId());
         if (deleteFile != null) {
@@ -192,6 +203,28 @@ public class Controller {
           }
         }
         return status;
+
+    }
+
+    public static boolean checkWithoutSpecSymbol(String word) {
+        if (word.isEmpty())
+            return false;
+        char[] symbals = word.toCharArray();
+        for (char c : symbals) {
+            if (!Character.isLetter(c)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public static boolean checkIdStorage(Storage storage){
+        if(storage == null)
+            return false;
+        if(storage.getId() <= 0)
+            return false;
+        return true;
 
     }
 }
