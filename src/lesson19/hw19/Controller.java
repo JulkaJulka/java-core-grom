@@ -53,13 +53,16 @@ public class Controller {
 
         if (file.getName().length() > limitLengthOfFileName)
             throw new Exception("The name of file with Id " + file.getId() + " is wrong. The name " +
-                    file.getName() + " exceeds limit of length ("+ limitLengthOfFileName + " chars)");
+                    file.getName() + " exceeds limit of length ("+ limitLengthOfFileName + " chars). It can not put to" +
+                    "storsge with Id " + storage.getId() );
 
         if(file.getId() <= 0)
-            throw new Exception("Id " + file.getId() + " isn't unacceptable");
+            throw new Exception("Id " + file.getId() +
+                    " isn't unacceptable. File can't put to storage with Id " + storage.getId());
 
         if(!checkWithoutSpecSymbol(file.getName()))
-            throw new Exception("File's name " + file.getName() + " is wrong. It must be contain only chars.");
+            throw new Exception("File's name " + file.getName() + " is wrong. It must be contain only chars." +
+                    " File can't put to storage " + storage.getId());
 
         if(!checkIdStorage(storage))
             throw new Exception("Storage Id " + storage.getId() + " is wrong.");
