@@ -12,7 +12,8 @@ public class Demo {
 File file1 = new File(23, "name1", "doc", 100 );
         File file2 = new File(24, "name2", "img",100);
 
-        File file3 = new File(0, "tes", "png", 1000);
+        File file3 = new File(0, "tes1", "png", 1000);
+        File file5 = new File(78, "hdjkslhjdhlkjhkl","png", 1000);
         //File file4 = new File(null);
 
         File[] files = {file2, file1, file2,null,null};
@@ -37,7 +38,7 @@ File file1 = new File(23, "name1", "doc", 100 );
        // controller.showFiles(files);
         //System.out.println(controller.findById(storage1,23));
       //
-         System.out.println(controller.put(storage1, file3));
+         System.out.println(controller.put(storage1, file5));
 
        // System.out.println("files after put " +  Arrays.toString(files));
 

@@ -49,20 +49,9 @@ public class Controller {
         if (!checkFormatsSupported(storage, file))
             throw new Exception("Format " + file.getFormat() + " is not supported by storage " + storage.getId());
 
-        int limitLengthOfFileName = 10;
-
-        if (file.getName().length() > limitLengthOfFileName)
-            throw new Exception("The name of file with Id " + file.getId() + " is wrong. The name " +
-                    file.getName() + " exceeds limit of length ("+ limitLengthOfFileName + " chars). It can not put to" +
-                    "storsge with Id " + storage.getId() );
-
         if(file.getId() <= 0)
             throw new Exception("Id " + file.getId() +
                     " isn't unacceptable. File can't put to storage with Id " + storage.getId());
-
-        if(!checkWithoutSpecSymbol(file.getName()))
-            throw new Exception("File's name " + file.getName() + " is wrong. It must be contain only chars." +
-                    " File can't put to storage " + storage.getId());
 
         if(!checkIdStorage(storage))
             throw new Exception("Storage Id " + storage.getId() + " is wrong.");
@@ -209,18 +198,7 @@ public class Controller {
 
     }
 
-    public static boolean checkWithoutSpecSymbol(String word) {
-        if (word.isEmpty())
-            return false;
-        char[] symbals = word.toCharArray();
-        for (char c : symbals) {
-            if (!Character.isLetter(c)) {
-                return false;
-            }
-        }
 
-        return true;
-    }
 
     public static boolean checkIdStorage(Storage storage){
         if(storage == null)
