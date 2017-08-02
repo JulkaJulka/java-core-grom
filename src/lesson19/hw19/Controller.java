@@ -191,6 +191,19 @@ public class Controller {
         return true;
     }
 
+    public boolean checkSizeFileInComparisonSizeStorage(Storage storage, File file) throws Exception{
+        long fullSizeStorage = 0;
+        for (File el: storage.getFiles()) {
+            if(el != null){
+                fullSizeStorage = fullSizeStorage + el.getSize();
+            }
+        }
+        long emptySizeOfStorage = storage.getStorageSize() - fullSizeStorage;
+        if(file.getSize() > emptySizeOfStorage)
+           return false;
+        return true;
+    }
+
     public boolean checkLimitation(Storage storage, File file) throws Exception {
         if (file == null)
             throw new Exception("Putted file  is not detected");
@@ -200,6 +213,8 @@ public class Controller {
                     " already exists in storage " + storage.getId() + " Storage can't save files with the same ID. ");
         if (!checkFormatsSupported(storage, file))
             throw new Exception("Format " + file.getFormat() + " is not supported by storage " + storage.getId());
+        if(!checkSizeFileInComparisonSizeStorage(storage,file))
+            throw new Exception("Not enough space int storage with Id " + storage.getId());
         if (!checkSizeOfStorage(storage))
             throw new Exception(("Storage with Id " + storage.getId() + " is full"));
         if (!checkIdStorage(storage))

@@ -21,12 +21,14 @@ File file1 = new File(23, "name", "doc", 100 );
 
         File[] files = {file2, file1, file2,null,null};
         File[] files2 = {file2, null, null};
+        File[] files3 = {file2,null};
 
 
         String[] formatSupportedStorage1 = {"img", "jpg", "png", "pdf", "doc"};
 
         Storage storage1 = new Storage(234,files,formatSupportedStorage1, 3);
         Storage storageTo = new Storage(235, files2, formatSupportedStorage1, 1000);
+        Storage storage2 = new Storage(236,files3,formatSupportedStorage1,100);
         Storage[] storages = {storage1,null};
 
       System.out.println("files " +  Arrays.toString(files));
@@ -103,13 +105,38 @@ File file1 = new File(23, "name", "doc", 100 );
             }
         }
 
+        System.out.println("--- Test6_ checkSizeFileInComparisonSizeStorage(storage,file)()_" +
+                "Not enough space int storage with Id for File---");
+        //Storage storage2 = new Storage(236,files3,formatSupportedStorage1,100)
+        // File file8 = new File(79, "name", "img",100);
+        // File[] files3 = {file2,null};
+        //File file2 = new File(24, "name", "img",100);
+        System.out.println(controller.checkSizeFileInComparisonSizeStorage(storage2, file8));
+
+        System.out.println("--- Test7_ put()_Not enough space int storage with Id for File---");
+        //Storage storage2 = new Storage(236,files3,formatSupportedStorage1,100)
+        // File file8 = new File(79, "name", "img",100);
+        // File[] files3 = {file2,null};
+        //File file2 = new File(24, "name", "img",100);
+        try{
+            System.out.println(controller.put(storage2, file8));
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+            if(e.getMessage().equals("Not enough space int storage with Id " + storage2.getId())){
+                System.out.println("Test Pass");
+            } else {
+                System.out.println("Test Fail");
+            }
+
+        }
 
 
 
 
 
 
-       // System.out.println(controller.checkFormatsSupported(storage1, file3));
+
+        // System.out.println(controller.checkFormatsSupported(storage1, file3));
 
        // controller.showFiles(files);
         //System.out.println(controller.findById(storage1,23));
