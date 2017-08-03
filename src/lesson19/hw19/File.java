@@ -6,7 +6,7 @@ public class File {
     private long size;
 
     public File(long id, String name, String format, long size) throws Exception {
-        if (!checkFileName(name))
+        if (!checkLengthFileName(name))
             throw new Exception(" File name can't be more 10 chars. File with this name can't be created");
 
         this.id = id;
@@ -31,20 +31,15 @@ public class File {
         return size;
     }
 
-    public static boolean checkFileName(String word) {
+    public static boolean checkLengthFileName(String word) throws Exception{
+        if(word == null )
+            throw new Exception("File  is not detected.");
         if (word.isEmpty())
             return false;
         int limitLengthOfNameFile = 10;
 
         if(word.length() > limitLengthOfNameFile)
             return false;
-        char[] symbals = word.toCharArray();
-        for (char c : symbals) {
-            if (!Character.isLetter(c)) {
-                return false;
-            }
-        }
-
         return true;
     }
 }

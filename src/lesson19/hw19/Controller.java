@@ -55,8 +55,6 @@ public class Controller {
         if (file == null)
             throw new Exception("Deleted file with Id " + file.getId() + " is null.");
 
-        int limitLengthOfFileName = 10;
-
         if (storage == null)
             throw new Exception("Storage with Id " + storage.getId() + " is not detected.");
 
@@ -147,13 +145,6 @@ public class Controller {
         if (file == null || storage.getFormatsSupported() == null)
             return false;
         boolean status = true;
-     /*   for (int i = 0; i < storage.getFormatsSupported().length ; i++) {
-            if(storage.getFormatsSupported()[i] == file.getFormat()){
-                status = true;
-            break;}
-            else {
-                status = false;}
-        }*/
         for (String el : storage.getFormatsSupported()) {
             if (el == file.getFormat()) {
                 status = true;
@@ -205,8 +196,8 @@ public class Controller {
     }
 
     public boolean checkLimitation(Storage storage, File file) throws Exception {
-        if (file == null)
-            throw new Exception("Putted file  is not detected");
+        /*if (file == null)
+            throw new Exception("Putted file  is not detected");*/
         File putFile = findById(storage, file.getId());
         if (putFile != null)
             throw new Exception("File with Id " + file.getId() +
