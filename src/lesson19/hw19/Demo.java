@@ -18,7 +18,7 @@ public class Demo {
         File file7 = new File(24, "named", "img", 100);
         File file8 = new File(79, "name", "img", 100);
         File file9 = new File(80, "name", "img", 25);
-        File file10 = new File(81, null, null, 1);
+      //  File file10 = new File(81, null, null, 1);
 
         File[] files = {file2, file1, file2, null, null};
         File[] files2 = {file2, null, null};
@@ -145,9 +145,11 @@ public class Demo {
         if (controller.put(storage3, file9) == file9) {
             System.out.println(file9);
             System.out.println("Test Pass");
+            System.out.println(Arrays.toString(files3));
         } else {
             System.out.println("Test Fail");
         }
+
 
         System.out.println("---Test9_put null file in storage with free space 50");
         //File file10 = new File(81,null,null,1);
@@ -155,7 +157,7 @@ public class Demo {
         //Storage storage3 = new Storage(236,files3,formatSupportedStorage1,50);
         //File file2 = new File(24, "name", "img",100);
 
-        try {
+      /*  try {
             System.out.println(controller.put(storage1, file10));
         } catch (Exception e){
             System.out.println(e.getMessage());
@@ -164,7 +166,7 @@ public class Demo {
             } else {
                 System.out.println("Test Fail");
             }
-        }
+        }*/
         /*if(file10.checkLengthFileName(file10.getName()) == null)
             System.out.println(file9);
             System.out.println("Test Pass");

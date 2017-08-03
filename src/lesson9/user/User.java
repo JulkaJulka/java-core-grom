@@ -1,8 +1,4 @@
 package lesson9.user;
-
-/**
- * Created by user on 25.05.2017.
- */
 public class User {
     private  long id;
     private String name;

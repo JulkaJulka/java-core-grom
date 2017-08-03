@@ -1,8 +1,4 @@
 package lesson9.user;
-
-/**
- * Created by user on 25.05.2017.
- */
 public class UserRepository {
     private User[] users = new User[10];
     public User[] getUsers() {

@@ -1,8 +1,4 @@
 package lesson19.hw19;
-
-/**
- * Created by user on 21.07.2017.
- */
 public class Controller {
     private Storage[] storage;
 
@@ -41,16 +37,6 @@ public class Controller {
 
     }
 
-
-//??? чем отличается от fori
-      /* for (File el: storage.getFiles()) {
-            if(el == null)
-                el = file;
-                break;
-        }*/
-    // return file;
-
-
     public void delete(Storage storage, File file) throws Exception {
         if (file == null)
             throw new Exception("Deleted file with Id " + file.getId() + " is null.");
@@ -79,36 +65,6 @@ public class Controller {
         System.out.println();
     }
 
-    // public boolean checkPresentFile(Storage storage, File file){}
-
-    /* public File[] transferAll(Storage storageFrom, Storage storageTo){
-         int countFilesFromStorage = 0;
-         for (File file: storageFrom.getFiles()) {
-             if(file != null)
-                 countFilesFromStorage++;
-         }
-
-         int countFreePositionToStorage = 0;
-         for (File file: storageTo.getFiles()) {
-             if(file == null)
-                 countFreePositionToStorage++;
-         }
-
-         if(countFilesFromStorage == 0 || countFreePositionToStorage == 0)
-             return null;
-
-         for (int i = 0; i <storageTo.getFiles().length ; i++) {
-             for (int j = 0; j <storageFrom.getFiles().length ; j++) {
-                 if (storageFrom.getFiles()[j] != null &&
-                         storageTo.getFiles()[i] == null) {
-                     storageTo.getFiles()[i] = storageFrom.getFiles()[j];
-                 }
-                 }
-
-             }
-         }
-
-     }*/
     public File transferFile(Storage storageFrom, Storage storageTo, long id) {
         File transferFile = findById(storageFrom, id);
         if (transferFile == null)
