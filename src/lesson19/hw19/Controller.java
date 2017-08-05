@@ -1,10 +1,5 @@
 package lesson19.hw19;
 public class Controller {
-    private Storage[] storage;
-
-    public Controller(Storage[] storage) {
-        this.storage = storage;
-    }
 
     public File findById(Storage storage, long id) {
         if (storage.getFiles() == null)
@@ -26,12 +21,21 @@ public class Controller {
             throw new Exception("Id " + file.getId() +
                     " isn't unacceptable. File can't put to storage with Id " + storage.getId());
         if (checkLimitation(storage, file)) {
-            for (int i = 0; i < storage.getFiles().length; i++) {
+           for (int i = 0; i < storage.getFiles().length; i++) {
                 if (storage.getFiles()[i] == null) {
                     storage.getFiles()[i] = file;
                     return file;
                 }
             }
+            /*int index = 0;
+            for (File el:storage.getFiles()) {
+                if (storage.getFiles()[index] == null){
+                    storage.getFiles()[index] = file;
+                    index++;
+                    return file;
+                }
+            }*/
+
         }
         throw new Exception("Storage " + storage.getId() + "is not empty");
 

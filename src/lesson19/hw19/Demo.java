@@ -113,13 +113,13 @@ public class Demo {
             }
         }
 
-        System.out.println("--- Test6_ checkSizeFileInComparisonSizeStorage(storage,file)()_" +
+       /* System.out.println("--- Test6_ checkSizeFileInComparisonSizeStorage(storage,file)()_" +
                 "Not enough space int storage with Id for File---");
         //Storage storage2 = new Storage(236,files3,formatSupportedStorage1,100)
         // File file8 = new File(79, "name", "img",100);
         // File[] files3 = {file2,null};
         //File file2 = new File(24, "name", "img",100);
-        System.out.println(controller.checkSizeFileInComparisonSizeStorage(storage2, file8));
+        System.out.println(controller.checkSizeFileInComparisonSizeStorage(storage2, file8));*/
 
         System.out.println("--- Test7_ put()_Not enough space int storage with Id for File---");
         //Storage storage2 = new Storage(236,files3,formatSupportedStorage1,100)
