@@ -34,13 +34,13 @@ public class Demo {
         Storage[] storages = {storage1, null};
 
         System.out.println("files " + Arrays.toString(files));
-        Controller controller = new Controller(storages);
+      //  Controller controller = new Controller(storages);
 
         System.out.println("---Test1_above SizeOfStorage");
         // storage1.getStorageSize() == 3
         // Storage storage1 = new Storage(234,files,formatSupportedStorage1, 3);
         // File[] files = {file2, file1, file2,null,null};
-        System.out.println(controller.checkSizeOfStorage(storage1));
+      /*  System.out.println(checkSizeOfStorage(storage1));
         System.out.println();
 
         System.out.println("---Test2_empty place in storage---");
@@ -121,7 +121,7 @@ public class Demo {
         //File file2 = new File(24, "name", "img",100);
         System.out.println(controller.checkSizeFileInComparisonSizeStorage(storage2, file8));*/
 
-        System.out.println("--- Test7_ put()_Not enough space int storage with Id for File---");
+       /* System.out.println("--- Test7_ put()_Not enough space int storage with Id for File---");
         //Storage storage2 = new Storage(236,files3,formatSupportedStorage1,100)
         // File file8 = new File(79, "name", "img",100);
         // File[] files3 = {file2,null};
@@ -148,7 +148,7 @@ public class Demo {
             System.out.println(Arrays.toString(files3));
         } else {
             System.out.println("Test Fail");
-        }
+        }*/
 
 
         System.out.println("---Test9_put null file in storage with free space 50");
