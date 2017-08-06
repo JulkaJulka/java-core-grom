@@ -67,6 +67,9 @@ public class Controller {
     }
 
     public File[] transferAll(Storage storageFrom, Storage storageTo) throws Exception{
+        if(storageTo == null || storageFrom == null)
+            throw new Exception("Storage is not detected");
+
         int countNull = 0;
         int index = 0;
         for (File el: storageTo.getFiles()) {
