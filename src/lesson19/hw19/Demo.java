@@ -1,14 +1,5 @@
 package lesson19.hw19;
-
-import com.sun.org.apache.xpath.internal.SourceTree;
-
 import java.util.Arrays;
-
-import static lesson19.hw19.File.checkLengthFileName;
-
-/**
- * Created by user on 21.07.2017.
- */
 public class Demo {
     public static void main(String[] args) throws Exception {
         File file1 = new File(23, "name", "doc", 100);
