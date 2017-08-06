@@ -1,4 +1,7 @@
 package lesson19.hw19;
+
+import java.util.Arrays;
+
 public class Controller {
 
     public File findById(Storage storage, long id) {
@@ -17,6 +20,8 @@ public class Controller {
     }
 
     public File put(Storage storage, File file) throws Exception {
+        if(file == null)
+            throw new Exception("Putted file  is not detected");
         if (file.getId() <= 0)
             throw new Exception("Id " + file.getId() +
                     " isn't unacceptable. File can't put to storage with Id " + storage.getId());
@@ -27,14 +32,6 @@ public class Controller {
                     return file;
                 }
             }
-            /*int index = 0;
-            for (File el:storage.getFiles()) {
-                if (storage.getFiles()[index] == null){
-                    storage.getFiles()[index] = file;
-                    index++;
-                    return file;
-                }
-            }*/
 
         }
         throw new Exception("Storage " + storage.getId() + "is not empty");
@@ -67,6 +64,57 @@ public class Controller {
             System.out.print(files[i] + " ");
         }
         System.out.println();
+    }
+
+    public File[] transferAll(Storage storageFrom, Storage storageTo) throws Exception{
+        int countNull = 0;
+        int index = 0;
+        for (File el: storageTo.getFiles()) {
+            if(el == null){
+                countNull++;
+            }
+            index++;
+        }
+        System.out.println(countNull);
+        int countTransferPosition = 0;
+        int index0 = 0;
+        for (File el:storageFrom.getFiles()) {
+            if(el != null)
+                countTransferPosition++;
+            index0++;
+
+        }
+        if(countNull < countTransferPosition)
+            throw new Exception("StorageTo with " + storageTo.getId() +
+                    " can't receive files. It hasn't free position for recording.");
+
+        int index1 = 0;
+        long fullSizeStorageTo = 0;
+        for (File el: storageTo.getFiles()) {
+            if(el != null){
+                fullSizeStorageTo = fullSizeStorageTo + el.getSize();
+                index1++;
+            }
+        }
+
+        long freeSizeStorageTo = storageTo.getStorageSize() - fullSizeStorageTo;
+        int index2 = 0;
+        long sizeTransfer = 0;
+        for (File el: storageFrom.getFiles()) {
+            if(el!= null){
+                sizeTransfer = sizeTransfer + el.getSize();
+                index2++;
+            }
+        }
+        if(freeSizeStorageTo < sizeTransfer)
+            throw new Exception("Size of transfer files exceeds free size of storageTo " + storageTo.getId());
+            for (int i = 0; i < storageFrom.getFiles().length; i++) {
+               if( storageFrom.getFiles()[i] != null);{
+                   put(storageTo,storageFrom.getFiles()[i]);
+                }
+            }
+        System.out.println(Arrays.toString(storageTo.getFiles()));
+        return storageTo.getFiles();
     }
 
     public File transferFile(Storage storageFrom, Storage storageTo, long id) {
@@ -156,8 +204,8 @@ public class Controller {
     }
 
     public boolean checkLimitation(Storage storage, File file) throws Exception {
-        /*if (file == null)
-            throw new Exception("Putted file  is not detected");*/
+         if(file == null)
+            throw new Exception("Putted file  is not detected");
         File putFile = findById(storage, file.getId());
         if (putFile != null)
             throw new Exception("File with Id " + file.getId() +

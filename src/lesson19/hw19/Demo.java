@@ -4,6 +4,8 @@ import com.sun.org.apache.xpath.internal.SourceTree;
 
 import java.util.Arrays;
 
+import static lesson19.hw19.File.checkLengthFileName;
+
 /**
  * Created by user on 21.07.2017.
  */
@@ -15,14 +17,17 @@ public class Demo {
         File file3 = new File(0, "tes", "png", 1000);
         File file5 = new File(78, "hdl", "png", 1000);
         File file6 = new File(78, "hdl", "xls", 1000);
-        File file7 = new File(24, "named", "img", 100);
+        File file7 = new File(25, "named", "img", 100);
         File file8 = new File(79, "name", "img", 100);
         File file9 = new File(80, "name", "img", 25);
-      //  File file10 = new File(81, null, null, 1);
+         // File file10 = new File(81, null, null, 1);
 
         File[] files = {file2, file1, file2, null, null};
         File[] files2 = {file2, null, null};
         File[] files3 = {file2, null, null};
+        File[] files4 = {file7,null};
+        File[] files5 = {file7,file8 };
+
 
 
         String[] formatSupportedStorage1 = {"img", "jpg", "png", "pdf", "doc"};
@@ -31,16 +36,37 @@ public class Demo {
         Storage storageTo = new Storage(235, files2, formatSupportedStorage1, 1000);
         Storage storage2 = new Storage(236, files3, formatSupportedStorage1, 100);
         Storage storage3 = new Storage(236, files3, formatSupportedStorage1, 150);
-        Storage[] storages = {storage1, null};
+        Storage storageFrom = new Storage(237, files4, formatSupportedStorage1, 130);
 
-        System.out.println("files " + Arrays.toString(files));
-      //  Controller controller = new Controller(storages);
+        Storage storageFrom2 = new Storage(238, files5,formatSupportedStorage1,250);
+
+
+
+      //  System.out.println("files " + Arrays.toString(files));
+        Controller controller = new Controller();
+        System.out.println("---Test12_transferAll with null File---");
+        controller.transferAll(storageFrom2,storageTo);
+
+
+        System.out.println("---Test11_transferAll with null File---");
+        //File file2 = new File(24, "name", "img", 100);
+        //File file7 = new File(25, "named", "img", 100);
+        //File[] files2 = {file2, null, null};
+        //File[] files4 = {file7,null};
+        //Storage storageFrom = new Storage(237, files4, formatSupportedStorage1, 130);
+        //Storage storageTo = new Storage(235, files2, formatSupportedStorage1, 1000);
+
+        try {
+            System.out.println(controller.transferAll(storageFrom, storageTo));
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
 
         System.out.println("---Test1_above SizeOfStorage");
         // storage1.getStorageSize() == 3
         // Storage storage1 = new Storage(234,files,formatSupportedStorage1, 3);
         // File[] files = {file2, file1, file2,null,null};
-      /*  System.out.println(checkSizeOfStorage(storage1));
+        System.out.println(controller.checkSizeOfStorage(storage1));
         System.out.println();
 
         System.out.println("---Test2_empty place in storage---");
@@ -55,7 +81,8 @@ public class Demo {
         // Storage storageTo = new Storage(235, files2, formatSupportedStorage1, 1000);
         // File[] files = {file2, file1, file2,null,null};
         // File file6 = new File(78, "hdl","xls", 1000);
-        System.out.println(controller.put(storageTo, file8));
+        System.out.println(controller.put(storage2, file8));
+
         System.out.println();
 
         System.out.println("---Test5_put file with existing ID in storage---");
@@ -113,15 +140,16 @@ public class Demo {
             }
         }
 
-       /* System.out.println("--- Test6_ checkSizeFileInComparisonSizeStorage(storage,file)()_" +
+
+        System.out.println("--- Test6_ checkSizeFileInComparisonSizeStorage(storage,file)()_" +
                 "Not enough space int storage with Id for File---");
         //Storage storage2 = new Storage(236,files3,formatSupportedStorage1,100)
         // File file8 = new File(79, "name", "img",100);
         // File[] files3 = {file2,null};
         //File file2 = new File(24, "name", "img",100);
-        System.out.println(controller.checkSizeFileInComparisonSizeStorage(storage2, file8));*/
+        System.out.println(controller.checkSizeFileInComparisonSizeStorage(storage2, file8));
 
-       /* System.out.println("--- Test7_ put()_Not enough space int storage with Id for File---");
+        System.out.println("--- Test7_ put()_Not enough space int storage with Id for File---");
         //Storage storage2 = new Storage(236,files3,formatSupportedStorage1,100)
         // File file8 = new File(79, "name", "img",100);
         // File[] files3 = {file2,null};
@@ -148,16 +176,16 @@ public class Demo {
             System.out.println(Arrays.toString(files3));
         } else {
             System.out.println("Test Fail");
-        }*/
+        }
 
 
-        System.out.println("---Test9_put null file in storage with free space 50");
+     /*   System.out.println("---Test9_put null file in storage with free space 50");
         //File file10 = new File(81,null,null,1);
         // File[] files3 = {file2,null};
         //Storage storage3 = new Storage(236,files3,formatSupportedStorage1,50);
         //File file2 = new File(24, "name", "img",100);
 
-      /*  try {
+        try {
             System.out.println(controller.put(storage1, file10));
         } catch (Exception e){
             System.out.println(e.getMessage());
@@ -166,8 +194,8 @@ public class Demo {
             } else {
                 System.out.println("Test Fail");
             }
-        }*/
-        /*if(file10.checkLengthFileName(file10.getName()) == null)
+        }
+        /*if(checkLengthFileName(file10.getName()) == null)
             System.out.println(file9);
             System.out.println("Test Pass");
         } else{
