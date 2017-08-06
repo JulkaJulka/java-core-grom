@@ -12,12 +12,15 @@ public class Demo {
         File file8 = new File(79, "name", "img", 100);
         File file9 = new File(80, "name", "img", 25);
          // File file10 = new File(81, null, null, 1);
+        File file11 = new File(82, "test", "doc",40);
+        File file12 = new File(83, "test", "doc",40);
+
 
         File[] files = {file2, file1, file2, null, null};
         File[] files2 = {file2, null, null};
         File[] files3 = {file2, null, null};
         File[] files4 = {file7,null};
-        File[] files5 = {file7,file8 };
+        File[] files5 = {file7, file8 };
 
 
 
@@ -31,15 +34,44 @@ public class Demo {
 
         Storage storageFrom2 = new Storage(238, files5,formatSupportedStorage1,250);
 
+        File[] files6 = {file11, null};
+        File[] files7 = {file12, null};
+        File[] files8 = {file11, file12,null,null};
+        File[] files9 = {file12, null};
+
+        Storage storageFrom13 = new Storage(239, files6,formatSupportedStorage1,1000);
+        Storage storageTo13  = new Storage(240,files7,formatSupportedStorage1,500);
+
+        Storage storageFrom14 = new Storage(241, files6,formatSupportedStorage1,100);
+        Storage storageTo14  = new Storage(242,files8,formatSupportedStorage1,81);
+
 
 
       //  System.out.println("files " + Arrays.toString(files));
         Controller controller = new Controller();
-        System.out.println("---Test12_transferAll with null File---");
+
+        System.out.println("---Test14_transferAll_storageTo has not enough space");
+        //Storage storageFrom14 = new Storage(241, files6,formatSupportedStorage1,100);
+        //Storage storageTo14  = new Storage(242,files8,formatSupportedStorage1,81);
+        try {
+            System.out.println(controller.transferAll(storageFrom14, storageTo14));
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+        System.out.println("---Test13_transferAll with nullFile");
+        try {
+            System.out.println(controller.transferAll(storageFrom13, storageTo13));
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+        System.out.println("---Test12_transferAll successfully---");
         controller.transferAll(storageFrom2,storageTo);
+       System.out.println(Arrays.toString(storageTo.getFiles()));
 
 
-        System.out.println("---Test11_transferAll with null File---");
+        System.out.println("---Test11_transferAll with full position storage---");
         //File file2 = new File(24, "name", "img", 100);
         //File file7 = new File(25, "named", "img", 100);
         //File[] files2 = {file2, null, null};
@@ -67,14 +99,14 @@ public class Demo {
         System.out.println(controller.checkSizeOfStorage(storageTo));
         System.out.println();
 
-        System.out.println("---Test6_put file with existing name File in storage---");
+       /* System.out.println("---Test6_put file with existing name File in storage---");
         // storageTo.getStorageSize() == 1000
         // Storage storageTo = new Storage(235, files2, formatSupportedStorage1, 1000);
         // File[] files = {file2, file1, file2,null,null};
         // File file6 = new File(78, "hdl","xls", 1000);
         System.out.println(controller.put(storage2, file8));
 
-        System.out.println();
+        System.out.println();*/
 
         System.out.println("---Test5_put file with existing ID in storage---");
         // storageTo.getStorageSize() == 1000
@@ -191,6 +223,8 @@ public class Demo {
             System.out.println("Test Pass");
         } else{
             System.out.println("Test Fail");*/
+
+
     }
 }
 
