@@ -1,4 +1,4 @@
-package lesson20;
+package lesson20.task1.exception;
 public class User {
     private  long id;
     private String name;
