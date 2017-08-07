@@ -39,16 +39,31 @@ public class Demo {
         File[] files8 = {file11, file12,null,null};
         File[] files9 = {file12, null};
 
+        File[] files10 = { file8};
+        File[] files11 = {null, null, file12,null};
+
         Storage storageFrom13 = new Storage(239, files6,formatSupportedStorage1,1000);
         Storage storageTo13  = new Storage(240,files7,formatSupportedStorage1,500);
 
         Storage storageFrom14 = new Storage(241, files6,formatSupportedStorage1,100);
         Storage storageTo14  = new Storage(242,files8,formatSupportedStorage1,81);
 
+        Storage storageFrom15 = new Storage(243, files10,formatSupportedStorage1,100);
+        Storage storageTo15  = new Storage(244,files11,formatSupportedStorage1,2000);
 
 
       //  System.out.println("files " + Arrays.toString(files));
         Controller controller = new Controller();
+
+        System.out.println("---Test15_transferAll_storageTo");
+        //Storage storageFrom15 = new Storage(241, files6,formatSupportedStorage1,100);
+        //Storage storageTo15  = new Storage(242,files8,formatSupportedStorage1,81);
+        try {
+            System.out.println(controller.transferAll(storageFrom15, storageTo15));
+            System.out.println(Arrays.toString(storageTo15.getFiles()));
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
 
         System.out.println("---Test14_transferAll_storageTo has not enough space");
         //Storage storageFrom14 = new Storage(241, files6,formatSupportedStorage1,100);
