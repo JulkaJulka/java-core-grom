@@ -1,7 +1,5 @@
 package lesson20.task2;
 
-import lesson20.task2.exception.LimitExceeded;
-
 public class Controller {
 
     //bad way
@@ -18,31 +16,33 @@ public class Controller {
     Transaction saveTransaction(Transaction transaction) throws Exception {
         Transaction[] transactions = transactionDAO.getTransactionsPerDay(transaction.getDateCreated());
 
-        if(transaction.getAmount() > utils.getTransactionAmountLimit())
+        if (transaction.getAmount() > utils.getTransactionAmountLimit())
             throw new LimitExceeded("Amount of this transaction exceeded");
 
         if (transactions.length + 1 > utils.getCountOfTransactionsPerDay()) {
             throw new LimitExceeded("Count of transactions per day exceeded");
         }
 
-        if (transactionsPerDayAmount(transactions) + transaction.getAmount()> utils.getSumAmountOfTransactionsPerDay()) {
+        if (transactionsPerDayAmount(transactions) + transaction.getAmount() > utils.getSumAmountOfTransactionsPerDay()) {
             throw new LimitExceeded("Amount of transactions per day exceeded");
         }
-        //TODO
-        // проверка на город
 
+        if (!transaction.getCity().equals(cityAllowed(transaction.getCity()))) {
+            throw new LimitExceeded("City of transaction is not allowed");
+        }
         transactionDAO.save(transaction);
         return transaction;
     }
-    Transaction[] allTransactions() {
+
+    Transaction[] transactionList() {
         return null;
     }
 
-    Transaction[] allTransactionsByCity(String city) {
+    Transaction[] transactionList(String city) {
         return null;
     }
 
-    Transaction[] allTransactions(int amount) {
+    Transaction[] transactionList(int amount) {
         return null;
     }
 
@@ -54,5 +54,12 @@ public class Controller {
         return amount;
     }
 
-
+    public String cityAllowed(String city) {
+        String[] citiesAllowed = new String[]{"Kiev", "Odesa", "Mykolayiv"};
+        for (String el : citiesAllowed) {
+            if (el.equals(city))
+                return city;
+        }
+        return null;
+    }
 }
