@@ -1,3 +1,6 @@
 package lesson20.task2;
-public class TransactionType {
+
+public enum TransactionType {
+    INCOME,
+    OUTCOME,
 }
