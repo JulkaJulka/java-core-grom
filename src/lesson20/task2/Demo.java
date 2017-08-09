@@ -1,9 +1,5 @@
 package lesson20.task2;
 
-import lesson20.task2.Controller;
-import lesson20.task2.Transaction;
-import lesson20.task2.TransactionDAO;
-import lesson20.task2.TransactionType;
 
 import java.util.Arrays;
 import java.util.Date;
