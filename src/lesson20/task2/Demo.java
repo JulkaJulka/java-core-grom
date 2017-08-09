@@ -40,8 +40,8 @@ public class Demo {
         System.out.println(Arrays.toString(transactionDAO.getTransactions()));
         System.out.println();
 
-        System.out.println("---Test4---");
-        System.out.println(controller.saveTransaction(transaction3));
+       /* System.out.println("---Test4---");
+        System.out.println(controller.saveTransaction(transaction3));*/
 
         System.out.println("---Test3---transactionDAO.save full space");
         try {
