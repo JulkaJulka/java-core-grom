@@ -9,7 +9,7 @@ import java.util.Date;
  * Created by user on 07.08.2017.
  */
 public class TransactionDAO {
-    private Transaction[] transactions = new Transaction[10];
+    private Transaction[] transactions = new Transaction[3];
 
     public Transaction[] getTransactions() {
         return transactions;
@@ -23,8 +23,9 @@ public class TransactionDAO {
 
         try{
             findSameExistingFile(transaction);
-            throw new BadRequestException("User with id " + transaction.getId() + " is already exist");
-       } catch (Exception e){
+            throw new BadRequestException("User with id " + transaction.getId() + " is already exist." +
+                    " Method save in TransactionDAO class failed to complete. ");
+       } catch (InternalServerException e){
             System.out.println("Transaction with id " + transaction.getId() + " not found. Will be saved");
         }
         for (int i = 0; i < transactions.length; i++) {
@@ -34,7 +35,7 @@ public class TransactionDAO {
             }
         }
         throw new InternalServerException("Method save in TransactionDAO class" +
-                " failed to complete. Not enough space");
+                " failed to complete. Not enough space for transaction with id " + transaction.getId());
 
       /*  int index = 0;
         for (Transaction tr : transactions) {
@@ -42,10 +43,6 @@ public class TransactionDAO {
                 tr[index] == transaction;
             index++;
         }*/
-
-
-        //TODO check and save if ok
-
     }
 
     public Transaction[] transactionList() {
@@ -106,6 +103,6 @@ public class TransactionDAO {
                     return transaction;
             }
         }
-      throw new Exception("Transaction with id: " + transaction.getId() + " not found");
+      throw new InternalServerException("Transaction with id: " + transaction.getId() + " not found");
     }
 }

@@ -36,7 +36,7 @@ public class Controller {
 
     Transaction[] transactionList() {
 
-        return null;
+        return transactionDAO.getTransactions();
     }
 
     Transaction[] transactionList(String city) throws Exception {
