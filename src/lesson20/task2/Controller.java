@@ -3,11 +3,11 @@ package lesson20.task2;
 public class Controller {
 
     //bad way
-    private TransactionDAO transactionDAO = new TransactionDAO();
+    public TransactionDAO transactionDAO = new TransactionDAO();
     private Utils utils = new Utils();
 
     public Controller() {
-        utils.setCountOfTransactionsPerDay(5);
+        utils.setCountOfTransactionsPerDay(10);
         utils.setSumAmountOfTransactionsPerDay(100);
         utils.setTransactionAmountLimit(40);
         utils.setCitiesAllowed(new String[]{"Kiev", "Odesa", "Mykolayiv"});
@@ -17,7 +17,8 @@ public class Controller {
         Transaction[] transactions = transactionDAO.getTransactionsPerDay(transaction.getDateCreated());
 
         if (transaction.getAmount() > utils.getTransactionAmountLimit())
-            throw new LimitExceeded("Amount of this transaction exceeded");
+            throw new LimitExceeded("Amount of this transaction exceeded." +
+                    " Method saveTransaction in Controller failed to complete" );
 
         if (transactions.length + 1 > utils.getCountOfTransactionsPerDay()) {
             throw new LimitExceeded("Count of transactions per day exceeded");
@@ -28,7 +29,8 @@ public class Controller {
         }
 
         if (!transaction.getCity().equals(cityAllowed(transaction.getCity()))) {
-            throw new LimitExceeded("City of transaction is not allowed");
+            throw new LimitExceeded("City of transaction is not allowed. Method saveTransaction in Controller" +
+                    " is failed to complete");
         }
         transactionDAO.save(transaction);
         return transaction;
@@ -41,7 +43,8 @@ public class Controller {
 
     Transaction[] transactionList(String city) throws Exception {
         if (!city.equals(cityAllowed(city)))
-            throw new LimitExceeded("City of transaction is not allowed");
+            throw new LimitExceeded("City of transaction is not allowed. Method transactionList by City in Controller" +
+                    " is failed to complete");
 
         int countTrByCity = 0;
         for (Transaction tr : transactionList()) {
@@ -50,7 +53,8 @@ public class Controller {
         }
 
         if (countTrByCity == 0)
-            throw new InternalServerException("DB doesn't contain any data of city " + city);
+            throw new InternalServerException("DB doesn't contain any data of city " + city +
+                    ". Method transactionList by City in Controller is failed to complete");
 
         Transaction[] trListByCity = new Transaction[countTrByCity];
         int index = 0;
@@ -70,7 +74,8 @@ public class Controller {
                 countAmountDB++;
         }
         if (countAmountDB == 0)
-            throw new InternalServerException("DB doesn't contain any data of amount " + amount);
+            throw new InternalServerException("DB doesn't contain any data of amount " + amount +
+                    ". Method transactionList by Amount in Controller is failed to complete");
         Transaction[] trListByAmount = new Transaction[countAmountDB];
         int index = 0;
         for (Transaction tr : transactionList()) {
