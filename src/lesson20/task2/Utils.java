@@ -1,9 +1,9 @@
 package lesson20.task2;
 
 public class Utils {
-    private int sumAmountOfTransactionsPerDay;
+    private int limitSimpleTransactionAmount;
     private int limitTransactionsPerDayCount;
-    private int transactionAmountLimit;
+    private int limitTransactionsPerDayAmount;
     private String[] citiesAllowed;
 
     public String[] getCitiesAllowed() {
@@ -14,20 +14,20 @@ public class Utils {
         this.citiesAllowed = citiesAllowed;
     }
 
-    public int getTransactionAmountLimit() {
-        return transactionAmountLimit;
+    public int getLimitTransactionsPerDayAmount() {
+        return limitTransactionsPerDayAmount;
     }
 
-    public void setTransactionAmountLimit(int transactionAmountLimit) {
-        this.transactionAmountLimit = transactionAmountLimit;
+    public void setLimitTransactionsPerDayAmount(int limitTransactionsPerDayAmount) {
+        this.limitTransactionsPerDayAmount = limitTransactionsPerDayAmount;
     }
 
-    public int getSumAmountOfTransactionsPerDay() {
-        return sumAmountOfTransactionsPerDay;
+    public int getLimitSimpleTransactionAmount() {
+        return limitSimpleTransactionAmount;
     }
 
-    public void setSumAmountOfTransactionsPerDay(int sumAmountOfTransactionsPerDay) {
-        this.sumAmountOfTransactionsPerDay = sumAmountOfTransactionsPerDay;
+    public void setLimitSimpleTransactionAmount(int limitSimpleTransactionAmount) {
+        this.limitSimpleTransactionAmount = limitSimpleTransactionAmount;
     }
 
     public int getLimitTransactionsPerDayCount() {

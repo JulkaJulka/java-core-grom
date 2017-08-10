@@ -7,9 +7,9 @@ public class Controller {
     private Utils utils = new Utils();
 
     public Controller() {
-        utils.setLimitTransactionsPerDayCount(5);
-        utils.setSumAmountOfTransactionsPerDay(100);
-        utils.setTransactionAmountLimit(40);
+        utils.setLimitTransactionsPerDayCount(10);
+        utils.setLimitSimpleTransactionAmount(100);
+        utils.setLimitTransactionsPerDayAmount(40);
         utils.setCitiesAllowed(new String[]{"Kiev", "Odesa", "Mykolayiv"});
     }
 
@@ -17,7 +17,7 @@ public class Controller {
    public Transaction save(Transaction transaction) throws Exception {
         Transaction[] transactions = transactionDAO.getTransactionsPerDay(transaction.getDateCreated());
 
-        if (transaction.getAmount() > utils.getTransactionAmountLimit())
+        if (transaction.getAmount() > utils.getLimitTransactionsPerDayAmount())
             throw new LimitExceeded("Amount of this transaction exceeded." +
                     " Method saveTransaction in Controller failed to complete" );
 
@@ -25,7 +25,7 @@ public class Controller {
             throw new LimitExceeded("Count of transactions per day exceeded");
         }
 
-        if (transactionsPerDayAmount(transactions) + transaction.getAmount() > utils.getSumAmountOfTransactionsPerDay()) {
+        if (transactionsPerDayAmount(transactions) + transaction.getAmount() > utils.getLimitSimpleTransactionAmount()) {
             throw new LimitExceeded("Amount of transactions per day exceeded");
         }
 
