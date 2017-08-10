@@ -34,4 +34,7 @@ public class Utils {
         return limitTransactionsPerDayCount;
     }
 
+    public void setLimitTransactionsPerDayCount(int limitTransactionsPerDayCount) {
+        this.limitTransactionsPerDayCount = limitTransactionsPerDayCount;
+    }
 }
