@@ -85,7 +85,7 @@ public class Demo {
 
         System.out.println("---Test10---controller.saveTransaction with Amount exceeded");
         try{
-            System.out.println(controller.saveTransaction(transaction1));
+            System.out.println(controller.save(transaction1));
         } catch (Exception e){
             System.out.println( e.getMessage());
         }

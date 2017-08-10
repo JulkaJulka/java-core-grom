@@ -13,7 +13,8 @@ public class Controller {
         utils.setCitiesAllowed(new String[]{"Kiev", "Odesa", "Mykolayiv"});
     }
 
-    Transaction saveTransaction(Transaction transaction) throws Exception {
+
+    Transaction save(Transaction transaction) throws Exception {
         Transaction[] transactions = transactionDAO.getTransactionsPerDay(transaction.getDateCreated());
 
         if (transaction.getAmount() > utils.getTransactionAmountLimit())
