@@ -5,6 +5,7 @@ import java.util.Date;
 
 public class TransactionDAO {
     private Transaction[] transactions = new Transaction[3];
+    private Utils utils = new Utils();
 
     public Transaction[] getTransactions() {
         return transactions;
