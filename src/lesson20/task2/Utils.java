@@ -2,7 +2,7 @@ package lesson20.task2;
 
 public class Utils {
     private int sumAmountOfTransactionsPerDay;
-    private int countOfTransactionsPerDay;
+    private int limitTransactionsPerDayCount;
     private int transactionAmountLimit;
     private String[] citiesAllowed;
 
@@ -30,11 +30,11 @@ public class Utils {
         this.sumAmountOfTransactionsPerDay = sumAmountOfTransactionsPerDay;
     }
 
-    public int getCountOfTransactionsPerDay() {
-        return countOfTransactionsPerDay;
+    public int getLimitTransactionsPerDayCount() {
+        return limitTransactionsPerDayCount;
     }
 
-    public void setCountOfTransactionsPerDay(int countOfTransactionsPerDay) {
-        this.countOfTransactionsPerDay = countOfTransactionsPerDay;
+    public void setLimitTransactionsPerDayCount(int limitTransactionsPerDayCount) {
+        this.limitTransactionsPerDayCount = limitTransactionsPerDayCount;
     }
 }

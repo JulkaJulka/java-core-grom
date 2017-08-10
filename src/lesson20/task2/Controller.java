@@ -7,7 +7,7 @@ public class Controller {
     private Utils utils = new Utils();
 
     public Controller() {
-        utils.setCountOfTransactionsPerDay(10);
+        utils.setLimitTransactionsPerDayCount(10);
         utils.setSumAmountOfTransactionsPerDay(100);
         utils.setTransactionAmountLimit(40);
         utils.setCitiesAllowed(new String[]{"Kiev", "Odesa", "Mykolayiv"});
@@ -20,7 +20,7 @@ public class Controller {
             throw new LimitExceeded("Amount of this transaction exceeded." +
                     " Method saveTransaction in Controller failed to complete" );
 
-        if (transactions.length + 1 > utils.getCountOfTransactionsPerDay()) {
+        if (transactions.length + 1 > utils.getLimitTransactionsPerDayCount()) {
             throw new LimitExceeded("Count of transactions per day exceeded");
         }
 
