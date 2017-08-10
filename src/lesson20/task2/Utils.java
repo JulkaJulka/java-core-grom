@@ -6,6 +6,9 @@ public class Utils {
     private int limitTransactionsPerDayAmount;
     private String[] cities;
 
+    public Utils() {
+    }
+
     public Utils(int limitSimpleTransactionAmount, int limitTransactionsPerDayCount,
                  int limitTransactionsPerDayAmount, String[] cities) {
         this.limitSimpleTransactionAmount = limitSimpleTransactionAmount;
