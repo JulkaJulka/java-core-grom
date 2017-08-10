@@ -2,9 +2,6 @@ package lesson20.task2;
 
 import java.util.Date;
 
-/**
- * Created by user on 07.08.2017.
- */
 public class Transaction {
     private long id;
     private String city;

@@ -1,12 +1,9 @@
 package lesson20.task2;
 
-
 import java.util.Arrays;
 import java.util.Date;
 
-/**
- * Created by user on 07.08.2017.
- */
+
 public class Demo {
     public static void main(String[] args) throws Exception {
         Controller controller = new Controller();

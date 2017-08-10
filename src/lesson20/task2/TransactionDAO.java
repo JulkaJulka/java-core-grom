@@ -1,13 +1,8 @@
 package lesson20.task2;
 
-
-
 import java.util.Calendar;
 import java.util.Date;
 
-/**
- * Created by user on 07.08.2017.
- */
 public class TransactionDAO {
     private Transaction[] transactions = new Transaction[3];
 
@@ -15,9 +10,6 @@ public class TransactionDAO {
         return transactions;
     }
 
-    public void setTransactions(Transaction[] transactions) {
-        this.transactions = transactions;
-    }
 
     public Transaction save(Transaction transaction) throws Exception {
         if (transaction == null)

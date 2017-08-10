@@ -1,8 +1,5 @@
 package lesson20.task2;
 
-/**
- * Created by user on 07.08.2017.
- */
 public class Utils {
     private int sumAmountOfTransactionsPerDay;
     private int countOfTransactionsPerDay;
