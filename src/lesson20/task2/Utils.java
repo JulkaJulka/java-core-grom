@@ -4,14 +4,14 @@ public class Utils {
     private int limitSimpleTransactionAmount;
     private int limitTransactionsPerDayCount;
     private int limitTransactionsPerDayAmount;
-    private String[] citiesAllowed;
+    private String[] cities;
 
-    public String[] getCitiesAllowed() {
-        return citiesAllowed;
+    public String[] getCities() {
+        return cities;
     }
 
-    public void setCitiesAllowed(String[] citiesAllowed) {
-        this.citiesAllowed = citiesAllowed;
+    public void setCities(String[] cities) {
+        this.cities = cities;
     }
 
     public int getLimitTransactionsPerDayAmount() {

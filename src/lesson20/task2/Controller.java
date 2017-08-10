@@ -10,7 +10,7 @@ public class Controller {
         utils.setLimitTransactionsPerDayCount(10);
         utils.setLimitSimpleTransactionAmount(100);
         utils.setLimitTransactionsPerDayAmount(40);
-        utils.setCitiesAllowed(new String[]{"Kiev", "Odesa", "Mykolayiv"});
+        utils.setCities(new String[]{"Kiev", "Odesa", "Mykolayiv"});
     }
 
 
