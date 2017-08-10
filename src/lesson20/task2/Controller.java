@@ -18,19 +18,22 @@ public class Controller {
         Transaction[] transactions = transactionDAO.getTransactionsPerDay(transaction.getDateCreated());
 
         if (transaction.getAmount() > utils.getLimitTransactionsPerDayAmount())
-            throw new LimitExceeded("Amount of this transaction exceeded." +
+            throw new LimitExceeded("Amount of transaction id " + transaction.getId() + " exceeded." +
                     " Method saveTransaction in Controller failed to complete" );
 
         if (transactions.length + 1 > utils.getLimitTransactionsPerDayCount()) {
-            throw new LimitExceeded("Count of transactions per day exceeded");
+            throw new LimitExceeded("Count of transactions per day exceeded. Transaction id "
+                    + transaction.getId() + " is not saved");
         }
 
         if (transactionsPerDayAmount(transactions) + transaction.getAmount() > utils.getLimitSimpleTransactionAmount()) {
-            throw new LimitExceeded("Amount of transactions per day exceeded");
+            throw new LimitExceeded("Amount of transactions per day exceeded. Transaction id "
+                    + transaction.getId() + " is not saved");
         }
 
         if (!transaction.getCity().equals(cityAllowed(transaction.getCity()))) {
-            throw new LimitExceeded("City of transaction is not allowed. Method saveTransaction in Controller" +
+            throw new LimitExceeded("City of transaction is not allowed. Transaction id "
+                    + transaction.getId() + " is not saved. Method saveTransaction in Controller" +
                     " is failed to complete");
         }
         transactionDAO.save(transaction);
