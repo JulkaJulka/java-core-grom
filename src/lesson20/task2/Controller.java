@@ -37,7 +37,7 @@ public class Controller {
         return transaction;
     }
 
-    Transaction[] transactionList() {
+   public Transaction[] transactionList() {
 
         return transactionDAO.getTransactions();
     }
