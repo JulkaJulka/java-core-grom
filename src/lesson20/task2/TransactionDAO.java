@@ -42,7 +42,7 @@ public class TransactionDAO {
     }
 
     public Transaction[] transactionList() throws Exception {
-        if(transactions == null)
+        if(transactions.length == 0)
             throw new InternalServerException("Method transactionList in TransactionDAO failed to complete." +
                     " There is no any transaction in DB");
         return transactions;
