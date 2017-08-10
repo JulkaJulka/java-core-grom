@@ -14,7 +14,7 @@ public class Controller {
     }
 
 
-    Transaction save(Transaction transaction) throws Exception {
+   public Transaction save(Transaction transaction) throws Exception {
         Transaction[] transactions = transactionDAO.getTransactionsPerDay(transaction.getDateCreated());
 
         if (transaction.getAmount() > utils.getTransactionAmountLimit())
@@ -42,7 +42,7 @@ public class Controller {
         return transactionDAO.getTransactions();
     }
 
-    Transaction[] transactionList(String city) throws Exception {
+   public Transaction[] transactionList(String city) throws Exception {
         if (!city.equals(cityAllowed(city)))
             throw new LimitExceeded("City of transaction is not allowed. Method transactionList by City in Controller" +
                     " is failed to complete");
@@ -68,7 +68,7 @@ public class Controller {
         return trListByCity;
     }
 
-    Transaction[] transactionList(int amount) throws Exception {
+    public Transaction[] transactionList(int amount) throws Exception {
         int countAmountDB = 0;
         for (Transaction tr : transactionList()) {
             if (tr.getAmount() == amount)
