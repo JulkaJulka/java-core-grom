@@ -1,5 +1,6 @@
 package lesson20.task2;
 
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -17,48 +18,49 @@ public class TransactionDAO {
         if (transaction == null)
             throw new BadRequestException("Method save in TransactionDAO class failed to complete. " +
                     "Null transaction not allowed to save");
-        if (transaction.getAmount() > utils.getLimitTransactionsPerDayAmount())
-            throw new LimitExceeded("Amount of transaction id " + transaction.getId() + " exceeded." +
+        if (transaction.getAmount() < 0)
+            throw new BadRequestException("Amount of transaction id " + transaction.getId() + " is not allowed." +
                     " Method save in TransactionDAO failed to complete");
-        if (transactions.length + 1 > utils.getLimitTransactionsPerDayCount()) {
-            throw new LimitExceeded("Count of transactions per day exceeded. Transaction id "
+        if (transaction.getId() < 0) {
+            throw new BadRequestException("Transaction id "
+                    + transaction.getId() + " is not allowed. Method save in TransactionDAO failed to complete");
+        }
+        if (transaction.getCity() == null) {
+            throw new BadRequestException("City can't be null. Transaction id "
                     + transaction.getId() + " is not saved. Method save in TransactionDAO failed to complete");
         }
-        if (controller.transactionsPerDayAmount(transactions) + transaction.getAmount() >
-                utils.getLimitSimpleTransactionAmount()) {
-            throw new LimitExceeded("Amount of transactions per day exceeded. Transaction id "
+        if (transaction.getDescription() == null) {
+            throw new BadRequestException("Description can't be null. Transaction id "
                     + transaction.getId() + " is not saved. Method save in TransactionDAO failed to complete");
         }
-        if (!transaction.getCity().equals(cityAllowed(transaction.getCity()))) {
-            throw new LimitExceeded("City of transaction is not allowed. Transaction id "
-                    + transaction.getId() + " is not saved. Method save in TransactionDAO" +
-                    " is failed to complete");
-        }
+        if (transaction.getDateCreated() == null) {
+            throw new BadRequestException("DateCreated can't be null. Transaction id "
+                    + transaction.getId() + " is not saved. Method save in TransactionDAO failed to complete");
 
 
-        try {
-            findSameExistingFile(transaction);
-            throw new BadRequestException("User with id " + transaction.getId() + " is already exist." +
-                    " Method save in TransactionDAO class failed to complete. ");
-        } catch (InternalServerException e) {
-            System.out.println("Transaction with id " + transaction.getId() + " not found. Will be saved");
-        }
-        for (int i = 0; i < transactions.length; i++) {
-            if (transactions[i] == null) {
-                transactions[i] = transaction;
-                return transaction;
+            try {
+                findSameExistingFile(transaction);
+                throw new BadRequestException("User with id " + transaction.getId() + " is already exist." +
+                        " Method save in TransactionDAO class failed to complete. ");
+            } catch (InternalServerException e) {
+                System.out.println("Transaction with id " + transaction.getId() + " not found. Will be saved");
+            }
+            for (int i = 0; i < transactions.length; i++) {
+                if (transactions[i] == null) {
+                    transactions[i] = transaction;
+                    return transaction;
+                }
             }
         }
         throw new InternalServerException("Method save in TransactionDAO class" +
                 " failed to complete. Not enough space for transaction with id " + transaction.getId());
-
     }
 
-    public Transaction[] transactionList() throws Exception {
+    public void transactionList() throws Exception {
         if (transactions.length == 0)
             throw new InternalServerException("Method transactionList in TransactionDAO failed to complete." +
                     " There is no any transaction in DB");
-        return transactions;
+        System.out.println( Arrays.toString(transactions));
     }
 
     public Transaction[] transactionList(String city) throws Exception {
@@ -66,7 +68,7 @@ public class TransactionDAO {
             throw new LimitExceeded("City of transaction is not allowed");
 
         int countTrByCity = 0;
-        for (Transaction tr : transactionList()) {
+        for (Transaction tr : transactions) {
             if (tr.getCity().equals(city))
                 countTrByCity++;
         }
@@ -77,7 +79,7 @@ public class TransactionDAO {
 
         Transaction[] trListByCity = new Transaction[countTrByCity];
         int index = 0;
-        for (Transaction tr : transactionList()) {
+        for (Transaction tr : transactions) {
             if (tr.getCity().equals(city)) {
                 trListByCity[index] = tr;
                 index++;
@@ -89,7 +91,7 @@ public class TransactionDAO {
 
     public Transaction[] transactionList(int amount) throws Exception {
         int countAmountDB = 0;
-        for (Transaction tr : transactionList()) {
+        for (Transaction tr : transactions) {
             if (tr.getAmount() == amount)
                 countAmountDB++;
         }
@@ -98,7 +100,7 @@ public class TransactionDAO {
                     "class failed to complete.DB doesn't contain any data of amount " + amount);
         Transaction[] trListByAmount = new Transaction[countAmountDB];
         int index = 0;
-        for (Transaction tr : transactionList()) {
+        for (Transaction tr :transactions) {
             if (tr.getAmount() == amount) {
                 trListByAmount[index] = tr;
                 index++;
@@ -164,4 +166,6 @@ public class TransactionDAO {
         }
         throw new LimitExceeded("City with name " + city + " not found at list of allowed cities");
     }
+
+
 }
