@@ -6,23 +6,20 @@ public class Utils {
     private int limitTransactionsPerDayAmount;
     private String[] cities;
 
-    public Utils() {
-    }
-
-    public Utils(int limitSimpleTransactionAmount, int limitTransactionsPerDayCount,
-                 int limitTransactionsPerDayAmount, String[] cities) {
-        this.limitSimpleTransactionAmount = limitSimpleTransactionAmount;
-        this.limitTransactionsPerDayCount = limitTransactionsPerDayCount;
-        this.limitTransactionsPerDayAmount = limitTransactionsPerDayAmount;
-        this.cities = cities;
-    }
-
     public String[] getCities() {
         return cities;
     }
 
     public void setCities(String[] cities) {
         this.cities = cities;
+    }
+
+    public int getLimitTransactionsPerDayCount() {
+        return limitTransactionsPerDayCount;
+    }
+
+    public void setLimitTransactionsPerDayCount(int limitTransactionsPerDayCount) {
+        this.limitTransactionsPerDayCount = limitTransactionsPerDayCount;
     }
 
     public int getLimitTransactionsPerDayAmount() {
@@ -39,13 +36,5 @@ public class Utils {
 
     public void setLimitSimpleTransactionAmount(int limitSimpleTransactionAmount) {
         this.limitSimpleTransactionAmount = limitSimpleTransactionAmount;
-    }
-
-    public int getLimitTransactionsPerDayCount() {
-        return limitTransactionsPerDayCount;
-    }
-
-    public void setLimitTransactionsPerDayCount(int limitTransactionsPerDayCount) {
-        this.limitTransactionsPerDayCount = limitTransactionsPerDayCount;
     }
 }

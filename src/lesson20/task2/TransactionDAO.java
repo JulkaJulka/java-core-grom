@@ -13,15 +13,34 @@ public class TransactionDAO {
 
 
     public Transaction save(Transaction transaction) throws Exception {
+        Controller controller = new Controller();
         if (transaction == null)
             throw new BadRequestException("Method save in TransactionDAO class failed to complete. " +
                     "Null transaction not allowed to save");
+        if (transaction.getAmount() > utils.getLimitTransactionsPerDayAmount())
+            throw new LimitExceeded("Amount of transaction id " + transaction.getId() + " exceeded." +
+                    " Method save in TransactionDAO failed to complete");
+        if (transactions.length + 1 > utils.getLimitTransactionsPerDayCount()) {
+            throw new LimitExceeded("Count of transactions per day exceeded. Transaction id "
+                    + transaction.getId() + " is not saved. Method save in TransactionDAO failed to complete");
+        }
+        if (controller.transactionsPerDayAmount(transactions) + transaction.getAmount() >
+                utils.getLimitSimpleTransactionAmount()) {
+            throw new LimitExceeded("Amount of transactions per day exceeded. Transaction id "
+                    + transaction.getId() + " is not saved. Method save in TransactionDAO failed to complete");
+        }
+        if (!transaction.getCity().equals(cityAllowed(transaction.getCity()))) {
+            throw new LimitExceeded("City of transaction is not allowed. Transaction id "
+                    + transaction.getId() + " is not saved. Method save in TransactionDAO" +
+                    " is failed to complete");
+        }
 
-        try{
+
+        try {
             findSameExistingFile(transaction);
             throw new BadRequestException("User with id " + transaction.getId() + " is already exist." +
                     " Method save in TransactionDAO class failed to complete. ");
-       } catch (InternalServerException e){
+        } catch (InternalServerException e) {
             System.out.println("Transaction with id " + transaction.getId() + " not found. Will be saved");
         }
         for (int i = 0; i < transactions.length; i++) {
@@ -33,16 +52,10 @@ public class TransactionDAO {
         throw new InternalServerException("Method save in TransactionDAO class" +
                 " failed to complete. Not enough space for transaction with id " + transaction.getId());
 
-      /*  int index = 0;
-        for (Transaction tr : transactions) {
-            if (tr == null)
-                tr[index] == transaction;
-            index++;
-        }*/
     }
 
     public Transaction[] transactionList() throws Exception {
-        if(transactions.length == 0)
+        if (transactions.length == 0)
             throw new InternalServerException("Method transactionList in TransactionDAO failed to complete." +
                     " There is no any transaction in DB");
         return transactions;
@@ -86,9 +99,10 @@ public class TransactionDAO {
         Transaction[] trListByAmount = new Transaction[countAmountDB];
         int index = 0;
         for (Transaction tr : transactionList()) {
-            if (tr.getAmount() == amount){
+            if (tr.getAmount() == amount) {
                 trListByAmount[index] = tr;
-            index++;}
+                index++;
+            }
         }
         return trListByAmount;
     }
@@ -126,7 +140,7 @@ public class TransactionDAO {
         return result;
     }
 
-  public   Transaction findSameExistingFile(Transaction transaction) throws Exception{
+    public Transaction findSameExistingFile(Transaction transaction) throws Exception {
         if (getTransactions() == null)
             return null;
         for (int i = 0; i < getTransactions().length; i++) {
@@ -139,7 +153,7 @@ public class TransactionDAO {
                     return transaction;
             }
         }
-      throw new InternalServerException("Transaction with id: " + transaction.getId() + " not found");
+        throw new InternalServerException("Transaction with id: " + transaction.getId() + " not found");
     }
 
     public String cityAllowed(String city) throws Exception {
@@ -148,6 +162,6 @@ public class TransactionDAO {
             if (el.equals(city))
                 return city;
         }
-        throw new LimitExceeded ("City with name " + city + " not found at list of allowed cities");
+        throw new LimitExceeded("City with name " + city + " not found at list of allowed cities");
     }
 }

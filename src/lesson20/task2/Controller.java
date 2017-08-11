@@ -90,7 +90,7 @@ public class Controller {
         return trListByAmount;
     }
 
-    private int transactionsPerDayAmount(Transaction[] transactions) {
+    public int transactionsPerDayAmount(Transaction[] transactions) {
         int amount = 0;
         for (Transaction tr : transactions) {
             amount += tr.getAmount();
