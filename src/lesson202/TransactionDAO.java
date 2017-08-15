@@ -78,7 +78,8 @@ public class TransactionDAO {
            }
        }
        if(countFullPosition == 0)
-           throw new InternalServerException("TransactionList is empty");
+           return new Transaction[] {};
+          // throw new InternalServerException("TransactionList is empty");
        Transaction[] trList = new Transaction[countFullPosition];
        int index = 0;
        for (Transaction tr:transactions) {
