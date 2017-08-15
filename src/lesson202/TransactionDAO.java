@@ -61,7 +61,7 @@ public class TransactionDAO {
         //TODO
     }
 
-   public Transaction[] transactionList() throws Exception {
+   public Transaction[] transactionList() throws InternalServerException {
        if(transactions == null)
            throw new InternalServerException("DB doesn't have any transactions.");
         return transactions;
