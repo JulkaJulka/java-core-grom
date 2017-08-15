@@ -37,7 +37,7 @@ public class Controller {
                     + transaction.getId() + " is not saved. Method saveTransaction in Controller" +
                     " is failed to complete");
         }
-        transactionDAO.save(transaction);
+       // transactionDAO.save(transaction);
         return transaction;
     }
 

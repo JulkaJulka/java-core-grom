@@ -7,21 +7,22 @@ import lesson202.Exception.LimitExceeded;
  */
 public class Controller {
 
-    private TransactionDAO transactionDAO = new TransactionDAO();
+    public TransactionDAO transactionDAO = new TransactionDAO();
 
-    public Transaction save(Transaction transaction) throws LimitExceeded{
+    public Transaction save(Transaction transaction) throws Exception{
         return transactionDAO.save(transaction);
     }
 
-    Transaction[] transactionList(){
-        return null;
+    public Transaction[] transactionList(){
+
+        return transactionDAO.transactionList();
     }
 
-    Transaction[] transactionList(String city){
-        return null;
+    public Transaction[] transactionList(String city) throws Exception{
+        return transactionDAO.transactionList(city);
     }
 
-    Transaction[] transactionList(int amount){
-        return null;
+    public Transaction[] transactionList(int amount) throws Exception{
+        return transactionDAO.transactionList(amount);
     }
 }

@@ -13,7 +13,7 @@ public class TransactionDAO {
     }
 
 
-    public Transaction save(Transaction transaction) throws Exception {
+   /* public Transaction save(Transaction transaction) throws Exception {
        // Controller controller = new Controller();
         if (transaction == null)
             throw new BadRequestException("Method save in TransactionDAO class failed to complete. " +
@@ -54,7 +54,7 @@ public class TransactionDAO {
         }
         throw new InternalServerException("Method save in TransactionDAO class" +
                 " failed to complete. Not enough space for transaction with id " + transaction.getId());
-    }
+    }*/
 
     public Transaction[] transactionList() throws Exception {
         if (transactions.length == 0)

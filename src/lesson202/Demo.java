@@ -1,4 +1,4 @@
-package lesson20.task2;
+package lesson202;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -6,14 +6,15 @@ import java.util.Date;
 
 public class Demo {
     public static void main(String[] args) throws Exception {
-        Controller controller = new Controller();
+      Controller controller = new Controller();
         Controller controller1 = new Controller();
+        //TransactionDAO transactionDAO = new TransactionDAO();
 
-        Transaction transaction1 = new Transaction(1, "Odesa", 500, "description", TransactionType.INCOME, new Date());
-        Transaction transaction2 = new Transaction(1, "Odesa", 500, "description", TransactionType.INCOME, new Date());
+        Transaction transaction1 = new Transaction(1, "Odessa", 20, "description", TransactionType.INCOME, new Date());
+        Transaction transaction2 = new Transaction(1, "Odessa", 20, "description", TransactionType.INCOME, new Date());
         Transaction transaction3 = new Transaction(2, "Kiev", 20, "description", TransactionType.INCOME, new Date());
-        Transaction transaction4 = new Transaction(3, "Odesa", 20, "description", TransactionType.INCOME, new Date());
-        Transaction transaction5 = new Transaction(4, "Odesa", 500, "description", TransactionType.INCOME, new Date());
+        Transaction transaction4 = new Transaction(3, "Odessa", 20, "description", TransactionType.INCOME, new Date());
+        Transaction transaction5 = new Transaction(4, "Odessa", 20, "description", TransactionType.INCOME, new Date());
 
         Transaction transaction10 = new Transaction(10, "Odesa", 10, "description",
                 TransactionType.OUTCOME, new Date());
@@ -22,29 +23,31 @@ public class Demo {
 
 
         System.out.println("---Test1---transactionDAO.save");
-     //   System.out.println(controller.transactionDAO.save(transaction1));
+        System.out.println(controller.save(transaction1));
         System.out.println();
 
         System.out.println("---Test2---transactionDAO.save the same transaction");
         try {
-      //      System.out.println(controller.transactionDAO.save(transaction2));
+            System.out.println(controller.save(transaction2));
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Test Pass");
         }
         System.out.println();
-        System.out.println(Arrays.toString(controller.transactionDAO.getTransactions()));
+      //  System.out.println(Arrays.toString(controller.transactionDAO.getTransactions()));
         System.out.println();
 
         System.out.println("---Test3---transactionDAO.save full space");
-      //  System.out.println(controller.transactionDAO.save(transaction3));
-      //  System.out.println(controller.transactionDAO.save(transaction4));
+        System.out.println(controller.transactionDAO.save(transaction3));
+        System.out.println(controller.transactionDAO.save(transaction4));
         try {
 
-      //      System.out.println(controller.transactionDAO.save(transaction5));
+            System.out.println(controller.transactionDAO.save(transaction5));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+
+       // System.out.println(Arrays.toString(controller.transactionDAO.get));
         System.out.println();
 
         System.out.println("---Test4---transactionDAO.transactionList");
