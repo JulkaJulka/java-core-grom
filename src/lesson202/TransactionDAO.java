@@ -17,15 +17,15 @@ public class TransactionDAO {
 
     public Transaction save(Transaction transaction) throws Exception {
         if (transaction == null)
-            throw new BadRequestException("Can't save null user");
+            throw new BadRequestException("Can't save null transaction");
         //ограничения
         //не хватило места в базе
         validate(transaction);
-        for (Transaction tr : transactions) {
+       /* for (Transaction tr : transactions) {
             if (tr != null && tr.equals(transaction))
                 throw new BadRequestException("User with id " + transaction.getId() + " is already exist." +
                         " Method save in TransactionDAO class failed to complete.");
-        }
+        }*/
         for (int i = 0; i < transactions.length; i++) {
             if (transactions[i] == null){
                 transactions[i] = transaction;
