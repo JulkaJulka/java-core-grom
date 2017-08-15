@@ -68,8 +68,24 @@ public class TransactionDAO {
 
     }
 
-   public Transaction[] transactionList() {
-        return transactions;
+   public Transaction[] transactionList() throws Exception {
+       int countFullPosition = 0;
+       for (Transaction tr:transactions) {
+           if(tr != null){
+               countFullPosition++;
+           }
+       }
+       if(countFullPosition == 0)
+           throw new InternalServerException("TransactionList is empty");
+       Transaction[] trList = new Transaction[countFullPosition];
+       int index = 0;
+       for (Transaction tr:transactions) {
+           if(tr != null){
+               trList[index] = tr;
+               index++;
+           }
+       }
+        return trList;
     }
 
     public Transaction[] transactionList(String city) throws Exception {
