@@ -23,23 +23,26 @@ public class Demo {
 
 
         System.out.println("---Test1---transactionDAO.save");
-        System.out.println(controller.save(transaction1));
+        System.out.println(controller.transactionDAO.save(transaction1));
+
         System.out.println();
+        System.out.println(Arrays.toString(controller.transactionDAO.transactionList()));
 
         System.out.println("---Test2---transactionDAO.save the same transaction");
         try {
-            System.out.println(controller.save(transaction2));
+            System.out.println(controller.transactionDAO.save(transaction2));
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Test Pass");
         }
         System.out.println();
-      //  System.out.println(Arrays.toString(controller.transactionDAO.getTransactions()));
+        System.out.println(Arrays.toString(controller.transactionDAO.transactionList()));
         System.out.println();
 
         System.out.println("---Test3---transactionDAO.save full space");
         System.out.println(controller.transactionDAO.save(transaction3));
         System.out.println(controller.transactionDAO.save(transaction4));
+        System.out.println(Arrays.toString(controller.transactionDAO.transactionList()));
         try {
 
             System.out.println(controller.transactionDAO.save(transaction5));
@@ -47,7 +50,7 @@ public class Demo {
             System.out.println(e.getMessage());
         }
 
-       // System.out.println(Arrays.toString(controller.transactionDAO.get));
+        System.out.println(Arrays.toString(controller.transactionDAO.transactionList()));
         System.out.println();
 
         System.out.println("---Test4---transactionDAO.transactionList");
@@ -67,7 +70,7 @@ public class Demo {
         System.out.println();
 
         System.out.println("---Test7---transactionDAO.transactionListByCity");
-        System.out.println(Arrays.toString(controller.transactionDAO.transactionList("Odesa")));
+        System.out.println(Arrays.toString(controller.transactionDAO.transactionList("Odessa")));
         System.out.println();
 
         System.out.println("---Test8---transactionDAO.transactionListByCity_allowed city is not existing in DB");
@@ -99,7 +102,7 @@ public class Demo {
         System.out.println();
 
         System.out.println("---Test12---controller.transactionList by City ");
-        System.out.println(Arrays.toString(controller.transactionList("Odesa")));
+        System.out.println(Arrays.toString(controller.transactionList("Odessa")));
         System.out.println();
 
         System.out.println("---Test13---controller.transactionList by City not allowed ");
@@ -119,7 +122,7 @@ public class Demo {
         System.out.println();
 
         System.out.println("---Test15---controller.transactionListByAmount");
-        System.out.println(Arrays.toString(controller.transactionList(500)));
+        System.out.println(Arrays.toString(controller.transactionList(20)));
         System.out.println();
 
         System.out.println("---Test16---controller.transactionListByAmount_amount is not existing in DB");

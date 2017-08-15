@@ -24,7 +24,14 @@ public class TransactionDAO {
                 throw new BadRequestException("User with id " + transaction.getId() + " is already exist." +
                         " Method save in TransactionDAO class failed to complete.");
         }
-        return transaction;
+        for (int i = 0; i < transactions.length; i++) {
+            if (transactions[i] == null){
+                transactions[i] = transaction;
+
+        return transaction;}
+        }
+        return null;
+
     }
 
     private void validate(Transaction transaction) throws Exception {
@@ -57,13 +64,9 @@ public class TransactionDAO {
                     "failed to complete. Not enough space for transaction with id " + transaction.getId());
         }
 
-
-        //TODO
     }
 
    public Transaction[] transactionList() throws InternalServerException {
-       if(transactions == null)
-           throw new InternalServerException("DB doesn't have any transactions.");
         return transactions;
     }
 

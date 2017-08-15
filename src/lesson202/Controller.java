@@ -13,7 +13,7 @@ public class Controller {
         return transactionDAO.save(transaction);
     }
 
-    public Transaction[] transactionList(){
+    public Transaction[] transactionList() throws Exception{
 
         return transactionDAO.transactionList();
     }
