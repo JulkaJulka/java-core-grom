@@ -46,10 +46,10 @@ public class TransactionDAO {
             sum += tr.getAmount();
             count++;
         }
-        if (sum > utils.getLimitTransactionsPerDayAmount())
+        if (sum + 1 > utils.getLimitTransactionsPerDayAmount())
             throw new LimitExceeded("Transaction limit per day amount " + transaction.getId() + " exceeded." +
                     " Method saveTransaction in Controller failed to complete");
-        if (count > utils.getLimitTransactionsPerDayCount())
+        if (count + 1 > utils.getLimitTransactionsPerDayCount())
             throw new LimitExceeded("Transaction limit per day count exceeded. Transaction id "
                     + transaction.getId() + " is not saved");
       if(cityAllowed(transaction.getCity()) == null)
