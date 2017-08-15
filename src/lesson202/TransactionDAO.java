@@ -104,8 +104,9 @@ public class TransactionDAO {
         }
 
         if (countTrByCity == 0)
-            throw new InternalServerException("DB doesn't contain any data of city " + city +
-                    ". Method transactionList by City in Controller is failed to complete");
+            return new Transaction[] {};
+            //throw new InternalServerException("DB doesn't contain any data of city " + city +
+               //     ". Method transactionList by City in Controller is failed to complete");
 
         Transaction[] trListByCity = new Transaction[countTrByCity];
         int index = 0;
