@@ -126,7 +126,7 @@ public class TransactionDAO {
                countAmountDB++;
        }
        if (countAmountDB == 0)
-           return new Transaction[] {null};
+           return new Transaction[] {};
            //throw new InternalServerException("DB doesn't contain any data of amount " + amount +
                 //   ". Method transactionList by Amount in TransactionDAO is failed to complete");
        Transaction[] trListByAmount = new Transaction[countAmountDB];
