@@ -16,7 +16,7 @@ public class TransactionDAO {
    public Transaction save(Transaction transaction) throws LimitExceeded{
        //ограничения
        //не хватило места в базе
-
+validate(transaction);
 
 
 return transaction;
