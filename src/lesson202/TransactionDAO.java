@@ -68,7 +68,7 @@ public class TransactionDAO {
 
     }
 
-   public Transaction[] transactionList() throws InternalServerException {
+   public Transaction[] transactionList() {
         return transactions;
     }
 
