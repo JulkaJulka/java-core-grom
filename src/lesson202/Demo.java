@@ -20,7 +20,7 @@ public class Demo {
                 TransactionType.OUTCOME, new Date());
         Transaction transaction11 = new Transaction(10, "Odesa", 10, "description",
                 TransactionType.OUTCOME, new Date());
-
+      //  Transaction transaction13 = new Transaction(null,null);
 
         System.out.println("---Test1---transactionDAO.save");
         System.out.println(controller.transactionDAO.save(transaction1));
