@@ -23,9 +23,8 @@ public class TransactionDAO {
         validate(transaction);
         for (Transaction tr : transactions) {
             if (tr != null && tr.equals(transaction))
-                return null;
-               // throw new BadRequestException("Transaction with id " + transaction.getId() + " is already exist." +
-                    //    " Method save in TransactionDAO class failed to complete.");
+               throw new BadRequestException("Transaction with id " + transaction.getId() + " is already exist." +
+                     " Method save in TransactionDAO class failed to complete.");
         }
         for (int i = 0; i < transactions.length; i++) {
             if (transactions[i] == null){
@@ -55,7 +54,8 @@ public class TransactionDAO {
                     + transaction.getId() + " is not saved");
       if(cityAllowed(transaction.getCity()) == null)
                 throw new BadRequestException("City with name " + transaction.getCity() +
-                       " not found at list of allowed cities");
+                       " not found at list of allowed cities" +
+                        "Transaction id " + transaction.getId() + " can't be save");
 
         int countNull = 0;
         for (Transaction tr : transactions) {
