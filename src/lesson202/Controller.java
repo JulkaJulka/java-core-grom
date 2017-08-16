@@ -7,7 +7,7 @@ import lesson202.Exception.LimitExceeded;
  */
 public class Controller {
 
-    public TransactionDAO transactionDAO = new TransactionDAO();
+    private TransactionDAO transactionDAO = new TransactionDAO();
 
     public Transaction save(Transaction transaction) throws Exception{
         return transactionDAO.save(transaction);
