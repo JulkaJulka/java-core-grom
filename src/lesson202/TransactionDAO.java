@@ -91,12 +91,12 @@ public class TransactionDAO {
         return trList;
     }
 
-    public Transaction[] transactionList(String city) throws Exception {
+    public Transaction[] transactionList(String city) {
 
-        if (!city.equals(cityAllowed(city)))
+       /* if (!city.equals(cityAllowed(city)))
             throw new LimitExceeded("City of transaction is not allowed. " +
                     "Method transactionList by City in TransactionDAO" +
-                    " is failed to complete");
+                    " is failed to complete");*/
 
         int countTrByCity = 0;
         for (Transaction tr : transactionList()) {
