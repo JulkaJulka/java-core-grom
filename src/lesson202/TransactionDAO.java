@@ -120,7 +120,7 @@ public class TransactionDAO {
         return trListByCity;
     }
 
-   public Transaction[] transactionList(int amount) throws Exception{
+   public Transaction[] transactionList(int amount){
 
        int countAmountDB = 0;
        for (Transaction tr : transactionList()) {
