@@ -135,9 +135,10 @@ public class TransactionDAO {
        Transaction[] trListByAmount = new Transaction[countAmountDB];
        int index = 0;
        for (Transaction tr : transactionList()) {
-           if (tr.getAmount() == amount)
+           if (tr.getAmount() == amount) {
                trListByAmount[index] = tr;
-           index++;
+               index++;
+           }
        }
        return trListByAmount;
     }
