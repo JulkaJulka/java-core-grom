@@ -23,8 +23,9 @@ public class TransactionDAO {
         validate(transaction);
         for (Transaction tr : transactions) {
             if (tr != null && tr.equals(transaction))
-                throw new BadRequestException("Transaction with id " + transaction.getId() + " is already exist." +
-                        " Method save in TransactionDAO class failed to complete.");
+                return null;
+               // throw new BadRequestException("Transaction with id " + transaction.getId() + " is already exist." +
+                    //    " Method save in TransactionDAO class failed to complete.");
         }
         for (int i = 0; i < transactions.length; i++) {
             if (transactions[i] == null){
