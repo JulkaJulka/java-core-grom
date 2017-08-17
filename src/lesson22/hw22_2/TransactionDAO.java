@@ -37,7 +37,7 @@ public class TransactionDAO {
     }
 
     private static void validate(Transaction transaction) throws Exception {
-        if (transaction.getAmount() > utils.getLimitSimpleTransactionAmount())
+        if (transaction.getAmount() > Utils.getLimitSimpleTransactionAmount())
             throw new LimitExceeded("Transaction limit per day amount " + transaction.getId() + " exceeded.");
 
         int sum = 0;
