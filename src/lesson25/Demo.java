@@ -1,10 +1,6 @@
 package lesson25;
 
-import lesson24.exercise.*;
 
-/**
- * Created by user on 20.08.2017.
- */
 public class Demo {
     public static void main(String[] args) throws Exception {
         GeneralDAO generalDAO = new GeneralDAO();
