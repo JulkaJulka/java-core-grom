@@ -1,7 +1,5 @@
 package lesson24.exercise;
 
-import lesson10.hw10.Order;
-
 import java.util.Arrays;
 
 /**
