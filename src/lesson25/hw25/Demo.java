@@ -1,6 +1,6 @@
 package lesson25.hw25;
 
-import lesson24.exercise.*;
+
 
 /**
  * Created by user on 20.08.2017.
