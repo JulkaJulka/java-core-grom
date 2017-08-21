@@ -9,9 +9,6 @@ public class GeneralDAO<T> {
     public T save(T t) throws Exception {
         if(t == null)
             throw new Exception("Object is not detected");
-       /* if (t.getId() <= 0)
-            throw new Exception("Id " + t.getId() +
-                    " isn't unacceptable. Object can't save to DB with Id ");*/
         if (checkLimitation(array, t)) {
             for (int i = 0; i < array.length; i++) {
                 if (array[i] == null) {
@@ -35,7 +32,6 @@ public class GeneralDAO<T> {
         T[] arrayEmpty = (T[]) new Object[0];
         if (countFullPosition == 0)
             return arrayEmpty;
-        // throw new InternalServerException("TransactionList is empty");
         T[] trList = (T[]) new Object[countFullPosition];
         int index = 0;
         for (T el : array) {
