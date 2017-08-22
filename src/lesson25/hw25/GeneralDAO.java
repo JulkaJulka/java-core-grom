@@ -9,7 +9,7 @@ public class GeneralDAO<T> {
     public T save(T t) throws Exception {
         if(t == null)
             throw new Exception("Object is not detected");
-        if (checkLimitation(array, t)) {
+        if (checkLimitation(t)) {
             for (int i = 0; i < array.length; i++) {
                 if (array[i] == null) {
                     array[i] = t;
@@ -44,14 +44,14 @@ public class GeneralDAO<T> {
     }
 
 
-    public boolean checkLimitation(T[] array, T t) throws Exception {
+    public boolean checkLimitation( T t) throws Exception {
         if(t == null)
             throw new Exception("Object  is not detected");
         T saveObject = findObjectInDB(array, t);
         if (saveObject != null)
             throw new Exception("Object  " + t +
                     " already exists in DB. DB can't save the same objects.");
-        if (!checkSizeOfDB(array))
+        if (!checkSizeOfDB())
             throw new Exception(("DB is full"));
         return true;
     }
@@ -71,7 +71,7 @@ public class GeneralDAO<T> {
 
     }
 
-    public boolean checkSizeOfDB(T[] array) throws Exception {
+    public boolean checkSizeOfDB() throws Exception {
         if (array == null)
             return false;
         int countFullPositions = 0;
