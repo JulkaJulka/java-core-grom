@@ -1,4 +1,4 @@
-package lesson9.user;
+package lesson27.hw27;
 public class User {
     private  long id;
     private String name;
@@ -26,19 +26,11 @@ public class User {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
-        User user = (User) o;
-
-        return id == user.id;
+        if(this.id == (((User)o).id)) {
+            return true;
+        }
+        return false;
 
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", sessionId='" + sessionId + '\'' +
-                '}';
-    }
 }
