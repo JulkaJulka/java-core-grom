@@ -1,4 +1,4 @@
-package lesson30;
+package lesson30.hw30;
 
 import java.util.ArrayList;
 
@@ -11,5 +11,10 @@ public class Manager extends Employer{
     public Manager(long id, long tabulNumber, String name, String yearOfBirth, Department department,
                    EmployerType employerType, long salary, ArrayList<Project> projects) {
         super(id, tabulNumber, name, yearOfBirth, department, employerType, salary, projects);
+    }
+
+    @Override
+    public ArrayList<Project> getProjects() {
+        return projects;
     }
 }
