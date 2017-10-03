@@ -24,6 +24,7 @@ public class Demo {
         customerArrayList.add(customer2);
 
         ArrayList<Project> projectArrayList = new ArrayList<>();
+        ArrayList<Project> projectArrayList2 = new ArrayList<>();
 
         Project project1 = new Project("Project1", customer1);
         Project project2 = new Project("Project2", customer2);
@@ -32,6 +33,8 @@ public class Demo {
         projectArrayList.add(project2);
         projectArrayList.add(project3);
 
+        projectArrayList2.add(project3);
+        projectArrayList2.add(project2);
        // Department department1 = new Department(DepartmentType.DEVELOPER, null, );
        // Employee employee1 = new Employee("Yuliia", "Petrova", new Date(), Position.DEVELOPER, null,null );
 
@@ -55,6 +58,9 @@ public class Demo {
 
         Employee employee3 = new Employee("Oleg", "Petrova", new Date(), Position.DEVELOPER, null, projectArrayList );
         employeeArrayList.add(employee3);
+
+        Employee employee6 = new Employee("Oleg", "Petrova", new Date(), Position.DEVELOPER, null, projectArrayList2 );
+        employeeArrayList.add(employee6);
 
 
         ArrayList<Employee> employees = new ArrayList<>();
@@ -85,6 +91,11 @@ public class Demo {
         System.out.println("Test5_projectsByCustomer");
         controller.projectsByCustomer(customer1);
         System.out.println();
+
+        System.out.println("---Test6_employeesByProjectEmployee");
+        controller.employeesByProjectEmployee(employee6);
+
+        System.out.println(employeeDAO1.getEmployeeArrayList().contains(employee1));
 
 
     }

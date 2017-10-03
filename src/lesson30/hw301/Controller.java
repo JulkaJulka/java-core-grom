@@ -83,7 +83,11 @@ public class Controller {
     }
 
     public void employeesByTeamLead(Employee lead){
-
+        ArrayList<Project> arrayList = new ArrayList<>();
+        for (Employee empl : employeeDAO.getEmployeeArrayList()) {
+            if(empl != null && empl.equals(lead))
+                arrayList.equals(lead.getProjects());
+        }
 
     }
     public void teamLeadsByEmployee(Employee employee){
@@ -92,17 +96,21 @@ public class Controller {
     public void employeesByProjectEmployee(Employee employee){
         ArrayList<Project> arrayList = new ArrayList<>();
         for (Employee empl : employeeDAO.getEmployeeArrayList()) {
-            if(empl != null && empl.equals(employee))
-                arrayList.equals(employee.getProjects());
+            if(empl != null && empl.equals(employee)) {
+                arrayList = employee.getProjects();
+                System.out.println("1 sout " + arrayList.toString());
+                break;
+            }
         }
+        System.out.println(arrayList.toString());
         ArrayList<Employee> employeesByProjectEmployee = new ArrayList<>();
         for (Employee empl : employeeDAO.getEmployeeArrayList())
             for (Project pr : arrayList){
             if(employeeDAO.getEmployeeArrayList().contains(pr)){
-
+employeesByProjectEmployee.add(empl);
             }
+                System.out.println(employeesByProjectEmployee.toString());
             }
-
 
     }
     public void projectsByCustomer(Customer customer){
