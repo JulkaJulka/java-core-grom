@@ -1,10 +1,9 @@
 package lesson30.hw301;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
-/**
- * Created by user on 02.10.2017.
- */
 public class Controller {
     private ArrayList<Employee> employeeArrayList;
     private ArrayList<Project> projectArrayList;
@@ -52,76 +51,107 @@ public class Controller {
         this.projectArrayList = projectArrayList;
     }
 
-    public void employeesByProject(Project project){
-        for (Employee empl: employeeDAO.getEmployeeArrayList()) {
-            if(empl != null && empl.getProjects() != null && empl.getProjects().contains(project)){
+    public void employeesByProject(Project project) {
+        for (Employee empl : employeeDAO.getEmployeeArrayList()) {
+            if (empl != null && empl.getProjects() != null && empl.getProjects().contains(project)) {
                 System.out.println(empl);
             }
         }
     }
 
-    public void projectsByEmployee(Employee employee){
+    public void projectsByEmployee(Employee employee) {
         for (Employee empl : employeeDAO.getEmployeeArrayList()) {
-            if(empl != null && empl.equals(employee))
+            if (empl != null && empl.equals(employee))
                 System.out.println(empl.getProjects());
         }
     }
 
-    public void employeesByDepartmentWithoutProject(Department department){
-        for(Employee empl : employeeDAO.getEmployeeArrayList()){
-            if(empl.getDepartment() == department && empl.getProjects() == null) {
+    public void employeesByDepartmentWithoutProject(Department department) {
+        for (Employee empl : employeeDAO.getEmployeeArrayList()) {
+            if (empl.getDepartment() == department && empl.getProjects() == null) {
                 System.out.println(empl);
             }
         }
     }
 
-    public void employeesWithoutProject(){
+    public void employeesWithoutProject() {
+        for (Employee empl : employeeDAO.getEmployeeArrayList()) {
+            if (empl != null && empl.getProjects() == null)
+                System.out.println(empl);
+        }
+    }
+
+    public void employeesByTeamLead(Employee lead) throws Exception {
+        if (lead == null) {
+            throw new Exception("Such lead doesn't exist in DB");
+        }
+        if (lead.getProjects() == null)
+            throw new Exception("Lead hasn't any employees");
+        Set<Employee> employeeSet = new HashSet<>();
+        for (Employee empl : employeeDAO.getEmployeeArrayList()) {
+            for (Project pr : lead.getProjects())
+                if (empl != null && pr != null && !empl.getPosition().equals(Position.TEAM_LEAD)
+                        && empl.getProjects() != null && empl.getProjects().contains(pr)) {
+                    employeeSet.add(empl);
+                }
+        }
+        System.out.println(employeeSet);
+
+
+    }
+
+    public void teamLeadsByEmployee(Employee employee) {
+        Set<Employee> employeeSet = new HashSet<>();
         for (Employee empl : employeeDAO.getEmployeeArrayList()){
-            if(empl != null && empl.getProjects() == null)
-                System.out.println(empl);
+            for (Project pr : employee.getProjects()){
+                if(empl != null && pr != null && employee.getProjects() != null
+                        && empl.getPosition() != null && empl.getPosition().equals(Position.TEAM_LEAD)
+                        && empl.getProjects() != null
+                        && empl.getProjects().contains(pr) ){
+                    employeeSet.add(empl);
+                }
+            }
         }
+        System.out.println(employeeSet);
+
     }
 
-    public void employeesByTeamLead(Employee lead){
-        ArrayList<Project> arrayList = new ArrayList<>();
+    public void employeesByProjectEmployee(Employee employee) {
+
+        Set<Employee> employeesByProjectEmployee = new HashSet<>();
         for (Employee empl : employeeDAO.getEmployeeArrayList()) {
-            if(empl != null && empl.equals(lead))
-                arrayList.equals(lead.getProjects());
-        }
+            for (Project pr : employee.getProjects()) {
+                if (empl != null && pr != null && !empl.equals(employee) && empl.getProjects() != null &&
+                        empl.getProjects().contains(pr)) {
+                    employeesByProjectEmployee.add(empl);
+                }
 
-    }
-    public void teamLeadsByEmployee(Employee employee){
-
-    }
-    public void employeesByProjectEmployee(Employee employee){
-        ArrayList<Project> arrayList = new ArrayList<>();
-        for (Employee empl : employeeDAO.getEmployeeArrayList()) {
-            if(empl != null && empl.equals(employee)) {
-                arrayList = employee.getProjects();
-                System.out.println("1 sout " + arrayList.toString());
-                break;
             }
         }
-        System.out.println(arrayList.toString());
-        ArrayList<Employee> employeesByProjectEmployee = new ArrayList<>();
-        for (Employee empl : employeeDAO.getEmployeeArrayList())
-            for (Project pr : arrayList){
-            if(employeeDAO.getEmployeeArrayList().contains(pr)){
-employeesByProjectEmployee.add(empl);
-            }
-                System.out.println(employeesByProjectEmployee.toString());
-            }
+        System.out.println(employeesByProjectEmployee.toString());
 
     }
-    public void projectsByCustomer(Customer customer){
-        for (Project pr : projectDAO.getProjectArrayList()){
-            if(pr != null && pr.getCustomer().equals(customer))
+
+    public void projectsByCustomer(Customer customer) {
+        for (Project pr : projectDAO.getProjectArrayList()) {
+            if (pr != null && pr.getCustomer().equals(customer))
                 System.out.println(pr);
         }
 
     }
-    public void employeesByCustomerProjects(Customer customer){
 
+    public void employeesByCustomerProjects(Customer customer) {
+        Set<Employee> employeeSet = new HashSet<>();
+        for (Employee empl : employeeDAO.getEmployeeArrayList()) {
+            for (Project pr : projectDAO.getProjectArrayList()) {
+                if (empl != null && pr != null && pr.getCustomer().equals(customer)) {
+                    employeeSet.add(empl);
+                }
+            }
 
+        }
+        System.out.println(employeeSet.toString());
     }
+
+
 }

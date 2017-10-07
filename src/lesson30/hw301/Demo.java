@@ -7,7 +7,7 @@ import java.util.Date;
  * Created by user on 02.10.2017.
  */
 public class Demo {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         ArrayList<Employee> employeeArrayList = new ArrayList<>();
 
@@ -25,6 +25,7 @@ public class Demo {
 
         ArrayList<Project> projectArrayList = new ArrayList<>();
         ArrayList<Project> projectArrayList2 = new ArrayList<>();
+        ArrayList<Project> projectArrayList3 = new ArrayList<>();
 
         Project project1 = new Project("Project1", customer1);
         Project project2 = new Project("Project2", customer2);
@@ -35,6 +36,7 @@ public class Demo {
 
         projectArrayList2.add(project3);
         projectArrayList2.add(project2);
+        projectArrayList3.add(project3);
        // Department department1 = new Department(DepartmentType.DEVELOPER, null, );
        // Employee employee1 = new Employee("Yuliia", "Petrova", new Date(), Position.DEVELOPER, null,null );
 
@@ -56,11 +58,17 @@ public class Demo {
 
 
 
-        Employee employee3 = new Employee("Oleg", "Petrova", new Date(), Position.DEVELOPER, null, projectArrayList );
+        Employee employee3 = new Employee("Oleg3", "Petrova", new Date(), Position.TEAM_LEAD, null, projectArrayList );
         employeeArrayList.add(employee3);
 
-        Employee employee6 = new Employee("Oleg", "Petrova", new Date(), Position.DEVELOPER, null, projectArrayList2 );
+        Employee employee6 = new Employee("Oleg6", "Petrova", new Date(), Position.TEAM_LEAD, null, projectArrayList2 );
         employeeArrayList.add(employee6);
+
+        Employee employee7 = new Employee("Oleg7", "Petrova", new Date(), Position.DEVELOPER, null, projectArrayList2 );
+        employeeArrayList.add(employee7);
+
+        Employee employee8 = new Employee("Oleg8", "Petrova", new Date(), Position.DEVELOPER, null, projectArrayList3 );
+        employeeArrayList.add(employee8);
 
 
         ArrayList<Employee> employees = new ArrayList<>();
@@ -77,8 +85,8 @@ public class Demo {
         System.out.println();
 
         System.out.println("---Test3_employeesByDepartmentWithoutProject()");
-        Employee employee4 = new Employee("Oleg", "Petrova", new Date(), Position.DEVELOPER, department1, projectArrayList );
-        Employee employee5 = new Employee("Oleg", "Petrova", new Date(), Position.DEVELOPER, department1, null );
+        Employee employee4 = new Employee("Oleg4", "Petrova", new Date(), Position.DEVELOPER, department1, projectArrayList );
+        Employee employee5 = new Employee("Oleg5", "Petrova", new Date(), Position.DEVELOPER, department1, null );
         employeeArrayList.add(employee4);
         employeeArrayList.add(employee5);
         controller.employeesByDepartmentWithoutProject(department1);
@@ -92,11 +100,20 @@ public class Demo {
         controller.projectsByCustomer(customer1);
         System.out.println();
 
-        System.out.println("---Test6_employeesByProjectEmployee");
-        controller.employeesByProjectEmployee(employee6);
+                           System.out.println("---Test6_employeesByProjectEmployee");
+        System.out.println("empl7 " + employee7.toString());
+        controller.employeesByProjectEmployee(employee7);
+        System.out.println();
 
-        System.out.println(employeeDAO1.getEmployeeArrayList().contains(employee1));
+        System.out.println("---Test6_employeesByCustomerProjects");
+controller.employeesByCustomerProjects(customer1);
+        System.out.println();
 
+        System.out.println("---Test8_employeesByTeamLead");
+        controller.employeesByTeamLead(employee6);
+        System.out.println();
 
+        System.out.println("---Test9_teamLeadsByEmployee");
+        controller.teamLeadsByEmployee(employee7);
     }
 }
