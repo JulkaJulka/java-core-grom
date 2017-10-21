@@ -1,7 +1,7 @@
 package lesson30.task1;
 
 public class Main {
-    public static void main(String[] args) {
+   /* public static void main(String[] args) {
         Bank usBank = new USBank(1222, "Sweden", Currency.EUR, 100, 1400, 4, 444343434);
         Bank euBank = new EUBank(1344,"France", Currency.EUR,100, 1500,4, 546899997);
         Bank chinaBank  = new ChinaBank(1344,"China", Currency.USD,100, 1300,4, 33339997);
@@ -25,9 +25,9 @@ public class Main {
        /* bankSystem.fund(user3, 50000);
         System.out.println(user3.getBalance()+" "  + user3.getName());*/
 
-        bankSystem.transferMoney(user6, user3,50);
+       /* bankSystem.transferMoney(user6, user3,50);
         System.out.println(user6.getBalance()+" "  + "userFrom");
         System.out.println(user3.getBalance()+" "  + "userTo");
 
-    }
+    }*/
 }
