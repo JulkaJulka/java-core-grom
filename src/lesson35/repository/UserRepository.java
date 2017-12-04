@@ -19,8 +19,6 @@ public class UserRepository {
     private final String pathUserDB = "D:/Ubuntu_backup/dev/UserDB.txt";
 
     public User registerUser(User user) throws Exception {
-       // if (user == null)
-        //    throw new Exception("You enter wrong data. Try again");
         validateInputData(user);
         if (!(findUserByUserName(user) == null)) {
             throw new Exception("User with userName " + user.getUserName() +
