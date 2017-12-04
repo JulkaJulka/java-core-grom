@@ -19,8 +19,9 @@ public class UserRepository {
     private final String pathUserDB = "D:/Ubuntu_backup/dev/UserDB.txt";
 
     public User registerUser(User user) throws Exception {
-        if (user == null)
-            throw new Exception("You enter wrong data. Try again");
+       // if (user == null)
+        //    throw new Exception("You enter wrong data. Try again");
+        validateInputData(user);
         if (!(findUserByUserName(user) == null)) {
             throw new Exception("User with userName " + user.getUserName() +
                     " has registered already. Try another userName");
@@ -105,6 +106,21 @@ public class UserRepository {
         return false;
     }
 
+    public boolean validateInputData(User user) throws Exception{
+        if(user == null || user.getUserName().isEmpty() || user.getPassword().isEmpty() ||
+                user.getCountry().isEmpty()){
+            throw new Exception("You input wrong data. Try again, please");
+        }
+        if(!(checkWordOnLetAndDigts(user.getUserName())))
+            throw new Exception("UserName " + user.getUserName() + " is wrong");
+        if(!(checkWordOnLetAndDigts(user.getPassword())))
+            throw new Exception("Password must have only letters and digits");
+        if(!(checkWordOnLetters(user.getCountry()))){
+            throw new Exception("Country " + user.getCountry() + " must have only letters");}
+            return true;
+
+    }
+
     public void writeToFile(String path, StringBuffer contentToWrite) throws IOException {
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(path, true))) {
             bufferedWriter.append(contentToWrite);
@@ -112,5 +128,33 @@ public class UserRepository {
         } catch (IOException e) {
             throw new IOException("Can't write to file " + path);
         }
+    }
+
+    private boolean checkWordOnLetters(String body) {
+        char[] chars = body.toCharArray();
+        for (char ch : chars) {
+            if (!Character.isLetter(ch))
+                return false;
+        }
+
+        return true;
+    }
+    private boolean checkWordOnLetAndDigts(String body) {
+        char[] chars = body.toCharArray();
+        for (char ch : chars) {
+            if (!Character.isLetterOrDigit(ch))
+                return false;
+        }
+
+        return true;
+    }
+    private boolean checkWordOnDigts(String body) {
+        char[] chars = body.toCharArray();
+        for (char ch : chars) {
+            if (!Character.isDigit(ch))
+                return false;
+        }
+
+        return true;
     }
 }
