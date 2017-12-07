@@ -13,6 +13,7 @@ public class HotelRepository {
 
     public Hotel findHotelByName(String name) throws Exception{
         checkHotelName(name);
+
         String line = "";
         StringBuffer res = new StringBuffer();
 
