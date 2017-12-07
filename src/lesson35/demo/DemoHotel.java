@@ -8,7 +8,12 @@ import lesson35.repository.HotelRepository;
 public class DemoHotel {
     public static void main(String[] args) throws Exception {
         HotelRepository hotelRepository = new HotelRepository();
-        System.out.println( hotelRepository.findHotelByName("Riviera"));
-        System.out.println( hotelRepository.findHotelByCity("Kyev"));
+       // System.out.println( hotelRepository.findHotelByName("Riviera"));
+        System.out.println("-----");
+        System.out.println( hotelRepository.findHotelByCity("Kiev"));
+
+
+       // System.out.println(hotelRepository.findHotelById(4556l));
+        System.out.println(hotelRepository.findHotelByName("Riviera"));
     }
 }

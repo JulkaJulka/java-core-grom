@@ -7,11 +7,5 @@ import lesson35.model.Hotel;
  */
 public class HotelController {
 
-   private Hotel addHotel(Hotel hotel){
-       return null;
-   }
-    private void deleteHotel(Hotel hotel){
-
-    }
 
 }
