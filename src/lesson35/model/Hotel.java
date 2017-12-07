@@ -5,12 +5,17 @@ package lesson35.model;
  */
 public class Hotel {
     private long id;
+    private String hotelName;
     private String country;
     private String city;
    private String street;
 
-    public Hotel(long id, String country, String city, String street) {
+    public Hotel() {
+    }
+
+    public Hotel(long id, String hotelName, String country, String city, String street) {
         this.id = id;
+        this.hotelName = hotelName;
         this.country = country;
         this.city = city;
         this.street = street;
@@ -18,6 +23,14 @@ public class Hotel {
 
     public long getId() {
         return id;
+    }
+
+    public String getHotelName() {
+        return hotelName;
+    }
+
+    public void setHotelName(String hotelName) {
+        this.hotelName = hotelName;
     }
 
     public String getCountry() {
@@ -31,4 +44,32 @@ public class Hotel {
     public String getStreet() {
         return street;
     }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    @Override
+    public String toString() {
+        return "Hotel{" +
+                "id=" + id +
+                ", hotelName='" + hotelName + '\'' +
+                ", country='" + country + '\'' +
+                ", city='" + city + '\'' +
+                ", street='" + street + '\'' +
+                '}';
+    }
+
 }

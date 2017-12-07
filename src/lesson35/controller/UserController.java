@@ -20,7 +20,7 @@ public class UserController {
         //return userService.registerUser(user);
         return null;
     }
-    private Hotel findHoteByName(String name){
+    private Hotel findHotelByName(String name){
         return null;
     }
     private Hotel findHotelByCity(String city){

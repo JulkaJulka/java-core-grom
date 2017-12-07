@@ -8,6 +8,7 @@ import java.util.Date;
 public class MovieSession {
     private long id;
     private int ticketsCount;
+    private int ticketsOrder;
     private Date date;
     private int price;
     private String address;
@@ -19,6 +20,14 @@ public class MovieSession {
         this.date = date;
         this.price = price;
         this.address = address;
+    }
+
+    public int getTicketsOrder() {
+        return ticketsOrder;
+    }
+
+    public void setTicketsOrder(int ticketsOrder) {
+        this.ticketsOrder = ticketsOrder;
     }
 
     public long getId() {

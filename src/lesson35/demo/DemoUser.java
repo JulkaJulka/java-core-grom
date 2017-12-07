@@ -22,7 +22,7 @@ public class DemoUser {
         User user3 = new User(1001,"Test2","qwerty", "Ukraine", UserType.USER);
         User user4 = new User(1001,"Test3","qwerty", "Ukraine", UserType.USER);
         User user5 = new User(234252452,"Test4","qwerty", "Ukraine", UserType.USER);*/
-        User user6 = new User(1001,"Katya","qwerty", "Ukraine", UserType.ADMIN);
+        User user6 = new User(1001,"Katy1","qwerty", "Ukra ine", UserType.ADMIN);
        // System.out.println(userRepository.findUserByUserName(user2));
         System.out.println(userRepository.registerUser(user6));
        // System.out.println(userRepository.checkPresenceIdUser(user6));
