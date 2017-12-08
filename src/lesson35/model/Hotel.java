@@ -79,12 +79,19 @@ public class Hotel {
 
         Hotel hotel = (Hotel) o;
 
-        return id == hotel.id;
+        if (!hotelName.equals(hotel.hotelName)) return false;
+        if (!country.equals(hotel.country)) return false;
+        if (!city.equals(hotel.city)) return false;
+        return street.equals(hotel.street);
 
     }
 
     @Override
     public int hashCode() {
-        return (int) (id ^ (id >>> 32));
+        int result = hotelName.hashCode();
+        result = 31 * result + country.hashCode();
+        result = 31 * result + city.hashCode();
+        result = 31 * result + street.hashCode();
+        return result;
     }
 }

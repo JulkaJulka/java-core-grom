@@ -1,5 +1,8 @@
 package lesson35.demo;
 
+import lesson35.model.Hotel;
+import lesson35.model.User;
+import lesson35.model.UserType;
 import lesson35.repository.HotelRepository;
 
 /**
@@ -10,10 +13,18 @@ public class DemoHotel {
         HotelRepository hotelRepository = new HotelRepository();
        // System.out.println( hotelRepository.findHotelByName("Riviera"));
         System.out.println("-----");
-        System.out.println( hotelRepository.findHotelByCity("Kiev"));
-
-
+        //System.out.println( hotelRepository.findHotelByCity("Kiev"));
+        User user1 = new User(1002l,"Oleg","poiuyt","Ukraine", UserType.USER);
+        user1.setUserType(UserType.ADMIN);
+        Hotel hotel1 = new Hotel(348l,"Riviera","Belarus","Minsk2","Test2");
+        Hotel hotel3 = new Hotel(111l,"LubidNova","Ukraine","Kiev","Test");
        // System.out.println(hotelRepository.findHotelById(4556l));
-        System.out.println(hotelRepository.findHotelByName("Riviera"));
+       // System.out.println(hotelRepository.findHotelByName("Riviera"));
+       // hotelRepository.deleteHotel(hotel1,user1);5284561767087373448,Rixon,Thailand,Phuket,Testova
+        Hotel hotel2 = new Hotel(3122410684202721229l,"Rixon8000000","Thailand","Phuket","Testova");
+        System.out.println(hotelRepository.addHotel(hotel2,user1));
+        //System.out.println(hotelRepository.checkPresenceIdHotel(100000000l));
+
+
     }
 }
