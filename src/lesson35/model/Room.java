@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Created by user on 30.11.2017.
  */
-public class Room {
+public class Room implements Comparable<Room>  {
    private long id;
    private int numberOfGuests;
    private double price;
@@ -13,6 +13,9 @@ public class Room {
    private boolean petsAllowed;
    private Date dateAvailableFrom;
    private Hotel hotel;
+
+    public Room() {
+    }
 
     public Room(long id, int numberOfGuests, double price, boolean breakfastIncluded, boolean petsAllowed, Date dateAvailableFrom, Hotel hotel) {
         this.id = id;
@@ -50,5 +53,45 @@ public class Room {
 
     public Hotel getHotel() {
         return hotel;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setNumberOfGuests(int numberOfGuests) {
+        this.numberOfGuests = numberOfGuests;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public void setBreakfastIncluded(boolean breakfastIncluded) {
+        this.breakfastIncluded = breakfastIncluded;
+    }
+
+    public void setPetsAllowed(boolean petsAllowed) {
+        this.petsAllowed = petsAllowed;
+    }
+
+    public void setDateAvailableFrom(Date dateAvailableFrom) {
+        this.dateAvailableFrom = dateAvailableFrom;
+    }
+
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
+    }
+
+    @Override
+    public int compareTo(Room o) {
+        int result;
+       /* result = Integer.compare(numberOfGuests, o.numberOfGuests);
+        if(result != 0){
+            return result;}
+          //  result = Date.*/
+        result = dateAvailableFrom.compareTo(o.dateAvailableFrom);
+        return result;
+
     }
 }

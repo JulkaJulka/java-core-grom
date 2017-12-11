@@ -1,5 +1,8 @@
 package lesson35.model;
 
+import java.util.Collection;
+import java.util.List;
+
 /**
  * Created by user on 30.11.2017.
  */
@@ -9,6 +12,7 @@ public class User {
     private String password;
     private String country;
     private UserType userType;
+    private Collection<Room> roomsReserved;
 
     public User() {
     }
