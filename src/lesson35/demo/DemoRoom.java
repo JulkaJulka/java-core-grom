@@ -14,7 +14,7 @@ public class DemoRoom {
     public static void main(String[] args)throws Exception {
         RoomRepository roomRepository = new RoomRepository();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        String dateStr = new String("15-11-2017");
+        String dateStr = new String("15-10-2017");
         Date date = simpleDateFormat.parse(dateStr);
         System.out.println(date);
 

@@ -37,23 +37,16 @@ public class RoomRepository {
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
                 Date dateAvailableFrom = simpleDateFormat.parse(strs[5]);
 
-                Hotel hotelOfRoom = findHotelById(Long.parseLong(strs[6]));
-                if (filter != null && numberOfGuests == filter.getNumberOfGuests() &&
-                        price == filter.getPrice() &&
-                        breakfastIncluded == filter.isBreakfastIncluded() &&
-                        isPetsAllowed == filter.isPetsAllowed() &&
-                        dateAvailableFrom.compareTo(filter.getDateAvailableFrom()) <= 0 &&
-                        hotelOfRoom != null &&
-                        hotelOfRoom.getCountry().equals(filter.getCountry()) &&
-                        hotelOfRoom.getCity().equals(filter.getCity())) {
-                    Room room = new Room();
-                    room.setId(roomId);
-                    room.setNumberOfGuests(numberOfGuests);
-                    room.setPrice(price);
-                    room.setBreakfastIncluded(breakfastIncluded);
-                    room.setPetsAllowed(isPetsAllowed);
-                    room.setDateAvailableFrom(dateAvailableFrom);
-                    room.setHotel(findHotelById(Long.parseLong(strs[6])));
+                Room room = new Room();
+                room.setId(roomId);
+                room.setNumberOfGuests(numberOfGuests);
+                room.setPrice(price);
+                room.setBreakfastIncluded(breakfastIncluded);
+                room.setPetsAllowed(isPetsAllowed);
+                room.setDateAvailableFrom(dateAvailableFrom);
+                room.setHotel(findHotelById(Long.parseLong(strs[6])));
+
+                if(conformityFilter(room, filter)){
                     roomArrayList.add(room);
                 }
             }
@@ -68,6 +61,20 @@ public class RoomRepository {
 
     void bookRoom(long roomId, long userId, long hotelId) {
 
+    }
+
+    private boolean conformityFilter(Room room, Filter filter){
+        if (filter != null && room.getNumberOfGuests() == filter.getNumberOfGuests() &&
+                room.getPrice() == filter.getPrice() &&
+                room.isBreakfastIncluded() == filter.isBreakfastIncluded() &&
+                room.isPetsAllowed() == filter.isPetsAllowed() &&
+                room.getDateAvailableFrom().compareTo(filter.getDateAvailableFrom()) <= 0 &&
+                room.getHotel() != null &&
+                room.getHotel().getCountry().equals(filter.getCountry()) &&
+                room.getHotel().getCity().equals(filter.getCity())){
+            return true;
+        }
+        return false;
     }
 
     public Hotel findHotelById(Long idFind) throws Exception {
