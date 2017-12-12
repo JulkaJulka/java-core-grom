@@ -12,7 +12,7 @@ public class User {
     private String password;
     private String country;
     private UserType userType;
-    private Collection<Room> roomsReserved;
+
 
     public User() {
     }
@@ -67,12 +67,10 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
-                ", country='" + country + '\'' +
-                ", userType=" + userType +
-                '}';
+        return id +
+                "," + userName +
+                "," + password +
+                "," + country +
+                "," + userType;
     }
 }
