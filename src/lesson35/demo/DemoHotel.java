@@ -21,7 +21,7 @@ public class DemoHotel {
        // System.out.println(hotelRepository.findHotelById(4556l));
        // System.out.println(hotelRepository.findHotelByName("Riviera"));
        // hotelRepository.deleteHotel(hotel1,user1);5284561767087373448,Rixon,Thailand,Phuket,Testova
-        Hotel hotel2 = new Hotel(3122410684202721229l,"Rixon8000000","Thailand","Phuket","Testova");
+        Hotel hotel2 = new Hotel(3122410684202721229l,"Sup","Thailand","Phuket","Testova");
         System.out.println(hotelRepository.addHotel(hotel2,user1));
         //System.out.println(hotelRepository.checkPresenceIdHotel(100000000l));
 

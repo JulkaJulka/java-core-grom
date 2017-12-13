@@ -6,7 +6,7 @@ import java.util.Date;
 /**
  * Created by user on 30.11.2017.
  */
-public class Filter {
+public class Filter{
     private int numberOfGuests;
     private double price;
     private boolean breakfastIncluded;
@@ -53,5 +53,6 @@ public class Filter {
     public String getCity() {
         return city;
     }
+
 
 }

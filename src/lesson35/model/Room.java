@@ -1,5 +1,6 @@
 package lesson35.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -96,5 +97,4 @@ public class Room {
                 ", hotel=" + hotel +
                 '}';
     }
-
 }

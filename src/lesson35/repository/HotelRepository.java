@@ -26,52 +26,34 @@ public class HotelRepository {
         try {
             StringBuffer bf = new StringBuffer("");
             StringBuffer bfBkp = new StringBuffer("");
-            String lineBkp = new String("");
+            String lineBkp ;
             BufferedReader brBkp = new BufferedReader(new FileReader(pathHotelDB));
+
             while ((lineBkp = brBkp.readLine()) != null) {
                 bfBkp.append(lineBkp);
                 bfBkp.append("\r\n");
             }
-            String line = "";
+            String line;
             BufferedReader br = new BufferedReader(new FileReader(pathHotelDB));
+
             while ((line = br.readLine()) != null) {
                 String[] str = line.split(",");
                 if (str[1].equals(hotel.getHotelName()) && str[2].equals(hotel.getCountry()) &&
                         str[3].equals(hotel.getCity()) && str[4].equals(hotel.getStreet())) {
                     return null;
-
                 }
             }
-
-            long generateHotelId;
-            Random random = new Random();
-            generateHotelId = Math.abs(random.nextLong());
-
-            while (checkPresenceIdHotel(generateHotelId)) {
-                generateHotelId = Math.abs(random.nextLong());
-            }
-
-            hotel.setId(generateHotelId);
-            Hotel addHotel = new Hotel(generateHotelId, hotel.getHotelName(),
-                    hotel.getCountry(), hotel.getCity(), hotel.getStreet());
+            generateHotelId(hotel);
+            String strHotel = hotel.toString();
             bf.append("\r\n");
-            bf.append(generateHotelId);
-            bf.append(",");
-            bf.append(hotel.getHotelName());
-            bf.append(",");
-            bf.append(hotel.getCountry());
-            bf.append(",");
-            bf.append(hotel.getCity());
-            bf.append(",");
-            bf.append(hotel.getStreet());
+            bf.append(strHotel);
+
             try {
                 utils.writeToFile(pathHotelDB, bf);
-                return addHotel;
+                return hotel;
             } catch (Exception e) {
                 utils.writeToFileWithClean(pathHotelDB, bfBkp);
             }
-
-
         } catch (Exception e) {
             throw new IOException("Can't write to hotelDB " + pathHotelDB);
         }
@@ -112,6 +94,17 @@ public class HotelRepository {
             throw new IOException("Reading from filed " + pathHotelDB + " failed");
         }
 
+    }
+    private void generateHotelId(Hotel hotel) throws Exception{
+        long generateHotelId;
+        Random random = new Random();
+        generateHotelId = Math.abs(random.nextLong());
+
+        while (checkPresenceIdHotel(generateHotelId)) {
+            generateHotelId = Math.abs(random.nextLong());
+        }
+
+        hotel.setId(generateHotelId);
     }
 
     private Hotel findHotelById(Long idFind) throws Exception {
@@ -163,7 +156,7 @@ public class HotelRepository {
         }
     }
 
-    public ArrayList<Hotel> findHotelByCity(String city) throws Exception {
+    private ArrayList<Hotel> findHotelByCity(String city) throws Exception {
         checkCityOfHotel(city);
         String line = "";
         StringBuffer res = new StringBuffer();
@@ -195,8 +188,7 @@ public class HotelRepository {
     public ArrayList<Hotel> findHotelByCountryAndCity(String country,String city) throws Exception {
         checkCityOfHotel(city);
         checkCountryOfHotel(country);
-        String line = "";
-        StringBuffer res = new StringBuffer();
+        String line ;
         ArrayList<Hotel> hotelArrayList = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(pathHotelDB))) {
             while ((line = br.readLine()) != null) {
@@ -221,7 +213,7 @@ public class HotelRepository {
         }
     }
 
-    public boolean checkPresenceIdHotel(long idHotel) throws Exception {
+    private boolean checkPresenceIdHotel(long idHotel) throws Exception {
         String line = "";
         try (BufferedReader br = new BufferedReader(new FileReader(pathHotelDB))) {
             while ((line = br.readLine()) != null) {
@@ -240,7 +232,7 @@ public class HotelRepository {
         return false; //заглуха?
     }
 
-    public boolean checkHotelName(String name) throws Exception {
+    private boolean checkHotelName(String name) throws Exception {
         if (name == null || name.isEmpty())
             throw new Exception("Enter name of Hotel");
         if (!utils.checkWordOnLetters(name))
@@ -248,14 +240,14 @@ public class HotelRepository {
         return true;
     }
 
-    public boolean checkCityOfHotel(String city) throws Exception {
+    private boolean checkCityOfHotel(String city) throws Exception {
         if (city == null || city.isEmpty())
             throw new Exception("Enter city of Hotel");
         if (!utils.checkWordOnLetters(city))
             throw new Exception("City " + city + " is wrong. Try again, please");
         return true;
     }
-    public boolean checkCountryOfHotel(String country) throws Exception {
+    private boolean checkCountryOfHotel(String country) throws Exception {
         if (country == null || country.isEmpty())
             throw new Exception("Enter city of Hotel");
         if (!utils.checkWordOnLetters(country))
@@ -263,7 +255,7 @@ public class HotelRepository {
         return true;
     }
 
-    public boolean checkIdHotel(Long idHotel) throws Exception {
+    private boolean checkIdHotel(Long idHotel) throws Exception {
         if (idHotel == null || idHotel <= 0)
             throw new Exception("Id " + idHotel + " is wrong");
         return true;
