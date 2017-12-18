@@ -1,9 +1,8 @@
-package lesson35.demo;
+package lesson36.demo;
 
-import lesson35.model.Order;
-import lesson35.model.User;
-import lesson35.model.UserType;
-import lesson35.repository.OrderRepository;
+import lesson36.OrderRepository;
+import lesson36.model.User;
+import lesson36.model.UserType;
 
 /**
  * Created by user on 30.11.2017.

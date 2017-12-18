@@ -1,7 +1,6 @@
-package lesson35.repository;
+package lesson36;
 
-import lesson35.Utils;
-import lesson35.model.*;
+import lesson36.model.*;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -9,7 +8,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Random;
 
 /**
  * Created by user on 30.11.2017.
@@ -97,7 +99,6 @@ public class RoomRepository {
             } catch (Exception e) {
                 utils.writeToFileWithClean(pathRoomDB, bfBkp);
             }
-
         } catch (Exception e) {
             throw new IOException("Can't write to roomDB " + pathRoomDB);
         }

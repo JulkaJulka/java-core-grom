@@ -1,21 +1,20 @@
-package lesson35.repository;
+package lesson36;
 
-import lesson24.exercise.GeneralDAO;
-import lesson35.Utils;
-import lesson35.model.Entity;
-import lesson35.model.Hotel;
-import lesson35.model.User;
-import lesson35.model.UserType;
+import lesson36.model.Hotel;
+import lesson36.model.User;
+import lesson36.model.UserType;
 
-
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
 /**
  * Created by user on 30.11.2017.
  */
-public class HotelRepository extends GeneralRepository {
+public class HotelRepository {
     private final  String pathHotelDB = "D:/Ubuntu_backup/dev/HotelDB.txt";
     private Utils utils = new Utils();
 
@@ -45,7 +44,7 @@ public class HotelRepository extends GeneralRepository {
                     return null;
                 }
             }
-            super.generateId(hotel,pathHotelDB);
+            generateHotelId(hotel);
             String strHotel = hotel.toString();
             bf.append("\r\n");
             bf.append(strHotel);
@@ -97,19 +96,39 @@ public class HotelRepository extends GeneralRepository {
         }
 
     }
+    private void generateHotelId(Hotel hotel) throws Exception{
+        long generateHotelId;
+        Random random = new Random();
+        generateHotelId = Math.abs(random.nextLong());
 
-    public Hotel findHotelById(Long idFind) throws Exception {
-        Entity entity = super.findEntitylById(idFind);
-        Hotel findHotel = (Hotel) entity;
-        String line;
-        BufferedReader br = new BufferedReader(new FileReader(pathHotelDB));
+        while (checkPresenceIdHotel(generateHotelId)) {
+            generateHotelId = Math.abs(random.nextLong());
+        }
+
+        hotel.setId(generateHotelId);
+    }
+
+    private Hotel findHotelById(Long idFind) throws Exception {
+        checkIdHotel(idFind);
+        String line = "";
+        try (BufferedReader br = new BufferedReader(new FileReader(pathHotelDB))) {
             while ((line = br.readLine()) != null) {
+                Hotel findHotel = new Hotel();
                 String[] strings = line.split(",");
-                findHotel.setHotelName(strings[1]);
-                findHotel.setCountry(strings[2]);
-                findHotel.setCity(strings[3]);
-                findHotel.setStreet(strings[4]);}
+                long hotelId = Long.parseLong(strings[0]);
+                if (hotelId == idFind) {
+                    findHotel.setId(hotelId);
+                    findHotel.setHotelName(strings[1]);
+                    findHotel.setCountry(strings[2]);
+                    findHotel.setCity(strings[3]);
+                    findHotel.setStreet(strings[4]);
                     return findHotel;
+                }
+            }
+        } catch (FileNotFoundException e) {
+            throw new FileNotFoundException("File " + pathHotelDB + " does not exist");
+        }
+        return null;
     }
 
     public ArrayList<Hotel> findHotelByName(String name) throws Exception {
@@ -141,6 +160,7 @@ public class HotelRepository extends GeneralRepository {
     private ArrayList<Hotel> findHotelByCity(String city) throws Exception {
         checkCityOfHotel(city);
         String line = "";
+        StringBuffer res = new StringBuffer();
         ArrayList<Hotel> hotelArrayList = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(pathHotelDB))) {
             while ((line = br.readLine()) != null) {
@@ -155,7 +175,9 @@ public class HotelRepository extends GeneralRepository {
                     findHotel.setCity(strings[3]);
                     findHotel.setStreet(strings[4]);
                     hotelArrayList.add(findHotel);
+
                 }
+
             }
             return hotelArrayList;
         } catch (FileNotFoundException e) {
@@ -164,7 +186,7 @@ public class HotelRepository extends GeneralRepository {
             throw new IOException("Reading from filed " + pathHotelDB + " failed");
         }
     }
-    public ArrayList<Hotel> findHotelByCountryAndCity(String country,String city) throws Exception {
+    public ArrayList<Hotel> findHotelByCountryAndCity(String country, String city) throws Exception {
         checkCityOfHotel(city);
         checkCountryOfHotel(country);
         String line ;
@@ -192,6 +214,25 @@ public class HotelRepository extends GeneralRepository {
         }
     }
 
+    private boolean checkPresenceIdHotel(long idHotel) throws Exception {
+        String line = "";
+        try (BufferedReader br = new BufferedReader(new FileReader(pathHotelDB))) {
+            while ((line = br.readLine()) != null) {
+                String[] strings = line.split(",");
+                long idDB = Long.parseLong(strings[0]);
+                if (idDB == idHotel) {
+                    return true;
+                }
+                return false;
+            }
+        } catch (FileNotFoundException e) {
+            throw new FileNotFoundException("File " + pathHotelDB + " does not exist");
+        } catch (IOException e) {
+            throw new IOException("Reading from filed " + pathHotelDB + " failed");
+        }
+        return false; //заглуха?
+    }
+
     private boolean checkHotelName(String name) throws Exception {
         if (name == null || name.isEmpty())
             throw new Exception("Enter name of Hotel");
@@ -212,6 +253,12 @@ public class HotelRepository extends GeneralRepository {
             throw new Exception("Enter city of Hotel");
         if (!utils.checkWordOnLetters(country))
             throw new Exception("Country " + country + " is wrong. Try again, please");
+        return true;
+    }
+
+    private boolean checkIdHotel(Long idHotel) throws Exception {
+        if (idHotel == null || idHotel <= 0)
+            throw new Exception("Id " + idHotel + " is wrong");
         return true;
     }
 

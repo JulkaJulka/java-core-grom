@@ -1,7 +1,7 @@
-package lesson35.demo;
+package lesson36.demo;
 
-import lesson35.model.*;
-import lesson35.repository.RoomRepository;
+import lesson36.RoomRepository;
+import lesson36.model.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

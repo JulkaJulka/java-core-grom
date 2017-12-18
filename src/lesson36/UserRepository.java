@@ -1,11 +1,12 @@
-package lesson35.repository;
+package lesson36;
 
-import lesson35.Utils;
-import lesson35.model.User;
-import lesson35.model.UserType;
+import lesson36.model.User;
+import lesson36.model.UserType;
 
-import java.io.*;
-import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Random;
 
 /**

@@ -1,12 +1,11 @@
-package lesson35.repository;
+package lesson36;
 
-import lesson35.Utils;
-import lesson35.model.*;
+import lesson36.model.*;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.*;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;

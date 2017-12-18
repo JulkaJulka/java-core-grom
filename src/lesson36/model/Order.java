@@ -1,4 +1,4 @@
-package lesson35.model;
+package lesson36.model;
 
 import java.util.Date;
 

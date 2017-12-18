@@ -37,4 +37,20 @@ public class FurnitureOrder extends Order {
         setTotalPrice(totalPrice);
 
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        FurnitureOrder that = (FurnitureOrder) o;
+
+        return furnitureCode != null ? furnitureCode.equals(that.furnitureCode) : that.furnitureCode == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return furnitureCode != null ? furnitureCode.hashCode() : 0;
+    }
 }

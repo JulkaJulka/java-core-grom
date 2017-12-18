@@ -1,10 +1,10 @@
-package lesson35.model;
+package lesson36.model;
 
 /**
  * Created by user on 30.11.2017.
  */
-public class Hotel extends Entity {
-
+public class Hotel {
+    private long id;
     private String hotelName;
     private String country;
     private String city;
@@ -13,16 +13,16 @@ public class Hotel extends Entity {
     public Hotel() {
     }
 
-    public Hotel(long id) {
-        super(id);
-    }
-
     public Hotel(long id, String hotelName, String country, String city, String street) {
-        super(id);
+        this.id = id;
         this.hotelName = hotelName;
         this.country = country;
         this.city = city;
         this.street = street;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public String getHotelName() {
@@ -37,20 +37,24 @@ public class Hotel extends Entity {
         return country;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
     public String getCity() {
         return city;
     }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
-
     public String getStreet() {
         return street;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public void setStreet(String street) {
@@ -59,14 +63,12 @@ public class Hotel extends Entity {
 
     @Override
     public String toString() {
-        return super.toString()+
+        return id +
                 "," + hotelName +
                 "," + country +
                 "," + city +
                 "," + street;
     }
-
-
 
     @Override
     public boolean equals(Object o) {
