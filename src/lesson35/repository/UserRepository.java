@@ -11,7 +11,7 @@ import java.util.Random;
 /**
  * Created by user on 30.11.2017.
  */
-public class UserRepository {
+public class UserRepository  extends GeneralRepository{
 //UserService userService = new UserService();
 
     //считывание данных - считывание файлов

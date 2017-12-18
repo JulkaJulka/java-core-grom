@@ -14,7 +14,7 @@ import java.util.*;
 /**
  * Created by user on 30.11.2017.
  */
-public class RoomRepository {
+public class RoomRepository extends GeneralRepository{
     private final String pathRoomDB = "D:/Ubuntu_backup/dev/RoomDB.txt";
     private final String pathHotelDB = "D:/Ubuntu_backup/dev/HotelDB.txt";
     private Utils utils = new Utils();
