@@ -6,6 +6,7 @@ package lesson35.model;
 public class Entity {
     private long id;
 
+
     public Entity() {
     }
 

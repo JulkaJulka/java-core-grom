@@ -16,16 +16,49 @@ import java.util.Random;
  */
 public class GeneralRepository<T> {
 
-    private final String pathRoomDB = "D:/Ubuntu_backup/dev/RoomDB.txt";
-    private final String pathHotelDB = "D:/Ubuntu_backup/dev/HotelDB.txt";
-    private final String pathUserDB = "D:/Ubuntu_backup/dev/UserDB.txt";
-    private final String pathDB = "";
+    private  static String pathRoomDB = "D:/Ubuntu_backup/dev/RoomDB.txt";
+    private  static String pathHotelDB = "D:/Ubuntu_backup/dev/HotelDB.txt";
+    private  String pathUserDB = "D:/Ubuntu_backup/dev/UserDB.txt";
+    private  String pathDB = "";
     private Utils utils = new Utils();
+
+    public String getPathRoomDB() {
+        return pathRoomDB;
+    }
+
+    public String getPathDB() {
+        return pathDB;
+    }
+
+    public void setPathDB(String pathDB) {
+        this.pathDB = pathDB;
+    }
+
+    public String getPathHotelDB() {
+        return pathHotelDB;
+    }
+
+    public String getPathUserDB() {
+        return pathUserDB;
+    }
+
+    public void setPathRoomDB(String pathRoomDB) {
+        this.pathRoomDB = pathRoomDB;
+    }
+
+    public void setPathHotelDB(String pathHotelDB) {
+        this.pathHotelDB = pathHotelDB;
+    }
+
+    public void setPathUserDB(String pathUserDB) {
+        this.pathUserDB = pathUserDB;
+    }
 
 
     public Entity findEntitylById(Long idFind) throws Exception {
         checkId(idFind);
         String line;
+
         try (BufferedReader br = new BufferedReader(new FileReader(pathDB))) {
             while ((line = br.readLine()) != null) {
                 Entity findEntity = new Entity();
@@ -40,19 +73,21 @@ public class GeneralRepository<T> {
             throw new FileNotFoundException("File " + pathDB + " does not exist");
         }
         return null;
+       // throw new Exception("Entity with id " + idFind + " doesn't exist in DB" );
     }
 
-    public <T extends Entity>  void  generateId(T t, String path) throws Exception {
+    public <T extends Entity>  void  generateId(T t) throws Exception {
         long generateId;
         Random random = new Random();
         generateId = Math.abs(random.nextLong());
 
-        while (checkPresenceId(generateId, path)) {
+        while (checkPresenceId(generateId)) {
             generateId = Math.abs(random.nextLong());
         }
         t.setId(generateId);
+
     }
-    private boolean checkPresenceId(long id, String pathDB) throws Exception {
+    public boolean checkPresenceId(long id) throws Exception {
         String line;
         try (BufferedReader br = new BufferedReader(new FileReader(pathDB))) {
             while ((line = br.readLine()) != null) {
@@ -62,12 +97,13 @@ public class GeneralRepository<T> {
                     return true;
                 }
             }
+            return false;
         } catch (FileNotFoundException e) {
             throw new FileNotFoundException("File " + pathDB + " does not exist");
         } catch (IOException e) {
             throw new IOException("Reading from filed " + pathDB + " failed");
         }
-        return false;
+       // return false;
     }
     private boolean checkId(Long id) throws Exception {
         if (id == null || id <= 0)
