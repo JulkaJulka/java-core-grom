@@ -16,7 +16,8 @@ public class DemoOrder {
      //  System.out.println(orderRepository.findUserlById(112l));
      //   System.out.println(orderRepository.findRoomById(1401549786401447791l));
      //   System.out.println(orderRepository.findHotelById(3570593990644212812l));
-       // orderRepository.bookRoom(5045396293690611794l,1001l,333l);
-        orderRepository.cancelReservation(5045396293690611794l,1001l,333l);
+      // orderRepository.bookRoom(3263465472588390554l,1001l,333l);
+        orderRepository.cancelReservation(2949157054379902010l,1001l,333l);
+
     }
 }

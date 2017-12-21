@@ -12,6 +12,7 @@ public class User {
     private String password;
     private String country;
     private UserType userType;
+    private LoginType loginType;
 
 
     public User() {

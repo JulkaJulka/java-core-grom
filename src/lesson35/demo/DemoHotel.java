@@ -22,18 +22,19 @@ public class DemoHotel {
        // System.out.println(hotelRepository.findHotelById(4556l));
        // System.out.println(hotelRepository.findHotelByName("Riviera"));
      //   hotelRepository.deleteHotel(hotel3,user1);
-        Hotel hotel2 = new Hotel(3122410684202721229l,"Sup","Thailand","Phuket","Testova");
-       // System.out.println(hotelRepository.addHotel(hotel2,user1));
+        Hotel hotel2 = new Hotel(3122410684202721229l,"Surprise","Thailand","Phuket","Testova");
+        System.out.println(hotelRepository.addHotel(hotel2,user1));
         //System.out.println(hotelRepository.checkPresenceIdHotel(100000000l));
 
-        GeneralRepository<Hotel> generalRepository = new GeneralRepository();
+       // GeneralRepository<Hotel> generalRepository = new GeneralRepository();
        // generalRepository.getPathHotelDB();
        // generalRepository.setPathHotelDB(hotel2);
-        generalRepository.setPathDB("D:/Ubuntu_backup/dev/HotelDB.txt");
-        System.out.println(generalRepository.getPathDB());
+       // generalRepository.setPathDB(generalRepository.getPathHotelDB());
+       // System.out.println(generalRepository.getPathDB());
+       // System.out.println(hotelRepository.getPathDB());
     //    generalRepository.findEntitylById(2835475146381439109l);
       // hotelRepository.deleteHotel(hotel3,user1);
-    hotelRepository.addHotel(hotel3,user1);
+   hotelRepository.addHotel(hotel3,user1);
       //  generalRepository.
       // System.out.println(generalRepository.checkPresenceId(3122410684202721229l));
         //System.out.println(generalRepository.generateId(hotel3));

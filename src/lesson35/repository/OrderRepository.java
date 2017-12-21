@@ -15,66 +15,54 @@ import java.util.Random;
  * Created by user on 30.11.2017.
  */
 public class OrderRepository extends GeneralRepository {
-    private static final String pathOrderDB = "D:/Ubuntu_backup/dev/OrderDB.txt";
+    private final String pathOrderDB = "D:/Ubuntu_backup/dev/OrderDB.txt";
     private final String pathRoomDB = "D:/Ubuntu_backup/dev/RoomDB.txt";
     private final String pathHotelDB = "D:/Ubuntu_backup/dev/HotelDB.txt";
     private final String pathUserDB = "D:/Ubuntu_backup/dev/UserDB.txt";
     private Utils utils = new Utils();
 
     public void bookRoom(long roomId, long userId, long hotelId) throws Exception {
-        if (findRoomById(roomId) == null)
+        Room needRoom = findRoomById(roomId);
+        if (needRoom == null)
             throw new Exception("Room with id " + roomId + " does not exist in dB");
         if (findUserlById(userId) == null)
             throw new Exception("User with id " + userId + " does not exist in dB");
-        if (findHotelById(hotelId) == null)
+        if (needRoom.getHotel() == null)
             throw new Exception("Hotel with id " + hotelId + " does not exist in dB");
 
-        String line;
-        try (BufferedReader br = new BufferedReader(new FileReader(pathRoomDB));
-             BufferedReader brOrder = new BufferedReader(new FileReader(pathOrderDB))) {
-            StringBuffer bfBefore = new StringBuffer();
-            StringBuffer addOrder = new StringBuffer("");
-            while ((line = brOrder.readLine()) != null) {
-                bfBefore.append(line);
-                bfBefore.append("\r\n");
-            }
-            while ((line = br.readLine()) != null) {
-                String[] strings = line.split(",");
-                if (Long.parseLong(strings[0]) == roomId && Long.parseLong(strings[6]) == hotelId) {
-                    Order order = new Order();
-                    generateOrderId(order);
-                    addOrder.append("\r\n");
-                    addOrder.append(order.getId());
-                    addOrder.append(",");
-                    addOrder.append(userId);
-                    addOrder.append(",");
-                    addOrder.append(roomId);
-                    addOrder.append(",");
-                    addOrder.append("20-09-2017");
-                    addOrder.append(",");
-                    addOrder.append("23-09-2017");
-                    addOrder.append(",");
-                    addOrder.append(findRoomById(roomId).getPrice() * 3);
-                    try {
-                        utils.writeToFile(pathOrderDB, addOrder);
-                    } catch (IOException e) {
-                        utils.writeToFileWithClean(pathHotelDB, bfBefore);
-                        throw new IOException("Can't write to file " + pathOrderDB);
-                    }
-                }
 
-            }
+            StringBuffer addOrder = new StringBuffer("");
+            Order order = new Order();
+            generateOrderId(order);
+
+            addOrder.append("\r\n");
+            addOrder.append(order.getId());
+            addOrder.append(",");
+            addOrder.append(userId);
+            addOrder.append(",");
+            addOrder.append(roomId);
+            addOrder.append(",");
+            addOrder.append("20-09-2017");
+            addOrder.append(",");
+            addOrder.append("23-09-2017");
+            addOrder.append(",");
+            addOrder.append(needRoom.getPrice() * 3);
+
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(pathOrderDB, true))) {
+            bufferedWriter.append(addOrder);
+
         } catch (Exception e) {
             throw new IOException("Can't write to orderlDB " + pathOrderDB);
         }
     }
 
     public void cancelReservation(long roomId, long userId, long hotelId) throws Exception {
-        if (findRoomById(roomId) == null)
+        Room cancelRoom = findRoomById(roomId);
+        if (cancelRoom == null)
             throw new Exception("Room with id " + roomId + " does not exist in dB");
         if (findUserlById(userId) == null)
             throw new Exception("User with id " + userId + " does not exist in dB");
-        if (findHotelById(hotelId) == null)
+        if (cancelRoom.getHotel() == null)
             throw new Exception("Hotel with id " + hotelId + " does not exist in dB");
 
         String line;
@@ -97,10 +85,11 @@ public class OrderRepository extends GeneralRepository {
                     res.append(line);
                     res.append("\r\n");
                 }
-                try {
-                    utils.writeToFileWithClean(pathOrderDB, res);
+                try (BufferedWriter bw = new BufferedWriter(new FileWriter(pathOrderDB,false))){
+                    bw.append(res);
                 } catch (IOException e) {
-                    utils.writeToFile(pathOrderDB, dataBeforeChanging);
+                    try( BufferedWriter bw = new BufferedWriter(new FileWriter(pathOrderDB))){
+                        bw.append(dataBeforeChanging);}
                     throw new IOException("Can't write to file " + pathOrderDB);
                 }
             }

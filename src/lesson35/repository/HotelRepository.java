@@ -29,18 +29,10 @@ public class HotelRepository extends GeneralRepository {
         if (hotel == null)
             throw new Exception("You enter wrong hotel");
 
-        try {
+        try (BufferedReader br = new BufferedReader(new FileReader(getPathDB()))){
             StringBuffer bf = new StringBuffer("");
-            StringBuffer bfBkp = new StringBuffer("");
-            String lineBkp ;
-            BufferedReader brBkp = new BufferedReader(new FileReader(getPathDB()));
-
-            while ((lineBkp = brBkp.readLine()) != null) {
-                bfBkp.append(lineBkp);
-                bfBkp.append("\r\n");
-            }
             String line;
-            BufferedReader br = new BufferedReader(new FileReader(getPathDB()));
+            //BufferedReader br = new BufferedReader(new FileReader(getPathDB()));
 
             while ((line = br.readLine()) != null) {
                 String[] str = line.split(",");
@@ -53,13 +45,8 @@ public class HotelRepository extends GeneralRepository {
             String strHotel = hotel.toString();
             bf.append("\r\n");
             bf.append(strHotel);
-
-            try {
-                utils.writeToFile(getPathDB(), bf);
-                return hotel;
-            } catch (Exception e) {
-                utils.writeToFileWithClean(getPathDB(), bfBkp);
-            }
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(getPathDB(), true));
+                bufferedWriter.append(bf);
         } catch (Exception e) {
             throw new IOException("Can't write to hotelDB " + getPathDB());
         }
@@ -89,10 +76,11 @@ public class HotelRepository extends GeneralRepository {
                     res.append(line);
                     res.append("\r\n");
                 }
-                try {
-                    utils.writeToFileWithClean(getPathHotelDB(), res);
+                try (BufferedWriter bw = new BufferedWriter(new FileWriter(getPathHotelDB(),false))){
+                    bw.append(res);
                 } catch (IOException e) {
-                    utils.writeToFile(getPathHotelDB(), dataBeforeChanging);
+                    try( BufferedWriter bw = new BufferedWriter(new FileWriter(getPathHotelDB()))){
+                        bw.append(dataBeforeChanging);}
                     throw new IOException("Can't write to file " + getPathHotelDB());
                 }
             }

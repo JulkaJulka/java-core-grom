@@ -22,12 +22,12 @@ public class DemoUser {
         User user3 = new User(1001,"Test2","qwerty", "Ukraine", UserType.USER);
         User user4 = new User(1001,"Test3","qwerty", "Ukraine", UserType.USER);
         User user5 = new User(234252452,"Test4","qwerty", "Ukraine", UserType.USER);*/
-        User user6 = new User(1001,"Katy1","qwerty", "Ukra ine", UserType.ADMIN);
+        User user6 = new User(1001,"Phaina","qwerty", "Ukraine", UserType.ADMIN);
         User user7 = new User(6799785227482630351l,"Super","qwerty", "Ukraine", UserType.USER);
        // System.out.println(userRepository.findUserByUserName(user2));
-       System.out.println(userRepository.registerUser(user7));
+       System.out.println(userRepository.registerUser(user6));
        // System.out.println(userRepository.checkPresenceIdUser(user6));
-        System.out.println(userRepository.findUserlById(1001l));
+       // System.out.println(userRepository.findUserlById(1001l));
 
     }
 }

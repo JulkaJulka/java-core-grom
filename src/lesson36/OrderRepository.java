@@ -57,7 +57,7 @@ public class OrderRepository {
                     try {
                         utils.writeToFile(pathOrderDB, addOrder);
                     } catch (IOException e) {
-                        utils.writeToFileWithClean(pathHotelDB, bfBefore);
+                        utils.writeToFileWithClean(pathOrderDB, bfBefore);
                         throw new IOException("Can't write to file " + pathOrderDB);
                     }
                 }

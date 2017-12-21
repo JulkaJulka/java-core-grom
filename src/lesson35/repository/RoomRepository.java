@@ -3,10 +3,7 @@ package lesson35.repository;
 import lesson35.Utils;
 import lesson35.model.*;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -14,7 +11,7 @@ import java.util.*;
 /**
  * Created by user on 30.11.2017.
  */
-public class RoomRepository extends GeneralRepository{
+public class RoomRepository extends GeneralRepository {
     private final String pathRoomDB = "D:/Ubuntu_backup/dev/RoomDB.txt";
     private final String pathHotelDB = "D:/Ubuntu_backup/dev/HotelDB.txt";
     private Utils utils = new Utils();
@@ -61,16 +58,9 @@ public class RoomRepository extends GeneralRepository{
         if (room == null)
             throw new Exception("You enter wrong room");
 
-        try {
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(pathRoomDB, true))) {
             StringBuffer bf = new StringBuffer("");
-            StringBuffer bfBkp = new StringBuffer("");
-            String lineBkp;
-            BufferedReader brBkp = new BufferedReader(new FileReader(pathRoomDB));
 
-            while ((lineBkp = brBkp.readLine()) != null) {
-                bfBkp.append(lineBkp);
-                bfBkp.append("\r\n");
-            }
             DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
             String strDateAvailableFrom = df.format(room.getDateAvailableFrom());
 
@@ -91,17 +81,14 @@ public class RoomRepository extends GeneralRepository{
             bf.append(",");
             bf.append(room.getHotel().getId());
 
-            try {
-                utils.writeToFile(pathRoomDB, bf);
-                return room;
-            } catch (Exception e) {
-                utils.writeToFileWithClean(pathRoomDB, bfBkp);
-            }
+            bufferedWriter.append(bf);
+            return room;
 
-        } catch (Exception e) {
+        } catch (IOException e) {
+
             throw new IOException("Can't write to roomDB " + pathRoomDB);
         }
-        return null;
+
 
     }
 
@@ -119,16 +106,19 @@ public class RoomRepository extends GeneralRepository{
         try (BufferedReader br = new BufferedReader(new FileReader(pathRoomDB))) {
             while ((line = br.readLine()) != null) {
                 dataBeforeChanging.append(line);
+                dataBeforeChanging.append("\r\n");
                 String[] strings = line.split(",");
                 long roomId = Long.parseLong(strings[0]);
                 if (roomId != room.getId()) {
                     res.append(line);
                     res.append("\r\n");
+
                 }
-                try {
-                    utils.writeToFileWithClean(pathRoomDB, res);
+                try (BufferedWriter bw = new BufferedWriter(new FileWriter(pathRoomDB,false))){
+                    bw.append(res);
                 } catch (IOException e) {
-                    utils.writeToFile(pathRoomDB, dataBeforeChanging);
+                   try( BufferedWriter bw = new BufferedWriter(new FileWriter(pathRoomDB))){
+                    bw.append(dataBeforeChanging);}
                     throw new IOException("Can't write to file " + pathRoomDB);
                 }
             }
@@ -175,13 +165,13 @@ public class RoomRepository extends GeneralRepository{
         if ((filter.getNumberOfGuests() == 0 || room.getNumberOfGuests() == filter.getNumberOfGuests()) &&
                 (filter.getPrice() == 0 || room.getPrice() == filter.getPrice()) &&
                 filter.isBreakfastIncluded() == room.isBreakfastIncluded() &&
-                        filter.isPetsAllowed() == room.isPetsAllowed() &&
-                        (filter.getDateAvailableFrom() == null ||
-                                filter.getDateAvailableFrom().compareTo(room.getDateAvailableFrom()) >= 0) &&
-                        (filter.getCountry()== null ||
-                                room.getHotel() != null && filter.getCountry().equals(room.getHotel().getCountry()) &&
-                        ( filter.getCity() == null ||
-                                room.getHotel() != null && filter.getCity().equals(room.getHotel().getCity()))))
+                filter.isPetsAllowed() == room.isPetsAllowed() &&
+                (filter.getDateAvailableFrom() == null ||
+                        filter.getDateAvailableFrom().compareTo(room.getDateAvailableFrom()) >= 0) &&
+                (filter.getCountry() == null ||
+                        room.getHotel() != null && filter.getCountry().equals(room.getHotel().getCountry()) &&
+                                (filter.getCity() == null ||
+                                        room.getHotel() != null && filter.getCity().equals(room.getHotel().getCity()))))
             return true;
 
         return false;
@@ -216,6 +206,7 @@ public class RoomRepository extends GeneralRepository{
         }
         return null;
     }
+
     private Hotel findHotelById(Long idFind) throws Exception {
         checkIdHotel(idFind);
         String line = "";
@@ -244,6 +235,7 @@ public class RoomRepository extends GeneralRepository{
             throw new Exception("Id " + idHotel + " is wrong");
         return true;
     }
+
     private boolean checkIdRoom(Long idRoom) throws Exception {
         if (idRoom == null || idRoom <= 0)
             throw new Exception("Id " + idRoom + " is wrong");

@@ -11,7 +11,7 @@ import java.util.Random;
 /**
  * Created by user on 30.11.2017.
  */
-public class UserRepository  extends GeneralRepository{
+public class UserRepository extends GeneralRepository {
 //UserService userService = new UserService();
 
     //считывание данных - считывание файлов
@@ -27,17 +27,17 @@ public class UserRepository  extends GeneralRepository{
             throw new Exception("User with userName " + user.getUserName() +
                     " has registered already. Try another userName");
         }
-        try {
-            generateUserId(user);
 
-            StringBuffer bf = new StringBuffer("");
-            String string = user.toString();
+        generateUserId(user);
 
-            bf.append("\r\n");
-            bf.append(string);
+        StringBuffer bf = new StringBuffer("");
+        String string = user.toString();
 
-            utils.writeToFile(pathUserDB, bf);
+        bf.append("\r\n");
+        bf.append(string);
 
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(pathUserDB, true))) {
+            bufferedWriter.append(bf);
         } catch (Exception e) {
             throw new IOException("Can't write to userBD " + pathUserDB);
         }
@@ -46,20 +46,22 @@ public class UserRepository  extends GeneralRepository{
 
 
     private User findUserByUserName(User user) throws Exception {
-        String line = "";
-        
+        String line;
+
         try (BufferedReader br = new BufferedReader(new FileReader(pathUserDB))) {
             while ((line = br.readLine()) != null) {
                 String[] strings = line.split(",");
-                if (strings[1].equals(user.getUserName()))
+                if (strings[1].equals(user.getUserName())) {
                     return user;
+                }
             }
+            return null;
         } catch (FileNotFoundException e) {
             throw new FileNotFoundException("File " + pathUserDB + " does not exist");
         } catch (IOException e) {
             throw new IOException("Reading from filed " + pathUserDB + " failed");
         }
-        return null;
+
     }
 
     private void generateUserId(User user) throws Exception {
@@ -105,6 +107,7 @@ public class UserRepository  extends GeneralRepository{
         }
         return true;
     }
+
     public User findUserlById(Long idFind) throws Exception {
         checkIdUser(idFind);
         String line = "";
@@ -118,8 +121,8 @@ public class UserRepository  extends GeneralRepository{
                     findUser.setUserName(strings[1]);
                     findUser.setPassword(strings[2]);
                     findUser.setCountry(strings[3]);
-                    if(strings[4].equals("ADMIN")){
-                    findUser.setUserType(UserType.ADMIN);
+                    if (strings[4].equals("ADMIN")) {
+                        findUser.setUserType(UserType.ADMIN);
                     } else {
                         findUser.setUserType(UserType.USER);
                     }
@@ -131,6 +134,7 @@ public class UserRepository  extends GeneralRepository{
         }
         return null;
     }
+
     private boolean checkIdUser(Long idUser) throws Exception {
         if (idUser == null || idUser <= 0)
             throw new Exception("Id " + idUser + " is wrong");

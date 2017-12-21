@@ -22,12 +22,13 @@ public class DemoRoom {
         user1.setUserType(UserType.ADMIN);
         Hotel hotel1 = new Hotel(333, "Schastie", "Ukraine", "Lviv", "Test");
         Room room1 = new Room(111, 4, 1800.00, true, false, date, hotel1);
-        Room room2 = new Room(6137386715093146361l, 4, 1800.00, true, false, date, hotel1);
+        Room room2 = new Room(7980395348638762038l, 2, 1800.00, true, false, dateF, hotel1);
         Filter filter = new Filter(0, 0, true, false, dateF, "Ukraine", "Lviv");
        // System.out.println(roomRepository.conformityFilter(room1, filter));
-       // System.out.println(roomRepository.addRoom(room2, user1));
+      // System.out.println(roomRepository.addRoom(room2, user1));
+        roomRepository.deleteRoom(room2,user1);
         //roomRepository.deleteRoom(room2,user1);
-        System.out.println(roomRepository.findRoomById(5045396293690611794l));
+      //  System.out.println(roomRepository.findRoomById(5045396293690611794l));
 
        // System.out.println(roomRepository.findRooms(filter));
 
