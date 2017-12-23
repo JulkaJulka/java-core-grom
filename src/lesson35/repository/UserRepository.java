@@ -6,6 +6,7 @@ import lesson35.model.UserType;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -45,23 +46,13 @@ public class UserRepository extends GeneralRepository {
     }
 
 
-    private User findUserByUserName(User user) throws Exception {
-        String line;
-
-        try (BufferedReader br = new BufferedReader(new FileReader(pathUserDB))) {
-            while ((line = br.readLine()) != null) {
-                String[] strings = line.split(",");
-                if (strings[1].equals(user.getUserName())) {
-                    return user;
-                }
-            }
-            return null;
-        } catch (FileNotFoundException e) {
-            throw new FileNotFoundException("File " + pathUserDB + " does not exist");
-        } catch (IOException e) {
-            throw new IOException("Reading from filed " + pathUserDB + " failed");
+    public User findUserByUserName(User user) throws Exception {
+        ArrayList<User> userArrayList = userToArrayList(pathUserDB);
+        for (User us : userArrayList) {
+            if (us.getUserName().equals(user.getUserName()))
+                return user;
         }
-
+        return null;
     }
 
     private void generateUserId(User user) throws Exception {
@@ -76,7 +67,7 @@ public class UserRepository extends GeneralRepository {
     }
 
     private boolean checkPresenceIdUser(long idUser) throws Exception {
-        String line = "";
+        String line;
         try (BufferedReader br = new BufferedReader(new FileReader(pathUserDB))) {
             while ((line = br.readLine()) != null) {
                 String[] strings = line.split(",");
@@ -108,31 +99,57 @@ public class UserRepository extends GeneralRepository {
         return true;
     }
 
-    public User findUserlById(Long idFind) throws Exception {
+    public User findUserById(Long idFind) throws Exception {
         checkIdUser(idFind);
-        String line = "";
-        try (BufferedReader br = new BufferedReader(new FileReader(pathUserDB))) {
-            while ((line = br.readLine()) != null) {
-                User findUser = new User();
-                String[] strings = line.split(",");
-                long userId = Long.parseLong(strings[0]);
-                if (userId == idFind) {
-                    findUser.setId(userId);
-                    findUser.setUserName(strings[1]);
-                    findUser.setPassword(strings[2]);
-                    findUser.setCountry(strings[3]);
-                    if (strings[4].equals("ADMIN")) {
-                        findUser.setUserType(UserType.ADMIN);
-                    } else {
-                        findUser.setUserType(UserType.USER);
-                    }
-                    return findUser;
-                }
+        ArrayList<User> users = userToArrayList(pathUserDB);
+        for (User us : users) {
+            if (us.getId() == idFind) {
+                return us;
             }
-        } catch (FileNotFoundException e) {
-            throw new FileNotFoundException("File " + pathUserDB + " does not exist");
         }
         return null;
+    }
+
+
+    public ArrayList<User> userToArrayList(String path) throws Exception {
+        ArrayList<User> userArrayList = new ArrayList<>();
+        String line;
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+            while ((line = br.readLine()) != null) {
+                String[] strs = line.split(",");
+                User user = formUser(strs);
+                userArrayList.add(user);
+            }
+        } catch (FileNotFoundException e) {
+            throw new FileNotFoundException("File " + path + " does not exist");
+        } catch (IOException e) {
+            throw new IOException("Reading from filed " + path + " failed");
+        }
+
+        return userArrayList;
+    }
+
+    public User formUser(String[] str) throws Exception {
+        if (str.length == 0 || str == null || str.length != 5)
+            throw new Exception("Error of reading");
+        User user = new User();
+
+        long id = Long.parseLong(str[0]);
+        String name = str[1];
+        String password = str[2];
+        String country = str[3];
+        String userTypeStr = str[4];
+
+        user.setId(id);
+        user.setUserName(name);
+        user.setPassword(password);
+        user.setCountry(country);
+        if (userTypeStr.equals("USER")) {
+            user.setUserType(UserType.USER);
+        } else {
+            user.setUserType(UserType.ADMIN);
+        }
+        return user;
     }
 
     private boolean checkIdUser(Long idUser) throws Exception {

@@ -16,177 +16,140 @@ import java.util.Random;
  * Created by user on 30.11.2017.
  */
 public class HotelRepository extends GeneralRepository {
-    //private final  String pathHotelDB = "D:/Ubuntu_backup/dev/HotelDB.txt";
+    private final  String pathHotelDB = "D:/Ubuntu_backup/dev/HotelDB.txt";
     private Utils utils = new Utils();
 
-   /* public String getPathHotelDB() {
-        return pathHotelDB;
-    }*/
 
-    public Hotel addHotel(Hotel hotel, User user) throws Exception {
-        if (user.getUserType() != UserType.ADMIN)
-            throw new Exception("Adding of hotel is not accessible to you");
-        if (hotel == null)
-            throw new Exception("You enter wrong hotel");
+   public Hotel addHotel(Hotel hotel, User user) throws Exception {
+       if (user.getUserType() != UserType.ADMIN)
+           throw new Exception("Adding of hotel is not accessible to you");
+       if (hotel == null)
+           throw new Exception("You enter wrong hotel");
 
-        try (BufferedReader br = new BufferedReader(new FileReader(getPathDB()))){
-            StringBuffer bf = new StringBuffer("");
-            String line;
-            //BufferedReader br = new BufferedReader(new FileReader(getPathDB()));
+       StringBuffer bf = new StringBuffer("");
+       super.generateId(hotel);
+       bf.append("\r\n");
+       bf.append(hotel.toString());
 
-            while ((line = br.readLine()) != null) {
-                String[] str = line.split(",");
-                if (str[1].equals(hotel.getHotelName()) && str[2].equals(hotel.getCountry()) &&
-                        str[3].equals(hotel.getCity()) && str[4].equals(hotel.getStreet())) {
-                    return null;
-                }
-            }
-            super.generateId(hotel);
-            String strHotel = hotel.toString();
-            bf.append("\r\n");
-            bf.append(strHotel);
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(getPathDB(), true));
-                bufferedWriter.append(bf);
-        } catch (Exception e) {
-            throw new IOException("Can't write to hotelDB " + getPathDB());
-        }
-        return null;
-
-    }
-
+       try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(pathHotelDB, true))) {
+           bufferedWriter.append(bf);
+           return hotel;
+       } catch (IOException e) {
+           throw new IOException("Can't write to hotelDB " + pathHotelDB);
+       }
+   }
     public void deleteHotel(Hotel hotel, User user) throws Exception {
         if (user.getUserType() != UserType.ADMIN)
             throw new Exception("Deleting of hotel is not accessible to you");
         if (hotel == null)
             throw new Exception("You didn't enter hotel");
-        if(findHotelById(hotel.getId()) == null)
-            throw new Exception("ooooooooo");
-        Hotel hotelFind = findHotelById(hotel.getId());
-        if (hotelFind == null)
-            throw new Exception("Hotel with id " + hotel.getId() + "not exist in hotelDB");
-        String line = "";
+
+        ArrayList<Hotel> hotelArrayListBeforeDel = hotelToArrayList(pathHotelDB);
+
+        if (!hotelArrayListBeforeDel.contains(hotel.getId()))
+            throw new Exception("Hotel with id " + hotel.getId() + " does not exist in hotelDB");
+
         StringBuffer res = new StringBuffer();
-        StringBuffer dataBeforeChanging = new StringBuffer("");
-        try (BufferedReader br = new BufferedReader(new FileReader(getPathHotelDB()))) {
-            while ((line = br.readLine()) != null) {
-                dataBeforeChanging.append(line);
-                String[] strings = line.split(",");
-                long hotelId = Long.parseLong(strings[0]);
-                if (hotelId != hotel.getId()) {
-                    res.append(line);
-                    res.append("\r\n");
-                }
-                try (BufferedWriter bw = new BufferedWriter(new FileWriter(getPathHotelDB(),false))){
-                    bw.append(res);
-                } catch (IOException e) {
-                    try( BufferedWriter bw = new BufferedWriter(new FileWriter(getPathHotelDB()))){
-                        bw.append(dataBeforeChanging);}
-                    throw new IOException("Can't write to file " + getPathHotelDB());
-                }
+        StringBuffer resBkp = new StringBuffer();
+        for (Hotel ht : hotelArrayListBeforeDel) {
+            resBkp.append(ht.toString());
+            resBkp.append("\r\n");
+
+            if (hotel.getId() != ht.getId()) {
+                res.append(ht.toString());
+                res.append("\r\n");
             }
-        } catch (FileNotFoundException e) {
-            throw new FileNotFoundException("File " + getPathHotelDB() + " does not exist");
-        } catch (IOException e) {
-            throw new IOException("Reading from filed " + getPathHotelDB() + " failed");
         }
-
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(pathHotelDB, false))) {
+            bw.append(res);
+        } catch (IOException e) {
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter(pathHotelDB, false))) {
+                bw.append(resBkp);
+            }
+            throw new IOException("Can't write to file " + pathHotelDB);
+        }
     }
-
     public Hotel findHotelById(Long idFind) throws Exception {
         setPathDB(getPathHotelDB());
         Entity entity = super.findEntitylById(idFind);
-if(entity == null)
-    throw new Exception("Hotel with id " + idFind + "doesn't exist in HotelDB" );
-        Hotel findHotel = (Hotel) entity;
-        String line;
-        BufferedReader br = new BufferedReader(new FileReader(getPathDB()));
-            while ((line = br.readLine()) != null) {
-                String[] strings = line.split(",");
-                findHotel.setHotelName(strings[1]);
-                findHotel.setCountry(strings[2]);
-                findHotel.setCity(strings[3]);
-                findHotel.setStreet(strings[4]);}
-                    return findHotel;
+
+        if(entity == null)
+            throw new Exception("Hotel with id " + idFind + "doesn't exist in HotelDB" );
+
+        ArrayList<Hotel> hotelArrayList = hotelToArrayList(pathHotelDB);
+        for (Hotel ht : hotelArrayList) {
+            if (ht.getId() == idFind) {
+                return ht;
+            }
+        }
+        return null;
     }
 
     public ArrayList<Hotel> findHotelByName(String name) throws Exception {
         checkHotelName(name);
-        String line = "";
-        try (BufferedReader br = new BufferedReader(new FileReader(getPathHotelDB()))) {
-            ArrayList<Hotel> hotelArrayList = new ArrayList<>();
-            while ((line = br.readLine()) != null) {
-                Hotel findHotel = new Hotel();
-                String[] strings = line.split(",");
-                if (strings[1].equals(name)) {
-                    long hotelId = Long.parseLong(strings[0]);
-                    findHotel.setId(hotelId);
-                    findHotel.setHotelName(strings[1]);
-                    findHotel.setCountry(strings[2]);
-                    findHotel.setCity(strings[3]);
-                    findHotel.setStreet(strings[4]);
-                    hotelArrayList.add(findHotel);
-                }
+        ArrayList<Hotel> findHotels = new ArrayList<>();
+        ArrayList<Hotel> hotelToArrayList = hotelToArrayList(pathHotelDB);
+        for (Hotel ht: hotelToArrayList){
+            if(ht.getHotelName().equals(name)){
+                findHotels.add(ht);
             }
-            return hotelArrayList;
-        } catch (FileNotFoundException e) {
-            throw new FileNotFoundException("File " + getPathHotelDB() + " does not exist");
-        } catch (IOException e) {
-            throw new IOException("Reading from filed " + getPathHotelDB() + " failed");
         }
+        return findHotels;
     }
 
     private ArrayList<Hotel> findHotelByCity(String city) throws Exception {
         checkCityOfHotel(city);
-        String line = "";
-        ArrayList<Hotel> hotelArrayList = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(getPathHotelDB()))) {
-            while ((line = br.readLine()) != null) {
-
-                String[] strings = line.split(",");
-                if (strings[3].equals(city)) {
-                    Hotel findHotel = new Hotel();
-                    long hotelId = Long.parseLong(strings[0]);
-                    findHotel.setId(hotelId);
-                    findHotel.setHotelName(strings[1]);
-                    findHotel.setCountry(strings[2]);
-                    findHotel.setCity(strings[3]);
-                    findHotel.setStreet(strings[4]);
-                    hotelArrayList.add(findHotel);
-                }
+        ArrayList<Hotel> hotelFindArrayList = new ArrayList<>();
+        ArrayList<Hotel> hotelToArrayList = hotelToArrayList(pathHotelDB);
+        for(Hotel ht : hotelToArrayList){
+            if(ht.getCity().equals(city)){
+                hotelFindArrayList.add(ht);
             }
-            return hotelArrayList;
-        } catch (FileNotFoundException e) {
-            throw new FileNotFoundException("File " + getPathHotelDB() + " does not exist");
-        } catch (IOException e) {
-            throw new IOException("Reading from filed " + getPathHotelDB() + " failed");
         }
+        return hotelFindArrayList;
     }
     public ArrayList<Hotel> findHotelByCountryAndCity(String country,String city) throws Exception {
         checkCityOfHotel(city);
         checkCountryOfHotel(country);
-        String line ;
-        ArrayList<Hotel> hotelArrayList = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(getPathHotelDB()))) {
-            while ((line = br.readLine()) != null) {
-
-                String[] strings = line.split(",");
-                if (strings[2].equals(country) && strings[3].equals(city) ) {
-                    Hotel findHotel = new Hotel();
-                    long hotelId = Long.parseLong(strings[0]);
-                    findHotel.setId(hotelId);
-                    findHotel.setHotelName(strings[1]);
-                    findHotel.setCountry(strings[2]);
-                    findHotel.setCity(strings[3]);
-                    findHotel.setStreet(strings[4]);
-                    hotelArrayList.add(findHotel);
-                }
+        ArrayList<Hotel> hotelFindArrayList = new ArrayList<>();
+        ArrayList<Hotel> hotelToArrayList = hotelToArrayList(pathHotelDB);
+        for(Hotel ht : hotelToArrayList){
+            if(ht.getCity().equals(city) && ht.getCountry().equals(country)){
+                hotelFindArrayList.add(ht);
             }
-            return hotelArrayList;
-        } catch (FileNotFoundException e) {
-            throw new FileNotFoundException("File " + getPathHotelDB() + " does not exist");
-        } catch (IOException e) {
-            throw new IOException("Reading from filed " + getPathHotelDB() + " failed");
         }
+        return hotelFindArrayList;
+    }
+    public ArrayList<Hotel> hotelToArrayList(String path) throws Exception {
+        ArrayList<Hotel> hotelToArrayList = new ArrayList<>();
+        String line;
+        try (BufferedReader br = new BufferedReader(new FileReader(pathHotelDB))) {
+            while ((line = br.readLine()) != null) {
+                String[] strs = line.split(",");
+                Hotel hotel = createHotel(strs);
+                hotelToArrayList.add(hotel);
+            }
+        } catch (FileNotFoundException e) {
+            throw new FileNotFoundException("File " + path + " does not exist");
+        } catch (IOException e) {
+            throw new IOException("Reading from filed " + path + " failed");
+        }
+
+        return hotelToArrayList;
+    }
+
+    public Hotel createHotel(String[] str) throws Exception {
+        if (str.length == 0 || str == null || str.length != 5)
+            throw new Exception("Error of reading");
+        Hotel hotel = new Hotel();
+
+        hotel.setId(Long.parseLong(str[0]));
+        hotel.setHotelName(str[1]);
+        hotel.setCountry(str[2]);
+        hotel.setCity(str[3]);
+        hotel.setStreet(str[4]);
+
+        return hotel;
     }
 
     private boolean checkHotelName(String name) throws Exception {

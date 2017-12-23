@@ -1,5 +1,6 @@
 package lesson35.model;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -87,14 +88,14 @@ public class Room {
 
     @Override
     public String toString() {
-        return "Room{" +
-                "id=" + id +
-                ", numberOfGuests=" + numberOfGuests +
-                ", price=" + price +
-                ", breakfastIncluded=" + breakfastIncluded +
-                ", petsAllowed=" + petsAllowed +
-                ", dateAvailableFrom=" + dateAvailableFrom +
-                ", hotel=" + hotel +
-                '}';
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        String strDateAvailableFrom = df.format(dateAvailableFrom);
+        return id +
+                "," + numberOfGuests +
+                "," + price +
+                "," + breakfastIncluded +
+                "," + petsAllowed +
+                "," + strDateAvailableFrom +
+                "," + hotel.getId();
     }
 }

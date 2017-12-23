@@ -23,6 +23,7 @@ public class DemoHotel {
        // System.out.println(hotelRepository.findHotelByName("Riviera"));
      //   hotelRepository.deleteHotel(hotel3,user1);
         Hotel hotel2 = new Hotel(3122410684202721229l,"Surprise","Thailand","Phuket","Testova");
+        Hotel hotel4 = new Hotel(3122410684202721229l,"general","Thailand","Phuket","Testova");
         System.out.println(hotelRepository.addHotel(hotel2,user1));
         //System.out.println(hotelRepository.checkPresenceIdHotel(100000000l));
 
@@ -34,7 +35,7 @@ public class DemoHotel {
        // System.out.println(hotelRepository.getPathDB());
     //    generalRepository.findEntitylById(2835475146381439109l);
       // hotelRepository.deleteHotel(hotel3,user1);
-   hotelRepository.addHotel(hotel3,user1);
+   hotelRepository.addHotel(hotel4,user1);
       //  generalRepository.
       // System.out.println(generalRepository.checkPresenceId(3122410684202721229l));
         //System.out.println(generalRepository.generateId(hotel3));

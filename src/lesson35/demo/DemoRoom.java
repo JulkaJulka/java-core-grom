@@ -21,16 +21,20 @@ public class DemoRoom {
         User user1 = new User(1001, "Julia", "qwerty", "Ukraine", UserType.ADMIN);
         user1.setUserType(UserType.ADMIN);
         Hotel hotel1 = new Hotel(333, "Schastie", "Ukraine", "Lviv", "Test");
-        Room room1 = new Room(111, 4, 1800.00, true, false, date, hotel1);
-        Room room2 = new Room(7980395348638762038l, 2, 1800.00, true, false, dateF, hotel1);
-        Filter filter = new Filter(0, 0, true, false, dateF, "Ukraine", "Lviv");
+        Hotel hotel2 = new Hotel(333, "Schastie", "Ukraine", "Lviv", "Test");
+        Room room1 = new Room(3263465472588390554l, 2, 1800.00d, true, false, date, hotel2);
+        Room room3 = new Room(3l, 2, 1800d, true, false, date, hotel2);
+        Room room2 = new Room(7980395348638762038l, 2, 1800.00, true, false, dateF, hotel2);
+        Filter filter = new Filter(2, 1000d, true, false, dateF, "Ukraine", "Rovno");
        // System.out.println(roomRepository.conformityFilter(room1, filter));
       // System.out.println(roomRepository.addRoom(room2, user1));
-        roomRepository.deleteRoom(room2,user1);
-        //roomRepository.deleteRoom(room2,user1);
-      //  System.out.println(roomRepository.findRoomById(5045396293690611794l));
+        roomRepository.addRoom(room1,user1);
+     // roomRepository.deleteRoom(room3,user1);
+       // System.out.println( roomRepository.findHotelById(333l));
+      //  System.out.println(roomRepository.roomToArrayList("D:/Ubuntu_backup/dev/RoomDB.txt"));
+     // System.out.println(roomRepository.findRoomById(3263465472588390554l));
 
-       // System.out.println(roomRepository.findRooms(filter));
+      //  System.out.println(roomRepository.findRooms(filter));
 
     }
 

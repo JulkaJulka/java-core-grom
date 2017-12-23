@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
 
@@ -23,6 +24,7 @@ public class OrderRepository extends GeneralRepository {
 
     public void bookRoom(long roomId, long userId, long hotelId) throws Exception {
         Room needRoom = findRoomById(roomId);
+        User needUser = findUserlById(userId);
         if (needRoom == null)
             throw new Exception("Room with id " + roomId + " does not exist in dB");
         if (findUserlById(userId) == null)
@@ -30,23 +32,15 @@ public class OrderRepository extends GeneralRepository {
         if (needRoom.getHotel() == null)
             throw new Exception("Hotel with id " + hotelId + " does not exist in dB");
 
+        StringBuffer addOrder = new StringBuffer("");
+        Order order = new Order();
+        generateOrderId(order);
+        order.setUser(needUser);
+        order.setRoom(needRoom);
 
-            StringBuffer addOrder = new StringBuffer("");
-            Order order = new Order();
-            generateOrderId(order);
-
-            addOrder.append("\r\n");
-            addOrder.append(order.getId());
-            addOrder.append(",");
-            addOrder.append(userId);
-            addOrder.append(",");
-            addOrder.append(roomId);
-            addOrder.append(",");
-            addOrder.append("20-09-2017");
-            addOrder.append(",");
-            addOrder.append("23-09-2017");
-            addOrder.append(",");
-            addOrder.append(needRoom.getPrice() * 3);
+        String strOrder = order.toString();
+        addOrder.append("\r\n");
+        addOrder.append(strOrder);
 
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(pathOrderDB, true))) {
             bufferedWriter.append(addOrder);
@@ -100,6 +94,41 @@ public class OrderRepository extends GeneralRepository {
         }
 
     }
+    public ArrayList<Order> orderToArrayList(String path) throws Exception {
+        ArrayList<Order> orderArrayList = new ArrayList<>();
+        String line;
+        try (BufferedReader br = new BufferedReader(new FileReader(pathOrderDB))) {
+            while ((line = br.readLine()) != null) {
+                String[] strs = line.split(",");
+                Order order = formOrder(strs);
+                orderArrayList.add(order);
+            }
+        } catch (FileNotFoundException e) {
+            throw new FileNotFoundException("File " + path + " does not exist");
+        } catch (IOException e) {
+            throw new IOException("Reading from filed " + path + " failed");
+        }
+
+        return orderArrayList;
+    }
+    public Order formOrder(String[] str) throws Exception {
+        if (str.length == 0  || str.length != 6)
+            throw new Exception("Error of reading");
+        Order order = new Order();
+
+        order.setId(Long.parseLong(str[0]));
+        order.setUser(findUserlById(Long.parseLong(str[1])));
+        order.setRoom(findRoomById(Long.parseLong(str[2])));
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        Date dateFrom = simpleDateFormat.parse(str[3]);
+        Date dateTo = simpleDateFormat.parse(str[4]);
+
+        order.setDateFrom(dateFrom);
+        order.setDateTo(dateTo);
+        order.setMoneyPaid(Double.parseDouble(str[5]));
+        return order;
+    }
 
     private void generateOrderId(Order order) throws Exception {
         long generateOrderId;
@@ -113,49 +142,65 @@ public class OrderRepository extends GeneralRepository {
     }
 
     private boolean checkPresenceIdOrder(long idOrder) throws Exception {
-        String line = "";
-        try (BufferedReader br = new BufferedReader(new FileReader(pathOrderDB))) {
-            while ((line = br.readLine()) != null) {
-                String[] strings = line.split(",");
-                long idDB = Long.parseLong(strings[0]);
-                if (idDB == idOrder) {
-                    return true;
-                }
-                return false;
+        checkIdOrder(idOrder);
+        ArrayList<Order> orderToArrayList = orderToArrayList(pathOrderDB);
+        for (Order or : orderToArrayList){
+            if(or.getId() == idOrder){
+                return true;
             }
-        } catch (FileNotFoundException e) {
-            throw new FileNotFoundException("File " + pathOrderDB + " does not exist");
-        } catch (IOException e) {
-            throw new IOException("Reading from filed " + pathOrderDB + " failed");
         }
-        return false; //заглуха?
+        return false;
     }
-
     public User findUserlById(Long idFind) throws Exception {
         checkIdUser(idFind);
-        String line = "";
-        try (BufferedReader br = new BufferedReader(new FileReader(pathUserDB))) {
-            while ((line = br.readLine()) != null) {
-                User findUser = new User();
-                String[] strings = line.split(",");
-                long userId = Long.parseLong(strings[0]);
-                if (userId == idFind) {
-                    findUser.setId(userId);
-                    findUser.setUserName(strings[1]);
-                    findUser.setPassword(strings[2]);
-                    findUser.setCountry(strings[3]);
-                    if (strings[4].equals("ADMIN")) {
-                        findUser.setUserType(UserType.ADMIN);
-                    } else {
-                        findUser.setUserType(UserType.USER);
-                    }
-                    return findUser;
-                }
+        ArrayList<User> users = userToArrayList(pathUserDB);
+        for (User us : users) {
+            if (us.getId() == idFind) {
+                return us;
             }
-        } catch (FileNotFoundException e) {
-            throw new FileNotFoundException("File " + pathUserDB + " does not exist");
         }
         return null;
+    }
+
+    public ArrayList<User> userToArrayList(String path) throws Exception {
+        ArrayList<User> userArrayList = new ArrayList<>();
+        String line;
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+            while ((line = br.readLine()) != null) {
+                String[] strs = line.split(",");
+                User user = formUser(strs);
+                userArrayList.add(user);
+            }
+        } catch (FileNotFoundException e) {
+            throw new FileNotFoundException("File " + path + " does not exist");
+        } catch (IOException e) {
+            throw new IOException("Reading from filed " + path + " failed");
+        }
+
+        return userArrayList;
+    }
+
+    public User formUser(String[] str) throws Exception {
+        if (str.length == 0  || str.length != 5)
+            throw new Exception("Error of reading");
+        User user = new User();
+
+        long id = Long.parseLong(str[0]);
+        String name = str[1];
+        String password = str[2];
+        String country = str[3];
+        String userTypeStr = str[4];
+
+        user.setId(id);
+        user.setUserName(name);
+        user.setPassword(password);
+        user.setCountry(country);
+        if (userTypeStr.equals("USER")) {
+            user.setUserType(UserType.USER);
+        } else {
+            user.setUserType(UserType.ADMIN);
+        }
+        return user;
     }
 
     private boolean checkIdUser(Long idUser) throws Exception {
@@ -166,32 +211,50 @@ public class OrderRepository extends GeneralRepository {
 
     public Room findRoomById(Long idFind) throws Exception {
         checkIdRoom(idFind);
-        String line = "";
-        try (BufferedReader br = new BufferedReader(new FileReader(pathRoomDB))) {
-            while ((line = br.readLine()) != null) {
-                Room findRoom = new Room();
-                String[] strings = line.split(",");
-                long roomId = Long.parseLong(strings[0]);
-                if (roomId == idFind) {
-                    findRoom.setId(roomId);
-                    findRoom.setNumberOfGuests(Integer.parseInt(strings[1]));
-                    findRoom.setPrice(Double.parseDouble(strings[2]));
-                    findRoom.setBreakfastIncluded(Boolean.parseBoolean(strings[3]));
-                    findRoom.setPetsAllowed(Boolean.parseBoolean(strings[4]));
-
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
-                    Date dateAvailableFrom = simpleDateFormat.parse(strings[5]);
-
-                    findRoom.setDateAvailableFrom(dateAvailableFrom);
-
-                    findRoom.setHotel(findHotelById(Long.parseLong(strings[6])));
-                    return findRoom;
-                }
+        ArrayList<Room> roomArrayList = roomToArrayList(pathRoomDB);
+        for (Room rm : roomArrayList) {
+            if (rm.getId() == idFind) {
+                return rm;
             }
-        } catch (FileNotFoundException e) {
-            throw new FileNotFoundException("File " + pathHotelDB + " does not exist");
         }
         return null;
+    }
+    public ArrayList<Room> roomToArrayList(String path) throws Exception {
+        ArrayList<Room> roomToArrayList = new ArrayList<>();
+        String line;
+        try (BufferedReader br = new BufferedReader(new FileReader(pathRoomDB))) {
+            while ((line = br.readLine()) != null) {
+                String[] strs = line.split(",");
+                Room room = createRoom(strs);
+                roomToArrayList.add(room);
+            }
+        } catch (FileNotFoundException e) {
+            throw new FileNotFoundException("File " + path + " does not exist");
+        } catch (IOException e) {
+            throw new IOException("Reading from filed " + path + " failed");
+        }
+
+        return roomToArrayList;
+    }
+
+    public Room createRoom(String[] str) throws Exception {
+        if (str.length == 0  || str.length != 7)
+            throw new Exception("Error of reading");
+        Room room = new Room();
+
+        room.setId(Long.parseLong(str[0]));
+        room.setNumberOfGuests(Integer.parseInt(str[1]));
+        room.setPrice(Double.parseDouble(str[2]));
+        room.setBreakfastIncluded(Boolean.parseBoolean(str[3]));
+        room.setPetsAllowed(Boolean.parseBoolean(str[4]));
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        Date dateAvailableFrom = simpleDateFormat.parse(str[5]);
+
+        room.setDateAvailableFrom(dateAvailableFrom);
+        room.setHotel(findHotelById(Long.parseLong(str[6])));
+
+        return room;
     }
 
     private boolean checkIdRoom(Long idRoom) throws Exception {
@@ -226,6 +289,11 @@ public class OrderRepository extends GeneralRepository {
     private boolean checkIdHotel(Long idHotel) throws Exception {
         if (idHotel == null || idHotel <= 0)
             throw new Exception("Id " + idHotel + " is wrong");
+        return true;
+    }
+    private boolean checkIdOrder(Long idOrder) throws Exception {
+        if (idOrder== null || idOrder <= 0)
+            throw new Exception("Id " + idOrder + " is wrong");
         return true;
     }
 }
