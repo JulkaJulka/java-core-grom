@@ -67,19 +67,12 @@ public class UserRepository extends GeneralRepository {
     }
 
     private boolean checkPresenceIdUser(long idUser) throws Exception {
-        String line;
-        try (BufferedReader br = new BufferedReader(new FileReader(pathUserDB))) {
-            while ((line = br.readLine()) != null) {
-                String[] strings = line.split(",");
-                long idDB = Long.parseLong(strings[0]);
-                if (idDB == idUser) {
-                    return true;
-                }
+        checkIdUser(idUser);
+        ArrayList<User> userToArrayList = userToArrayList(pathUserDB);
+        for (User us : userToArrayList){
+            if(us.getId() == idUser){
+                return true;
             }
-        } catch (FileNotFoundException e) {
-            throw new FileNotFoundException("File " + pathUserDB + " does not exist");
-        } catch (IOException e) {
-            throw new IOException("Reading from filed " + pathUserDB + " failed");
         }
         return false;
     }
