@@ -1,16 +1,14 @@
-package lesson35.repository;
+package lesson36.repository;
 
-import lesson24.exercise.GeneralDAO;
-import lesson35.Utils;
-import lesson35.model.Entity;
-import lesson35.model.Hotel;
-import lesson35.model.User;
-import lesson35.model.UserType;
+import lesson36.Utils;
+import lesson36.model.Entity;
+import lesson36.model.Hotel;
+import lesson36.model.User;
+import lesson36.model.UserType;
 
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Created by user on 30.11.2017.
@@ -69,7 +67,7 @@ public class HotelRepository extends GeneralRepository {
             throw new IOException("Can't write to file " + pathHotelDB);
         }
     }
-    public Hotel findHotelById(Long idFind) throws Exception {
+    /*public Hotel findHotelById(Long idFind) throws Exception {
         setPathDB(getPathHotelDB());
         Entity entity = super.findEntitylById(idFind);
 
@@ -83,7 +81,7 @@ public class HotelRepository extends GeneralRepository {
             }
         }
         return null;
-    }
+    }*/
 
     public ArrayList<Hotel> findHotelByName(String name) throws Exception {
         checkHotelName(name);

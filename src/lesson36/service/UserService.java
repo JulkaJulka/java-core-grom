@@ -1,7 +1,7 @@
 package lesson36.service;
 
-import lesson36.UserRepository;
 import lesson36.model.User;
+import lesson36.repository.UserRepository;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

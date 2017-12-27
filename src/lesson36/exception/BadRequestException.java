@@ -1,4 +1,4 @@
-package lesson35.exception;
+package lesson36.exception;
 
 /**
  * Created by user on 06.09.2017.

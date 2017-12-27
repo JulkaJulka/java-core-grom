@@ -1,10 +1,9 @@
-package lesson35.repository;
+package lesson36.repository;
 
-import lesson35.Utils;
-import lesson35.model.*;
+import lesson36.Utils;
+import lesson36.model.*;
 
 import java.io.*;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -12,7 +11,7 @@ import java.util.*;
  * Created by user on 30.11.2017.
  */
 public class RoomRepository extends GeneralRepository {
-    private final String pathRoomDB = "D:/Ubuntu_backup/dev/RoomDB.txt";
+    private String pathRoomDB = "D:/Ubuntu_backup/dev/RoomDB.txt";
     private final String pathHotelDB = "D:/Ubuntu_backup/dev/HotelDB.txt";
 
     public Collection findRooms(Filter filter) throws Exception {
@@ -44,6 +43,12 @@ public class RoomRepository extends GeneralRepository {
         } catch (IOException e) {
             throw new IOException("Can't write to roomDB " + pathRoomDB);
         }
+    }
+
+    @Override
+    public void deleteEntity(Entity entity, User user) throws Exception {
+        setPathDB(pathRoomDB);
+        super.deleteEntity(entity, user);
     }
 
     public void deleteRoom(Room room, User user) throws Exception {

@@ -3,12 +3,13 @@ package lesson36.model;
 /**
  * Created by user on 30.11.2017.
  */
-public class User {
+public class User extends Entity{
     private long id;
     private String userName;
     private String password;
     private String country;
     private UserType userType;
+    private LoginType loginType;
 
 
     public User() {

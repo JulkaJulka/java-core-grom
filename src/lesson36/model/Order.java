@@ -72,4 +72,16 @@ public class Order {
     public void setMoneyPaid(double moneyPaid) {
         this.moneyPaid = moneyPaid;
     }
+
+    @Override
+    public String toString() {
+        String strDateFrom = "20-09-2017";
+        String strDateTo = "23-09-2017";
+        return id +
+                "," + user.getId() +
+                "," + room.getId() +
+                "," + strDateFrom +
+                "," + strDateTo +
+                "," + room.getPrice()*3 ;
+    }
 }

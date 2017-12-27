@@ -1,6 +1,6 @@
 package vebinar;
 
-import lesson35.model.UserType;
+import lesson36.model.UserType;
 
 import java.util.Date;
 import java.util.Random;

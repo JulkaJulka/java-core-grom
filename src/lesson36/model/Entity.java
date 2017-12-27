@@ -1,4 +1,4 @@
-package lesson35.model;
+package lesson36.model;
 
 /**
  * Created by user on 18.12.2017.

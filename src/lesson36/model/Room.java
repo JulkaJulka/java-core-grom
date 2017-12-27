@@ -1,11 +1,13 @@
 package lesson36.model;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
  * Created by user on 30.11.2017.
  */
-public class Room {
+public class Room extends Entity{
    private long id;
    private int numberOfGuests;
    private double price;
@@ -86,14 +88,14 @@ public class Room {
 
     @Override
     public String toString() {
-        return "Room{" +
-                "id=" + id +
-                ", numberOfGuests=" + numberOfGuests +
-                ", price=" + price +
-                ", breakfastIncluded=" + breakfastIncluded +
-                ", petsAllowed=" + petsAllowed +
-                ", dateAvailableFrom=" + dateAvailableFrom +
-                ", hotel=" + hotel +
-                '}';
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        String strDateAvailableFrom = df.format(dateAvailableFrom);
+        return id +
+                "," + numberOfGuests +
+                "," + price +
+                "," + breakfastIncluded +
+                "," + petsAllowed +
+                "," + strDateAvailableFrom +
+                "," + hotel.getId();
     }
 }
