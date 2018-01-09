@@ -8,6 +8,7 @@ import lesson36.Utils;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -15,7 +16,7 @@ import java.util.Random;
  */
 public class GeneralRepository<T> {
 
-    public static   String pathDB = "";
+    public static String pathDB = "";
     private Utils utils = new Utils();
 
 
@@ -23,53 +24,58 @@ public class GeneralRepository<T> {
         GeneralRepository.pathDB = pathDB;
     }
 
-    public <T extends Entity > Entity addEntity(Entity entity) throws Exception {
+    public <T extends Entity> T addEntity(T t) throws Exception {
         //validate inputData
-        generateId(entity);
+        if (t == null)
+            throw new Exception("You enter wrong data");
+        generateId(t);
 
         StringBuffer bf = new StringBuffer("");
-        String string = entity.toString();
+        String string = t.toString();
 
         bf.append("\r\n");
         bf.append(string);
 
         writeToFile(bf);
 
-        return entity;
+        return t;
     }
 
-    public void deleteEntity(Entity entity, User user) throws Exception {
+    public void deleteEntity(Long id, User user) throws Exception {
         if (user.getUserType() != UserType.ADMIN)
             throw new Exception("Deleting  is not accessible to you");
-        if (entity == null)
+        if (id == null)
             throw new Exception("You didn't enter any data");
 
         ArrayList<Entity> entityArrayListBeforeDel = entityToArrayList();
-
-        if (!entityArrayListBeforeDel.contains(entity.getId()))
-            throw new Exception("Entity with id " + entity.getId() + " does not exist in DB");
-
         StringBuffer res = new StringBuffer();
         StringBuffer resBkp = new StringBuffer();
+        int count = 0;
         for (Entity ent : entityArrayListBeforeDel) {
 
             resBkp.append(ent.toString());
             resBkp.append("\r\n");
 
-            if (ent.getId() != entity.getId()) {
+            if (ent.getId() != id) {
                 res.append(ent.toString());
                 res.append("\r\n");
             }
+            if (ent.getId() == id) {
+                count++;
+            }
+        }
+        res.delete(res.length()-2,res.length());
+        if (count < 1) {
+            throw new Exception("Entity with id " + id + " does not exist in DB");
         }
 
-        try{
+        try {
             writeToCleanFile(res);
-        } catch (IOException e){
+        } catch (IOException e) {
             writeToCleanFile(resBkp);
             throw new IOException("Can't write to file " + pathDB);
         }
     }
-
 
     public Entity findEntityById(Long idFind) throws Exception {
         checkId(idFind);
@@ -82,7 +88,7 @@ public class GeneralRepository<T> {
         return null;
     }
 
-    public <T extends Entity>  void  generateId(T t) throws Exception {
+    public <T extends Entity> void generateId(T t) throws Exception {
         long generateId;
         Random random = new Random();
         generateId = Math.abs(random.nextLong());
@@ -97,45 +103,63 @@ public class GeneralRepository<T> {
     public boolean checkPresenceId(long idEntity) throws Exception {
         checkId(idEntity);
         ArrayList<Entity> entityToArrayList = entityToArrayList();
-        for (Entity ent : entityToArrayList){
-            if(ent.getId() == idEntity){
+        for (Entity ent : entityToArrayList) {
+            if (ent.getId() == idEntity) {
                 return true;
             }
         }
         return false;
     }
-    public ArrayList<Entity> entityToArrayList() throws Exception {
-        ArrayList<Entity> entityArrayList = new ArrayList<>();
-        String line;
-        try (BufferedReader br = new BufferedReader(new FileReader(pathDB))) {
-            while ((line = br.readLine()) != null) {
-                String[] strs = line.split(",");
-                Entity entity = formEntity(strs);
-                entityArrayList.add(entity);
-            }
-        } catch (FileNotFoundException e) {
-            throw new FileNotFoundException("File " + pathDB + " does not exist");
-        } catch (IOException e) {
-            throw new IOException("Reading from filed " + pathDB + " failed");
+
+    public <T extends Entity> ArrayList<T> entityToArrayList() throws Exception {
+        ArrayList<T> arrayList = new ArrayList<>();
+        StringBuffer stringBuffer = readFile();
+        String strings = stringBuffer.toString();
+        String[] strs = strings.split("\r\n");
+        for (String el : strs) {
+            String[] els = el.split(",");
+            T object = (T) formEntity(els);
+            arrayList.add(object);
         }
 
-        return entityArrayList;
+        return arrayList;
     }
-    public Entity formEntity(String[] str) throws Exception {
-        if (str.length == 0 || str == null )
+    public <T extends Entity> T formEntity(String[] str) throws Exception {
+        if (str.length == 0 || str == null)
             throw new Exception("Error of reading: Incorrect data");
-        for (String el : str ){
-            if(el == null){
+        for (String el : str) {
+            if (el == null) {
                 throw new BadRequestException("Error of reading: Incorrect data");
             }
         }
         Entity entity = new Entity();
+        T t = (T) entity;
         long id = Long.parseLong(str[0]);
         entity.setId(id);
-        return entity;
+        return t;
     }
 
-    public void writeToFile(StringBuffer contentToWrite) throws IOException{
+
+    public StringBuffer readFile() throws Exception {
+        if (pathDB == null)
+            throw new Exception("Path doesn't exist");
+        StringBuffer stringBuffer = new StringBuffer();
+        try (BufferedReader br = new BufferedReader(new FileReader(pathDB))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                stringBuffer.append(line);
+                stringBuffer.append("\r\n");
+            }
+           stringBuffer.delete(stringBuffer.length() - 2, stringBuffer.length());
+        } catch (FileNotFoundException e) {
+            System.err.println("File does not exist");
+        } catch (IOException e) {
+            System.err.println("Reading from filed " + pathDB + " faild");
+        }
+        return stringBuffer;
+    }
+
+    public void writeToFile(StringBuffer contentToWrite) throws IOException {
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(pathDB, true))) {
             bufferedWriter.append(contentToWrite);
 
@@ -144,13 +168,14 @@ public class GeneralRepository<T> {
         }
     }
 
-    public void writeToCleanFile(StringBuffer contentToWrite) throws IOException{
+    public void writeToCleanFile(StringBuffer contentToWrite) throws IOException {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(pathDB, false))) {
             bw.append(contentToWrite);
         } catch (IOException e) {
             throw new IOException("Can't write to file " + pathDB);
-            }
+        }
     }
+
     private boolean checkId(Long id) throws Exception {
         if (id == null || id <= 0)
             throw new Exception("Id " + id + " is wrong");

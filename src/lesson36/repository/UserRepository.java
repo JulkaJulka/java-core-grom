@@ -1,6 +1,6 @@
 package lesson36.repository;
 
-import lesson202.Exception.BadRequestException;
+import lesson36.exception.BadRequestException;
 import lesson36.Utils;
 import lesson36.model.Entity;
 import lesson36.model.User;
@@ -16,23 +16,24 @@ public class UserRepository extends GeneralRepository {
 
     //считывание данных - считывание файлов
     //обработка данных - маппинг данных
-private String pathUserDB = "D:/Ubuntu_backup/dev/UserDB.txt";
 
     private Utils utils = new Utils();
+    static {
+        setPathDB("D:/Ubuntu_backup/dev/UserDB.txt");
+    }
 
     @Override
     public Entity addEntity(Entity entity) throws Exception {
-        setPathDB(pathUserDB);
         User user = (User) entity;
+        validateInputData(user);
         if (!(findUserByUserName(user) == null)) {
             throw new Exception("User with userName " + user.getUserName() +
                     " has registered already. Try another userName");
         }
-        return super.addEntity(entity);
+        return super.addEntity(user);
     }
 
     public User findUserByUserName(User user) throws Exception {
-       setPathDB(pathUserDB);
         ArrayList<Entity> userArrayList = entityToArrayList();
         for (Entity ent : userArrayList) {
             User po = (User) ent;
@@ -43,6 +44,26 @@ private String pathUserDB = "D:/Ubuntu_backup/dev/UserDB.txt";
         return null;
     }
 
+    @Override
+    public   User formEntity(String[] str) throws Exception {
+        if (str.length != 5 || str.length == 0 || str == null)
+            throw new Exception("Error of reading: Incorrect data");
+        User user = new User();
+        user.setId(Long.parseLong(str[0]));
+        user.setUserName(str[1]);
+        user.setPassword(str[2]);
+        user.setCountry(str[3]);
+        if (str[4].equals("USER")) {
+            user.setUserType(UserType.USER);
+        } else if (str[4].equals("ADMIN")) {
+            user.setUserType(UserType.ADMIN);
+        } else {
+            throw new BadRequestException("Error of reading: Incorrect data");
+        }
+
+        return user;
+
+    }
 
     private boolean validateInputData(User user) throws Exception {
         if (user == null || user.getUserName().isEmpty() || user.getPassword().isEmpty() ||
@@ -59,43 +80,4 @@ private String pathUserDB = "D:/Ubuntu_backup/dev/UserDB.txt";
         return true;
     }
 
-    @Override
-    public Entity findEntityById(Long idFind) throws Exception {
-        setPathDB(pathUserDB);
-        return super.findEntityById(idFind);
-    }
-
-    @Override
-    public ArrayList<Entity> entityToArrayList() throws Exception {
-        setPathDB(pathUserDB);
-        return super.entityToArrayList();
-    }
-
-    @Override
-    public Entity formEntity(String[] str) throws Exception {
-        if ( str.length != 5)
-            throw new Exception("Error of reading: Incorrect data");
-        setPathDB("D:/Ubuntu_backup/dev/UserDB.txt");
-        User user = new User();
-        user.setId(super.formEntity(str).getId());
-        user.setUserName(str[1]);
-        user.setPassword(str[2]);
-        user.setCountry(str[3]);
-        if (str[4].equals("USER")) {
-            user.setUserType(UserType.USER);
-        } else if(str[4].equals("ADMIN")){
-            user.setUserType(UserType.ADMIN);
-        } else{
-            throw new BadRequestException("Error of reading: Incorrect data");
-        }
-        super.formEntity(str);
-
-        return user;
-    }
-
-    @Override
-    public boolean checkPresenceId(long id) throws Exception {
-        setPathDB(pathUserDB);
-        return super.checkPresenceId(id);
-    }
 }
