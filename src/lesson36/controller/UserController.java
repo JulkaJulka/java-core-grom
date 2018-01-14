@@ -10,7 +10,7 @@ import lesson36.service.UserService;
 public class UserController {
 
     private UserService userService = new UserService();
-    private boolean login;
+   // private boolean login;
 
     public UserService getUserService() {
         return userService;
@@ -21,11 +21,11 @@ public class UserController {
 
     }
 
-    void login(String userName, String password) throws Exception {
+    public void login(String userName, String password) throws Exception {
         userService.login(userName, password);
     }
 
-    void logout() {
+    public void logout() {
         userService.logout();
     }
 

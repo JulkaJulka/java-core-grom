@@ -20,7 +20,6 @@ public class OrderRepository extends GeneralRepository {
     private final String pathRoomDB = "D:/Ubuntu_backup/dev/RoomDB";
     private final String pathHotelDB = "D:/Ubuntu_backup/dev/HotelDB";
     private final String pathUserDB = "D:/Ubuntu_backup/dev/UserDB";
-  //  private static UserRepository userRepository = new UserRepository();
     private Utils utils = new Utils();
 
     static {

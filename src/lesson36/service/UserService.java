@@ -5,10 +5,6 @@ import lesson36.model.Entity;
 import lesson36.model.User;
 import lesson36.repository.UserRepository;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -69,23 +65,7 @@ public class UserService {
             }
             if(abcenseUsInDB == true)
                 throw new BadRequestException("You didn't sign in. Please try again");
-
         }
-
-       /* for (User us : userArrayList) {
-            System.out.println("********** " + us.toString());
-            if (userArrayList != null && us != null &&
-                    us.getUserName().equals(userName) &&
-                    us.getPassword().equals(password)) {
-                us.setLoginStatus(true);
-                user = us;
-                break;
-            }
-        }
-//        user.setLoginStatus(false);
-        throw new BadRequestException("You didn't sign in. Please try again");*/
-
-
 
     public void logout() {
         if (user.isLoginStatus() == true)
