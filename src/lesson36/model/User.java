@@ -1,15 +1,17 @@
 package lesson36.model;
 
+import lesson36.exception.BadRequestException;
+
 /**
  * Created by user on 30.11.2017.
  */
-public class User extends Entity{
+public class User extends Entity {
     private long id;
     private String userName;
     private String password;
     private String country;
     private UserType userType;
-    private LoginType loginType;
+    private boolean loginStatus;
 
 
     public User() {
@@ -25,6 +27,14 @@ public class User extends Entity{
 
     public long getId() {
         return id;
+    }
+
+    public boolean isLoginStatus() {
+        return loginStatus;
+    }
+
+    public void setLoginStatus(boolean loginStatus) {
+        this.loginStatus = loginStatus;
     }
 
     public String getUserName() {
@@ -70,5 +80,52 @@ public class User extends Entity{
                 "," + password +
                 "," + country +
                 "," + userType;
+    }
+
+    public   Entity formEntity(String[] str) throws Exception {
+        if (str.length != 5)
+            throw new Exception("Error of reading: Incorrect data");
+        User user = new User();
+        user.setId(Long.parseLong(str[0]));
+        user.setUserName(str[1]);
+        user.setPassword(str[2]);
+        user.setCountry(str[3]);
+        if (str[4].equals("USER")) {
+            user.setUserType(UserType.USER);
+        } else if (str[4].equals("ADMIN")) {
+            user.setUserType(UserType.ADMIN);
+        } else {
+            throw new BadRequestException("Error of reading: Incorrect data");
+        }
+
+        return user;
+
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        if (id != user.id) return false;
+        if (loginStatus != user.loginStatus) return false;
+        if (!userName.equals(user.userName)) return false;
+        if (!password.equals(user.password)) return false;
+        if (!country.equals(user.country)) return false;
+        return userType == user.userType;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + userName.hashCode();
+        result = 31 * result + password.hashCode();
+        result = 31 * result + country.hashCode();
+        result = 31 * result + userType.hashCode();
+        result = 31 * result + (loginStatus ? 1 : 0);
+        return result;
     }
 }

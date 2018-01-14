@@ -11,11 +11,16 @@ import java.util.*;
  * Created by user on 30.11.2017.
  */
 public class RoomRepository extends GeneralRepository {
-    // private String pathRoomDB = "D:/Ubuntu_backup/dev/RoomDB";
-    private final String pathHotelDB = "D:/Ubuntu_backup/dev/HotelDB";
+    private String pathRoomDB = "D:/Ubuntu_backup/dev/RoomDB";
+    private String pathHotelDB = "D:/Ubuntu_backup/dev/HotelDB";
+
 
     static {
         setPathDB("D:/Ubuntu_backup/dev/RoomDB");
+    }
+
+    static {
+        setCountFieldsOfObject(7);
     }
 
     public Collection findRooms(Filter filter) throws Exception {
@@ -34,14 +39,20 @@ public class RoomRepository extends GeneralRepository {
     public Entity formEntity(String[] str) throws Exception {
         if (str.length == 0 || str.length != 7 || str == null)
             throw new Exception("Error of reading.Incorrect data");
+
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
         Date dateAvailableFrom = simpleDateFormat.parse(str[5]);
-        HotelRepository hotelRepository = new HotelRepository();
 
+        HotelRepository hotelRepository = new HotelRepository();
+        setPathDB(pathHotelDB);
+        setCountFieldsOfObject(5);
         Hotel hotel = (Hotel) hotelRepository.findEntityById(Long.parseLong(str[6]));
 
+        setPathDB(pathRoomDB);
+        setCountFieldsOfObject(7);
         Room room = new Room(Long.parseLong(str[0]), Integer.parseInt(str[1]), Double.parseDouble(str[2]),
                 Boolean.parseBoolean(str[3]), Boolean.parseBoolean(str[4]), dateAvailableFrom, hotel);
+
         return room;
     }
 
@@ -64,19 +75,6 @@ public class RoomRepository extends GeneralRepository {
             return false;
         if (filter.getCity() != null && (room.getHotel() != null && !filter.getCity().equals(room.getHotel().getCity())))
             return false;
-        return true;
-
-    }
-
-    private boolean checkIdHotel(Long idHotel) throws Exception {
-        if (idHotel == null || idHotel <= 0)
-            throw new Exception("Id " + idHotel + " is wrong");
-        return true;
-    }
-
-    private boolean checkIdRoom(Long idRoom) throws Exception {
-        if (idRoom == null || idRoom <= 0)
-            throw new Exception("Id " + idRoom + " is wrong");
         return true;
     }
 }

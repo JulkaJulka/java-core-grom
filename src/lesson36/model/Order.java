@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Created by user on 30.11.2017.
  */
-public class Order {
+public class Order extends Entity {
     private long id;
     private User user;
     private Room room;
@@ -84,4 +84,5 @@ public class Order {
                 "," + strDateTo +
                 "," + room.getPrice()*3 ;
     }
+
 }

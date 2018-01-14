@@ -18,14 +18,19 @@ public class GeneralRepository<T> {
 
     public static String pathDB = "";
     private Utils utils = new Utils();
-
+    public static int countFieldsOfObject;
 
     public static void setPathDB(String pathDB) {
         GeneralRepository.pathDB = pathDB;
     }
 
+
+    public static void setCountFieldsOfObject(int countFieldsOfObject) {
+        GeneralRepository.countFieldsOfObject = countFieldsOfObject;
+    }
+
     public <T extends Entity> T addEntity(T t) throws Exception {
-        //validate inputData
+
         if (t == null)
             throw new Exception("You enter wrong data");
         generateId(t);
@@ -33,7 +38,7 @@ public class GeneralRepository<T> {
         StringBuffer bf = new StringBuffer("");
         String string = t.toString();
 
-        bf.append("\r\n");
+       bf.append("\r\n");
         bf.append(string);
 
         writeToFile(bf);
@@ -41,9 +46,7 @@ public class GeneralRepository<T> {
         return t;
     }
 
-    public void deleteEntity(Long id, User user) throws Exception {
-        if (user.getUserType() != UserType.ADMIN)
-            throw new Exception("Deleting  is not accessible to you");
+    public void deleteEntity(Long id) throws Exception {
         if (id == null)
             throw new Exception("You didn't enter any data");
 
@@ -64,7 +67,7 @@ public class GeneralRepository<T> {
                 count++;
             }
         }
-        res.delete(res.length()-2,res.length());
+        res.delete(res.length() - 2, res.length());
         if (count < 1) {
             throw new Exception("Entity with id " + id + " does not exist in DB");
         }
@@ -111,7 +114,7 @@ public class GeneralRepository<T> {
         return false;
     }
 
-    public <T extends Entity> ArrayList<T> entityToArrayList() throws Exception {
+    public <T> ArrayList<T> entityToArrayList() throws Exception {
         ArrayList<T> arrayList = new ArrayList<>();
         StringBuffer stringBuffer = readFile();
         String strings = stringBuffer.toString();
@@ -124,6 +127,7 @@ public class GeneralRepository<T> {
 
         return arrayList;
     }
+
     public <T extends Entity> T formEntity(String[] str) throws Exception {
         if (str.length == 0 || str == null)
             throw new Exception("Error of reading: Incorrect data");
@@ -146,11 +150,14 @@ public class GeneralRepository<T> {
         StringBuffer stringBuffer = new StringBuffer();
         try (BufferedReader br = new BufferedReader(new FileReader(pathDB))) {
             String line;
+            int numberLine = 0;
             while ((line = br.readLine()) != null) {
+                numberLine++;
+                checkLine(line, numberLine);
                 stringBuffer.append(line);
                 stringBuffer.append("\r\n");
             }
-           stringBuffer.delete(stringBuffer.length() - 2, stringBuffer.length());
+            stringBuffer.delete(stringBuffer.length() - 2, stringBuffer.length());
         } catch (FileNotFoundException e) {
             System.err.println("File does not exist");
         } catch (IOException e) {
@@ -179,6 +186,23 @@ public class GeneralRepository<T> {
     private boolean checkId(Long id) throws Exception {
         if (id == null || id <= 0)
             throw new Exception("Id " + id + " is wrong");
+        return true;
+    }
+
+    public boolean checkLine(String line, int numberLine) throws Exception {
+        if (line == null || line.isEmpty())
+            throw new BadRequestException("Wrong data in DB " + pathDB + " Line number: " + numberLine);
+
+        String[] str = line.split(",");
+        if (str.length != countFieldsOfObject)
+            throw new BadRequestException("Wrong data in DB " + pathDB + " Line number: " + numberLine);
+        for (String el : str) {
+            if (el == null || el.isEmpty() )
+                throw new BadRequestException("Wrong data in DB " + pathDB + " Line number: " + numberLine);
+        }
+        if (!utils.checkWordOnDigts(str[0]))
+            throw new BadRequestException("Wrong data in DB " + pathDB + " Line number: " + numberLine);
+
         return true;
     }
 

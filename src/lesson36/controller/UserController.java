@@ -1,40 +1,32 @@
 package lesson36.controller;
 
-import lesson36.model.Filter;
-import lesson36.model.Hotel;
-import lesson36.model.LoginType;
+import lesson36.model.*;
 import lesson36.repository.UserRepository;
 import lesson36.service.UserService;
-import lesson36.model.User;
 
 /**
  * Created by user on 30.11.2017.
  */
-public class UserController extends UserRepository{
+public class UserController {
 
     private UserService userService = new UserService();
+    private boolean login;
 
+    public UserService getUserService() {
+        return userService;
+    }
 
-    /*void login(String userName, String password) throws Exception{
+    public Entity registerUser(User user) throws Exception {
+        return userService.registerUser(user);
 
-            for (int i = 0; i < userDAO.getArray().length; i++) {
-                if (userDAO.getArray() != null &&
-                        !(userDAO.getArray()[i]==null) &&
-                        userDAO.getArray()[i].getName().equals(name) &&
-                        userDAO.getArray()[i].getPassword().equals(password)) {
-                    setLoginType(LoginType.AUTH);
-                    break;
-                } }
-        }
-        public boolean checkLoginUser(User user) throws Exception{
+    }
 
-            if(!(user.getLoginType() == LoginType.AUTH))
-                throw new BadRequestException("You are not authorized.Try again please");
-            return true;
-        }
-    void logout(){
+    void login(String userName, String password) throws Exception {
+        userService.login(userName, password);
+    }
 
-    }*/
-
+    void logout() {
+        userService.logout();
+    }
 
 }

@@ -67,6 +67,18 @@ public class Hotel extends Entity {
     }
 
 
+    public static Hotel formHotel(String[] str) throws Exception {
+        if (str == null || str.length == 0 || str.length != 5)
+                throw new Exception("Error of reading: Incorrect data");
+            Hotel hotel = new Hotel();
+            hotel.setId(Long.parseLong(str[0]));
+            hotel.setHotelName(str[1]);
+            hotel.setCountry(str[2]);
+            hotel.setCity(str[3]);
+            hotel.setStreet(str[4]);
+
+            return hotel;
+    }
 
     @Override
     public boolean equals(Object o) {

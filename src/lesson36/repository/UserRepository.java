@@ -12,20 +12,20 @@ import java.util.ArrayList;
  * Created by user on 30.11.2017.
  */
 public class UserRepository extends GeneralRepository {
-//UserService userService = new UserService();
-
-    //считывание данных - считывание файлов
-    //обработка данных - маппинг данных
 
     private Utils utils = new Utils();
+  ;
     static {
-        setPathDB("D:/Ubuntu_backup/dev/UserDB.txt");
+        setPathDB("D:/Ubuntu_backup/dev/UserDB");
+    }
+    static {
+        setCountFieldsOfObject(5);
     }
 
     @Override
     public Entity addEntity(Entity entity) throws Exception {
         User user = (User) entity;
-        validateInputData(user);
+
         if (!(findUserByUserName(user) == null)) {
             throw new Exception("User with userName " + user.getUserName() +
                     " has registered already. Try another userName");
@@ -65,7 +65,7 @@ public class UserRepository extends GeneralRepository {
 
     }
 
-    private boolean validateInputData(User user) throws Exception {
+    public boolean validateInputData(User user) throws Exception {
         if (user == null || user.getUserName().isEmpty() || user.getPassword().isEmpty() ||
                 user.getCountry().isEmpty()) {
             throw new Exception("You input wrong data. Try again, please");
@@ -80,4 +80,13 @@ public class UserRepository extends GeneralRepository {
         return true;
     }
 
+    @Override
+    public Entity findEntityById(Long idFind) throws Exception {
+        return super.findEntityById(idFind);
+    }
+
+    @Override
+    public ArrayList entityToArrayList() throws Exception {
+        return super.entityToArrayList();
+    }
 }
