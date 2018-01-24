@@ -1,10 +1,12 @@
 package lesson36.model;
 
+import lesson36.repository.GeneralRepository;
+
 /**
  * Created by user on 30.11.2017.
  */
-public class Hotel extends Entity {
-
+public class Hotel {
+private long id;
     private String hotelName;
     private String country;
     private String city;
@@ -13,16 +15,20 @@ public class Hotel extends Entity {
     public Hotel() {
     }
 
-    public Hotel(long id) {
-        super(id);
-    }
-
-    public Hotel(long id, String hotelName, String country, String city, String street) {
-        super(id);
+    public Hotel( String hotelName, String country, String city, String street) {
+        this.id = GeneralRepository.generateId();
         this.hotelName = hotelName;
         this.country = country;
         this.city = city;
         this.street = street;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getHotelName() {
@@ -59,7 +65,7 @@ public class Hotel extends Entity {
 
     @Override
     public String toString() {
-        return super.toString()+
+        return id +
                 "," + hotelName +
                 "," + country +
                 "," + city +

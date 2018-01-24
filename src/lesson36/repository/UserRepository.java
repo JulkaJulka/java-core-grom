@@ -1,53 +1,34 @@
 package lesson36.repository;
 
 import lesson36.exception.BadRequestException;
-import lesson36.Utils;
-import lesson36.model.Entity;
 import lesson36.model.User;
 import lesson36.model.UserType;
 
 import java.util.ArrayList;
+
+import static lesson36.Utils.checkWordOnDigts;
+import static lesson36.Utils.checkWordOnLetAndDigts;
+import static lesson36.Utils.checkWordOnLetters;
 
 /**
  * Created by user on 30.11.2017.
  */
 public class UserRepository extends GeneralRepository {
 
-    private Utils utils = new Utils();
-  ;
     static {
         setPathDB("D:/Ubuntu_backup/dev/UserDB");
     }
-    static {
-        setCountFieldsOfObject(5);
-    }
+
 
     @Override
-    public Entity addEntity(Entity entity) throws Exception {
-        User user = (User) entity;
-
-        if (!(findUserByUserName(user) == null)) {
-            throw new Exception("User with userName " + user.getUserName() +
-                    " has registered already. Try another userName");
-        }
-        return super.addEntity(user);
-    }
-
-    public User findUserByUserName(User user) throws Exception {
-        ArrayList<Entity> userArrayList = entityToArrayList();
-        for (Entity ent : userArrayList) {
-            User po = (User) ent;
-            if (po.getUserName().equals(user.getUserName())) {
-                return user;
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public   User formEntity(String[] str) throws Exception {
+    public Object formEntity(String[] str) throws Exception {
         if (str.length != 5 || str.length == 0 || str == null)
             throw new Exception("Error of reading: Incorrect data");
+        for (String el : str) {
+            if (el == null) {
+                throw new BadRequestException("Error of reading: Incorrect data");
+            }
+        }
         User user = new User();
         user.setId(Long.parseLong(str[0]));
         user.setUserName(str[1]);
@@ -65,28 +46,41 @@ public class UserRepository extends GeneralRepository {
 
     }
 
-    public boolean validateInputData(User user) throws Exception {
-        if (user == null || user.getUserName().isEmpty() || user.getPassword().isEmpty() ||
-                user.getCountry().isEmpty()) {
-            throw new Exception("You input wrong data. Try again, please");
+    public User findUserByUserName(User user) throws Exception {
+        ArrayList<User> userArrayList = entityToArrayList();
+        for (User us : userArrayList) {
+            if (us.getUserName().equals(user.getUserName())) {
+                return user;
+            }
         }
-        if (!(utils.checkWordOnLetAndDigts(user.getUserName())))
-            throw new Exception("UserName " + user.getUserName() + " is wrong");
-        if (!(utils.checkWordOnLetAndDigts(user.getPassword())))
-            throw new Exception("Password must have only letters and digits");
-        if (!(utils.checkWordOnLetters(user.getCountry()))) {
-            throw new Exception("Country " + user.getCountry() + " must have only letters");
+        return null;
+    }
+
+    @Override
+    public boolean checkLine(String line, int numberLine) throws Exception {
+        if (line == null || line.isEmpty())
+            throw new BadRequestException("Wrong data in DB " + pathDB + " Line number: " + numberLine);
+
+        String[] str = line.split(",");
+        if (str.length != 5)
+            throw new BadRequestException("Wrong data in DB " + pathDB + " Line number: " + numberLine);
+        for (String el : str) {
+            if (el == null || el.isEmpty())
+                throw new BadRequestException("Wrong data in DB " + pathDB + " Line number: " + numberLine);
         }
+        if (!checkWordOnDigts(str[0]))
+            throw new BadRequestException("Wrong data in DB " + pathDB + " Line number: " + numberLine);
+
         return true;
     }
-
-    @Override
-    public Entity findEntityById(Long idFind) throws Exception {
-        return super.findEntityById(idFind);
+    public static void validateUser(User user)throws Exception{
+        if(user == null)
+            throw new BadRequestException("Wrong data room");
     }
-
-    @Override
-    public ArrayList entityToArrayList() throws Exception {
-        return super.entityToArrayList();
+    public  void validateUser(Long id)throws Exception{
+        if(id <= 0)
+            throw new BadRequestException("You enter wrong userId. Please, try again");
+        if(findEntityById(id) == null)
+            throw new Exception("User with id " + id + " does not exist in DB Room");
     }
 }

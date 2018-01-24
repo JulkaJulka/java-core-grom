@@ -5,7 +5,20 @@ package lesson36;
  */
 public class Utils {
 
-    public boolean checkWordOnLetters(String body) {
+    public static String pathRoomDB = "D:/Ubuntu_backup/dev/RoomDB";
+    public static String pathHotelDB = "D:/Ubuntu_backup/dev/HotelDB";
+    public static String pathOrderDB = "D:/Ubuntu_backup/dev/OrderDB.txt";
+    public static String pathUserDB = "D:/Ubuntu_backup/dev/UserDB";
+
+    public static String getPathRoomDB() {
+        return pathRoomDB;
+    }
+
+    public static String getPathHotelDB() {
+        return pathHotelDB;
+    }
+
+    public static boolean checkWordOnLetters(String body) {
         char[] chars = body.toCharArray();
         for (char ch : chars) {
             if (!Character.isLetter(ch))
@@ -14,7 +27,8 @@ public class Utils {
 
         return true;
     }
-    public boolean checkWordOnLetAndDigts(String body) {
+
+    public static boolean checkWordOnLetAndDigts(String body) {
         char[] chars = body.toCharArray();
         for (char ch : chars) {
             if (!Character.isLetterOrDigit(ch))
@@ -23,7 +37,8 @@ public class Utils {
 
         return true;
     }
-    public boolean checkWordOnDigts(String body) {
+
+    public static boolean checkWordOnDigts(String body) {
         char[] chars = body.toCharArray();
         for (char ch : chars) {
             if (!Character.isDigit(ch))
@@ -32,6 +47,7 @@ public class Utils {
 
         return true;
     }
+
 
 }
 

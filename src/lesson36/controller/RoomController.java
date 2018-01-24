@@ -19,7 +19,7 @@ public class RoomController {
     public Collection<Room> findRooms(Filter filter) throws Exception{
         return roomService.findRooms(filter);
     }
-    public Entity addRoom(Room room, User user)throws Exception{
+    public Object addRoom(Room room, User user)throws Exception{
         return roomService.addRoom(room, user);
     }
     public void deleteRoom(Long roomId,User user)throws Exception{

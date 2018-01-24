@@ -1,33 +1,26 @@
 package lesson36.repository;
 
-import lesson36.Utils;
+import lesson36.exception.BadRequestException;
 import lesson36.model.*;
 
-import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-/**
- * Created by user on 30.11.2017.
- */
-public class RoomRepository extends GeneralRepository {
-    private String pathRoomDB = "D:/Ubuntu_backup/dev/RoomDB";
-    private String pathHotelDB = "D:/Ubuntu_backup/dev/HotelDB";
+import static lesson36.Utils.checkWordOnDigts;
+import static lesson36.Utils.getPathHotelDB;
+import static lesson36.Utils.getPathRoomDB;
 
+
+public class RoomRepository extends GeneralRepository {
 
     static {
         setPathDB("D:/Ubuntu_backup/dev/RoomDB");
     }
 
-    static {
-        setCountFieldsOfObject(7);
-    }
-
     public Collection findRooms(Filter filter) throws Exception {
-        ArrayList<Entity> roomArrayList = entityToArrayList();
+        ArrayList<Room> roomArrayList = entityToArrayList();
         ArrayList<Room> findRooms = new ArrayList<>();
-        for (Entity ent : roomArrayList) {
-            Room rm = (Room) ent;
+        for (Room rm : roomArrayList) {
             if (conformityFilter(rm, filter)) {
                 findRooms.add(rm);
             }
@@ -35,25 +28,48 @@ public class RoomRepository extends GeneralRepository {
         return findRooms;
     }
 
-
-    public Entity formEntity(String[] str) throws Exception {
-        if (str.length == 0 || str.length != 7 || str == null)
-            throw new Exception("Error of reading.Incorrect data");
-
+    @Override
+    public Object formEntity(String[] str) throws Exception {
+        if (str == null || str.length == 0 || str.length != 7)
+            throw new Exception("Error of reading: Incorrect data");
+        for (String el : str) {
+            if (el == null) {
+                throw new Exception("Error of reading: Incorrect data");
+            }
+        }
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
         Date dateAvailableFrom = simpleDateFormat.parse(str[5]);
 
         HotelRepository hotelRepository = new HotelRepository();
-        setPathDB(pathHotelDB);
-        setCountFieldsOfObject(5);
+        setPathDB(getPathHotelDB());
         Hotel hotel = (Hotel) hotelRepository.findEntityById(Long.parseLong(str[6]));
+        if(hotel == null)
+            throw new Exception("Hotel with id " + Long.parseLong(str[6]) + " does not exist in DB" );
 
-        setPathDB(pathRoomDB);
-        setCountFieldsOfObject(7);
-        Room room = new Room(Long.parseLong(str[0]), Integer.parseInt(str[1]), Double.parseDouble(str[2]),
+        setPathDB(getPathRoomDB());
+        Room room = new Room(Integer.parseInt(str[1]), Double.parseDouble(str[2]),
                 Boolean.parseBoolean(str[3]), Boolean.parseBoolean(str[4]), dateAvailableFrom, hotel);
+        room.setId(Long.parseLong(str[0]));
 
         return room;
+    }
+
+    @Override
+    public boolean checkLine(String line, int numberLine) throws Exception {
+        if (line == null || line.isEmpty())
+            throw new BadRequestException("Wrong data in DB " + pathDB + " Line number: " + numberLine);
+
+        String[] str = line.split(",");
+        if (str.length != 7)
+            throw new BadRequestException("Wrong data in DB " + pathDB + " Line number: " + numberLine);
+        for (String el : str) {
+            if (el == null || el.isEmpty())
+                throw new BadRequestException("Wrong data in DB " + pathDB + " Line number: " + numberLine);
+        }
+        if (!checkWordOnDigts(str[0]))
+            throw new BadRequestException("Wrong data in DB " + pathDB + " Line number: " + numberLine);
+
+        return true;
     }
 
     public boolean conformityFilter(Room room, Filter filter) {
@@ -77,4 +93,16 @@ public class RoomRepository extends GeneralRepository {
             return false;
         return true;
     }
+
+    public static void validateRoom(Room room)throws Exception{
+        if(room == null)
+            throw new BadRequestException("Wrong data room");
+    }
+    public  void validateRoom(Long id)throws Exception{
+        if(id <= 0)
+            throw new BadRequestException("You enter wrong roomId. Please, try again");
+        if(findEntityById(id) == null)
+            throw new Exception("Room with id " + id + " does not exist in DB Room");
+    }
+
 }

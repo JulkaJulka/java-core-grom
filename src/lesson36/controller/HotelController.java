@@ -1,9 +1,7 @@
 package lesson36.controller;
 
-import lesson36.model.Entity;
 import lesson36.model.Hotel;
 import lesson36.model.User;
-import lesson36.model.UserType;
 import lesson36.service.HotelService;
 
 import java.util.ArrayList;
@@ -19,7 +17,7 @@ public class HotelController {
         return hotelService;
     }
 
-    public ArrayList<Hotel> findHotelByName(String name) throws Exception {
+   public ArrayList<Hotel> findHotelByName(String name) throws Exception {
         return hotelService.findHotelByName(name);
     }
 
@@ -27,7 +25,7 @@ public class HotelController {
         return hotelService.findHotelByCity(city);
     }
 
-    public Entity addHotel(Hotel hotel, User user) throws Exception {
+    public Object addHotel(Hotel hotel, User user) throws Exception {
         return hotelService.addHotel(hotel, user);
     }
 

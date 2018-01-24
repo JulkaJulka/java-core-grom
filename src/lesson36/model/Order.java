@@ -1,11 +1,13 @@
 package lesson36.model;
 
+import lesson36.repository.GeneralRepository;
+
 import java.util.Date;
 
 /**
  * Created by user on 30.11.2017.
  */
-public class Order extends Entity {
+public class Order {
     private long id;
     private User user;
     private Room room;
@@ -16,8 +18,8 @@ public class Order extends Entity {
     public Order() {
     }
 
-    public Order(long id, User user, Room room, Date dateFrom, Date dateTo, double moneyPaid) {
-        this.id = id;
+    public Order(User user, Room room, Date dateFrom, Date dateTo, double moneyPaid) {
+        this.id = GeneralRepository.generateId();
         this.user = user;
         this.room = room;
         this.dateFrom = dateFrom;

@@ -1,11 +1,13 @@
 package lesson36.model;
 
 import lesson36.exception.BadRequestException;
+import lesson36.repository.GeneralRepository;
 
 /**
  * Created by user on 30.11.2017.
  */
-public class User extends Entity {
+public class User {
+
     private long id;
     private String userName;
     private String password;
@@ -17,8 +19,8 @@ public class User extends Entity {
     public User() {
     }
 
-    public User(long id, String userName, String password, String country, UserType userType) {
-        this.id = id;
+    public User(String userName, String password, String country, UserType userType) {
+        this.id = GeneralRepository.generateId();
         this.userName = userName;
         this.password = password;
         this.country = country;
@@ -80,26 +82,6 @@ public class User extends Entity {
                 "," + password +
                 "," + country +
                 "," + userType;
-    }
-
-    public   Entity formEntity(String[] str) throws Exception {
-        if (str.length != 5)
-            throw new Exception("Error of reading: Incorrect data");
-        User user = new User();
-        user.setId(Long.parseLong(str[0]));
-        user.setUserName(str[1]);
-        user.setPassword(str[2]);
-        user.setCountry(str[3]);
-        if (str[4].equals("USER")) {
-            user.setUserType(UserType.USER);
-        } else if (str[4].equals("ADMIN")) {
-            user.setUserType(UserType.ADMIN);
-        } else {
-            throw new BadRequestException("Error of reading: Incorrect data");
-        }
-
-        return user;
-
     }
 
     @Override

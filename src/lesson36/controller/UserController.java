@@ -16,7 +16,7 @@ public class UserController {
         return userService;
     }
 
-    public Entity registerUser(User user) throws Exception {
+   public Object registerUser(User user) throws Exception {
         return userService.registerUser(user);
 
     }

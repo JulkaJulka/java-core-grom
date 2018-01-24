@@ -1,11 +1,14 @@
 package lesson36.service;
 
 import lesson36.exception.BadRequestException;
-import lesson36.model.Entity;
 import lesson36.model.User;
+import lesson36.repository.GeneralRepository;
 import lesson36.repository.UserRepository;
 
 import java.util.ArrayList;
+
+import static lesson36.Utils.checkWordOnLetAndDigts;
+import static lesson36.Utils.checkWordOnLetters;
 
 /**
  * Created by user on 30.11.2017.
@@ -36,10 +39,13 @@ public class UserService {
         this.loginStatus = loginStatus;
     }
 
-    public Entity registerUser(User user) throws Exception {
-        userRepository.validateInputData(user);
-        Entity ent = (Entity) user;
-        return userRepository.addEntity(ent);
+    public Object registerUser(User user) throws Exception {
+        validateInputData(user);
+        if (!(userRepository.findUserByUserName(user) == null))
+            throw new Exception("User with userName " + user.getUserName() +
+                    " has registered already. Try another userName");
+        Object o = (Object) user;
+        return userRepository.addEntity(o);
 
     }
 
@@ -70,5 +76,20 @@ public class UserService {
     public void logout() {
         if (user.isLoginStatus() == true)
             user.setLoginStatus(false);
+    }
+
+    public boolean validateInputData(User user) throws Exception {
+        if (user == null || user.getUserName().isEmpty() || user.getPassword().isEmpty() ||
+                user.getCountry().isEmpty()) {
+            throw new Exception("You input wrong data. Try again, please");
+        }
+        if (!(checkWordOnLetAndDigts(user.getUserName())))
+            throw new Exception("UserName " + user.getUserName() + " is wrong");
+        if (!(checkWordOnLetAndDigts(user.getPassword())))
+            throw new Exception("Password must have only letters and digits");
+        if (!(checkWordOnLetters(user.getCountry()))) {
+            throw new Exception("Country " + user.getCountry() + " must have only letters");
+        }
+        return true;
     }
 }
