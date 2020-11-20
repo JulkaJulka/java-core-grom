@@ -18,6 +18,28 @@ public class UserRepository {
         return findById(id);
     }
 
+    public User getUserBySessionId(String sessionId){
+        if(sessionId == null)
+            return null;
+        for (User u: this.users) {
+            if(u != null && u.getSessionId() == sessionId)
+                return u;
+        }
+        return null;
+    }
+
+    public User getUserByName(String name){
+        if(name == null || name.isEmpty())
+            return null;
+        for (User u: this.users) {
+            if( u != null && u.getName().equals(name)){
+                return u;
+            }
+
+        }
+      return null;
+    }
+
     public String[] getUserNames() {
         String[] names = new String[this.users.length];
         int index = 0;
